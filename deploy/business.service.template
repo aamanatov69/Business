@@ -1,0 +1,22 @@
+[Unit]
+Description=Business Landing (Next.js)
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/business
+Environment=NODE_ENV=production
+Environment=PORT=3001
+EnvironmentFile=/var/www/business/.env.production
+ExecStart=/usr/bin/npm run start
+Restart=always
+RestartSec=5
+
+# Optional hardening
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
