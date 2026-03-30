@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import {
   ArrowRight,
   BarChart3,
@@ -171,6 +171,15 @@ const heroStats = [
 
 const trustItems = ["Розница", "Кафе", "Сервисы", "Франшизы", "Сети", "СТО"];
 
+const heroAnimatedSegments = [
+  "магазинов",
+  "складов",
+  "кафе",
+  "Бильярдов",
+  "СТО",
+  
+];
+
 const faqItems = [
   {
     question: "Для каких бизнесов подходит платформа?",
@@ -250,6 +259,7 @@ function formatKgPhone(localDigits: string): string {
 
 export default function HomeClient() {
   const [isModalOpen, setModalOpen] = useState(false);
+  const [heroSegmentIndex, setHeroSegmentIndex] = useState(0);
   const [fullName, setFullName] = useState("");
   const [phoneDigits, setPhoneDigits] = useState("");
   const [email, setEmail] = useState("");
@@ -260,6 +270,7 @@ export default function HomeClient() {
   const [submitError, setSubmitError] = useState("");
   const [submitSuccess, setSubmitSuccess] = useState("");
   const autoCloseTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const prefersReducedMotion = useReducedMotion();
 
   const clearAutoCloseTimer = () => {
     if (autoCloseTimerRef.current) {
@@ -267,6 +278,22 @@ export default function HomeClient() {
       autoCloseTimerRef.current = null;
     }
   };
+
+  useEffect(() => {
+    if (prefersReducedMotion) {
+      return;
+    }
+
+    const switchTimer = setInterval(() => {
+      setHeroSegmentIndex((previous) =>
+        previous === heroAnimatedSegments.length - 1 ? 0 : previous + 1,
+      );
+    }, 2200);
+
+    return () => {
+      clearInterval(switchTimer);
+    };
+  }, [prefersReducedMotion]);
 
   useEffect(() => {
     if (!isModalOpen) {
@@ -447,7 +474,35 @@ export default function HomeClient() {
       <section id="hero" className="shell hero">
         <div className="hero-copy">
           <span className="tag">Автоматизация торговли и сервиса</span>
-          <h1>Автоматизация для магазинов и сервисных команд</h1>
+          <h1>
+            <span className="hero-title-static">Автоматизация для</span>
+            <span className="hero-title-dynamic-wrap" aria-live="polite">
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.span
+                  key={heroAnimatedSegments[heroSegmentIndex]}
+                  className="hero-title-dynamic"
+                  initial={
+                    prefersReducedMotion
+                      ? { opacity: 1, y: 0 }
+                      : { opacity: 0, y: 14 }
+                  }
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={
+                    prefersReducedMotion
+                      ? { opacity: 1, y: 0 }
+                      : { opacity: 0, y: -14 }
+                  }
+                  transition={
+                    prefersReducedMotion
+                      ? { duration: 0 }
+                      : { duration: 0.32, ease: "easeOut" }
+                  }
+                >
+                  {heroAnimatedSegments[heroSegmentIndex]}
+                </motion.span>
+              </AnimatePresence>
+            </span>
+          </h1>
           <p>
             Одна система для кассы, склада, клиентов, финансов и управленческих
             решений. Контролируйте бизнес в реальном времени и масштабируйтесь

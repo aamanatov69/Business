@@ -8,18 +8,7 @@ import {
   SITE_URL,
 } from "@/lib/seo";
 import type { Metadata, Viewport } from "next";
-import { Manrope, Rubik } from "next/font/google";
 import "./globals.css";
-
-const manrope = Manrope({
-  variable: "--font-manrope",
-  subsets: ["latin", "cyrillic"],
-});
-
-const rubik = Rubik({
-  variable: "--font-space-grotesk",
-  subsets: ["latin", "cyrillic"],
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -137,8 +126,11 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="ru">
-      <body className={`${manrope.variable} ${rubik.variable} antialiased`}>
+    <html lang="ru" translate="no" className="notranslate">
+      <head>
+        <meta name="google" content="notranslate" />
+      </head>
+      <body className="antialiased">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -153,7 +145,57 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }}
         />
-        {children}
+        <div className="site-content">{children}</div>
+        <footer className="site-footer" aria-label="Контакты и реквизиты">
+          <h2 className="site-footer-title">Контакты и адрес</h2>
+          <div className="shell site-footer-inner">
+            <p className="site-footer-address">Улица Мадиева 23/1 Кок-Жар</p>
+            <div className="site-footer-phones" aria-label="Номера телефонов">
+              <details className="site-footer-phone-chooser">
+                <summary className="site-footer-link">+996 559 474 999</summary>
+                <div className="site-footer-actions" aria-label="Способы связи">
+                  <a className="site-footer-action" href="tel:+996559474999">
+                    Позвонить
+                  </a>
+                  <a
+                    className="site-footer-action"
+                    href="https://wa.me/996559474999"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    WhatsApp
+                  </a>
+                </div>
+              </details>
+              <details className="site-footer-phone-chooser">
+                <summary className="site-footer-link">+996 990 474 999</summary>
+                <div className="site-footer-actions" aria-label="Способы связи">
+                  <a className="site-footer-action" href="tel:+996990474999">
+                    Позвонить
+                  </a>
+                  <a
+                    className="site-footer-action"
+                    href="https://wa.me/996990474999"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    WhatsApp
+                  </a>
+                </div>
+              </details>
+            </div>
+            <a
+              className="site-footer-link"
+              href="https://mail.google.com/mail/?view=cm&fs=1&to=automat.busines@gmail.com&su=%D0%97%D0%B0%D1%8F%D0%B2%D0%BA%D0%B0%20%D1%81%20%D1%81%D0%B0%D0%B9%D1%82%D0%B0"
+              target="_self"
+            >
+              automat.busines@gmail.com
+            </a>
+            <p className="site-footer-copy">
+              © 2026 Все права защищены. Разработано AutomationBusines
+            </p>
+          </div>
+        </footer>
       </body>
     </html>
   );
