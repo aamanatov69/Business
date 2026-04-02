@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { ArrowRight, BarChart3, Boxes, Play, Warehouse } from "lucide-react";
+import { ArrowRight, BarChart3, Boxes, Warehouse } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { type FormEvent, useEffect, useRef, useState } from "react";
@@ -357,6 +357,7 @@ function formatKgPhone(localDigits: string): string {
 }
 
 export default function HomeClient({ seoHubGroups = [] }: HomeClientProps) {
+  const showTrustedBrandsSection = false;
   const industriesSectionRef = useRef<HTMLElement | null>(null);
   const [isModalOpen, setModalOpen] = useState(false);
   const [isEquipmentModalOpen, setEquipmentModalOpen] = useState(false);
@@ -692,7 +693,6 @@ export default function HomeClient({ seoHubGroups = [] }: HomeClientProps) {
                 >
                   Попробовать сейчас <ArrowRight size={16} />
                 </motion.button>
-                
               </div>
             </div>
 
@@ -982,57 +982,59 @@ export default function HomeClient({ seoHubGroups = [] }: HomeClientProps) {
         </div>
       </section>
 
-      <section className="shell section">
-        <div className="section-head">
-          <span className="tag">Нас выбрали</span>
-          <h2>Нам доверяют бренды</h2>
-        </div>
-
-        <div className="trusted-logos" aria-label="Нам доверяют бренды">
-          <div className="trusted-logos-track">
-            {trustedOrganizations.map((item) => (
-              <article
-                key={item.name}
-                className="trusted-logo-card"
-                aria-label={item.name}
-              >
-                {item.logoSrc && !failedTrustedLogos[item.name] ? (
-                  <img
-                    src={item.logoSrc}
-                    alt={item.name}
-                    className="trusted-logo-image"
-                    loading="lazy"
-                    decoding="async"
-                    onError={() => markTrustedLogoFailed(item.name)}
-                  />
-                ) : (
-                  <span>{item.name}</span>
-                )}
-              </article>
-            ))}
-            {trustedOrganizations.map((item) => (
-              <article
-                key={`${item.name}-copy`}
-                className="trusted-logo-card"
-                aria-hidden="true"
-              >
-                {item.logoSrc && !failedTrustedLogos[item.name] ? (
-                  <img
-                    src={item.logoSrc}
-                    alt=""
-                    className="trusted-logo-image"
-                    loading="lazy"
-                    decoding="async"
-                    onError={() => markTrustedLogoFailed(item.name)}
-                  />
-                ) : (
-                  <span>{item.name}</span>
-                )}
-              </article>
-            ))}
+      {showTrustedBrandsSection ? (
+        <section className="shell section">
+          <div className="section-head">
+            <span className="tag">Нас выбрали</span>
+            <h2>Нам доверяют бренды</h2>
           </div>
-        </div>
-      </section>
+
+          <div className="trusted-logos" aria-label="Нам доверяют бренды">
+            <div className="trusted-logos-track">
+              {trustedOrganizations.map((item) => (
+                <article
+                  key={item.name}
+                  className="trusted-logo-card"
+                  aria-label={item.name}
+                >
+                  {item.logoSrc && !failedTrustedLogos[item.name] ? (
+                    <img
+                      src={item.logoSrc}
+                      alt={item.name}
+                      className="trusted-logo-image"
+                      loading="lazy"
+                      decoding="async"
+                      onError={() => markTrustedLogoFailed(item.name)}
+                    />
+                  ) : (
+                    <span>{item.name}</span>
+                  )}
+                </article>
+              ))}
+              {trustedOrganizations.map((item) => (
+                <article
+                  key={`${item.name}-copy`}
+                  className="trusted-logo-card"
+                  aria-hidden="true"
+                >
+                  {item.logoSrc && !failedTrustedLogos[item.name] ? (
+                    <img
+                      src={item.logoSrc}
+                      alt=""
+                      className="trusted-logo-image"
+                      loading="lazy"
+                      decoding="async"
+                      onError={() => markTrustedLogoFailed(item.name)}
+                    />
+                  ) : (
+                    <span>{item.name}</span>
+                  )}
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
 
       <section id="faq" className="shell section">
         <div className="section-head">
