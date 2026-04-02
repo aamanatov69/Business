@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="120" viewBox="0 0 360 120" role="img" aria-label="LACOSTE">
+  <rect width="360" height="120" rx="20" fill="#ffffff" stroke="#dbe5f7"/>
+  <path d="M54 62 l20 -14 l18 8 l-6 14 l-20 8 z" fill="#0a9d58"/>
+  <circle cx="83" cy="52" r="2.5" fill="#ffffff"/>
+  <text x="118" y="72" font-size="38" letter-spacing="2" font-family="Arial Black, Arial, sans-serif" fill="#101010">LACOSTE</text>
+</svg>

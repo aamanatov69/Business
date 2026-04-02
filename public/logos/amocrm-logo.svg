@@ -1,0 +1,35 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">AMOCRM + Website Development Logo</title>
+  <desc id="desc">Combined visual mark for AMOCRM integration and website development services</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f7fbff"/>
+      <stop offset="100%" stop-color="#edf4ff"/>
+    </linearGradient>
+    <linearGradient id="icon" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#3d8bfd"/>
+      <stop offset="100%" stop-color="#1f6fe5"/>
+    </linearGradient>
+    <linearGradient id="code" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#14c7a0"/>
+      <stop offset="100%" stop-color="#0ea07e"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="0" y="0" width="1200" height="800" fill="url(#bg)"/>
+
+  <g transform="translate(150 205)">
+    <rect x="0" y="0" width="170" height="170" rx="36" fill="url(#icon)"/>
+    <circle cx="85" cy="85" r="46" fill="#ffffff" opacity="0.96"/>
+    <circle cx="85" cy="85" r="20" fill="#2a77e8"/>
+
+    <rect x="360" y="0" width="170" height="170" rx="36" fill="url(#code)"/>
+    <path d="M435 73L400 85L435 97" stroke="#ffffff" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <path d="M455 118L475 52" stroke="#ffffff" stroke-width="11" stroke-linecap="round"/>
+    <path d="M495 73L530 85L495 97" stroke="#ffffff" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+    <text x="580" y="78" fill="#243958" font-family="Segoe UI, Arial, sans-serif" font-size="76" font-weight="700" letter-spacing="0.5">AMOCRM</text>
+    <text x="580" y="143" fill="#1f4f94" font-family="Segoe UI, Arial, sans-serif" font-size="60" font-weight="700">+ Разработка сайтов</text>
+    <text x="580" y="198" fill="#5a739b" font-family="Segoe UI, Arial, sans-serif" font-size="28" font-weight="600">CRM интеграция и digital-разработка в одном решении</text>
+  </g>
+</svg>

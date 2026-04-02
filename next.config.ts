@@ -23,6 +23,38 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "www.btpos.md",
       },
+      {
+        protocol: "https",
+        hostname: "art-trade.com.ua",
+      },
+      {
+        protocol: "https",
+        hostname: "www.art-trade.com.ua",
+      },
+      {
+        protocol: "https",
+        hostname: "inventure.com.ua",
+      },
+      {
+        protocol: "https",
+        hostname: "www.inventure.com.ua",
+      },
+      {
+        protocol: "https",
+        hostname: "easypayments.online",
+      },
+      {
+        protocol: "https",
+        hostname: "www.easypayments.online",
+      },
+      {
+        protocol: "https",
+        hostname: "cdn-ru.bitrix24.ru",
+      },
+      {
+        protocol: "https",
+        hostname: "logo.clearbit.com",
+      },
     ],
   },
 };

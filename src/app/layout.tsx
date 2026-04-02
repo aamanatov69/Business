@@ -1,7 +1,15 @@
 import {
+  BRAND_ADDRESS,
+  BRAND_CITY,
+  BRAND_COUNTRY,
   BRAND_EMAIL,
+  BRAND_LOGO_PATH,
   BRAND_PHONE,
+  BRAND_POSTAL_CODE,
+  CIS_COUNTRIES,
+  CORE_SEO_KEYWORDS,
   SITE_DESCRIPTION,
+  SITE_LANGUAGE,
   SITE_LOCALE,
   SITE_NAME,
   SITE_TITLE,
@@ -18,20 +26,22 @@ export const metadata: Metadata = {
   },
   description: SITE_DESCRIPTION,
   applicationName: SITE_NAME,
-  keywords: [
-    "автоматизация бизнеса",
-    "POS система",
-    "CRM для бизнеса",
-    "учет склада",
-    "финансовая аналитика",
-    "автоматизация кафе",
-    "автоматизация магазина",
-    "автоматизация СТО",
-    "amoCRM интеграция",
-    "Кыргызстан",
-  ],
+  referrer: "origin-when-cross-origin",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  keywords: [...CORE_SEO_KEYWORDS],
+  authors: [{ name: SITE_NAME, url: SITE_URL }],
+  creator: SITE_NAME,
+  publisher: SITE_NAME,
   alternates: {
-    canonical: "/",
+    canonical: SITE_URL,
+    languages: {
+      ru: SITE_URL,
+      "x-default": SITE_URL,
+    },
   },
   openGraph: {
     type: "website",
@@ -55,6 +65,17 @@ export const metadata: Metadata = {
     description: SITE_DESCRIPTION,
     images: ["/twitter-image"],
   },
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+    yandex: process.env.NEXT_PUBLIC_YANDEX_VERIFICATION,
+  },
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: BRAND_LOGO_PATH, type: "image/png" },
+    ],
+    apple: [{ url: BRAND_LOGO_PATH, type: "image/png" }],
+  },
   robots: {
     index: true,
     follow: true,
@@ -65,6 +86,14 @@ export const metadata: Metadata = {
       "max-snippet": -1,
       "max-video-preview": -1,
     },
+  },
+  manifest: "/manifest.webmanifest",
+  other: {
+    "geo.region": "KG-GB",
+    "geo.placename": `${BRAND_CITY}, Кыргызстан`,
+    "geo.position": "42.82699;74.61044",
+    ICBM: "42.82699, 74.61044",
+    language: SITE_LANGUAGE,
   },
   category: "business software",
 };
@@ -85,9 +114,17 @@ export default function RootLayout({
     "@type": "Organization",
     name: SITE_NAME,
     url: SITE_URL,
+    logo: `${SITE_URL}${BRAND_LOGO_PATH}`,
     email: BRAND_EMAIL,
     telephone: BRAND_PHONE,
-    areaServed: "KG",
+    areaServed: [...CIS_COUNTRIES],
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: BRAND_ADDRESS,
+      addressLocality: BRAND_CITY,
+      postalCode: BRAND_POSTAL_CODE,
+      addressCountry: BRAND_COUNTRY,
+    },
     contactPoint: [
       {
         "@type": "ContactPoint",
@@ -103,7 +140,7 @@ export default function RootLayout({
     "@type": "WebSite",
     name: SITE_NAME,
     url: SITE_URL,
-    inLanguage: "ru",
+    inLanguage: SITE_LANGUAGE,
     potentialAction: {
       "@type": "SearchAction",
       target: `${SITE_URL}/?q={search_term_string}`,
@@ -149,12 +186,15 @@ export default function RootLayout({
         <footer className="site-footer" aria-label="Контакты и реквизиты">
           <h2 className="site-footer-title">Контакты и адрес</h2>
           <div className="shell site-footer-inner">
-            <p className="site-footer-address">Улица Мадиева 23/1 Кок-Жар</p>
+            <p className="site-footer-address">{BRAND_ADDRESS}</p>
             <div className="site-footer-phones" aria-label="Номера телефонов">
               <details className="site-footer-phone-chooser">
-                <summary className="site-footer-link">+996 559 474 999</summary>
+                <summary className="site-footer-link">{BRAND_PHONE}</summary>
                 <div className="site-footer-actions" aria-label="Способы связи">
-                  <a className="site-footer-action" href="tel:+996559474999">
+                  <a
+                    className="site-footer-action"
+                    href={`tel:${BRAND_PHONE.replace(/\s+/g, "")}`}
+                  >
                     Позвонить
                   </a>
                   <a
@@ -186,10 +226,10 @@ export default function RootLayout({
             </div>
             <a
               className="site-footer-link"
-              href="https://mail.google.com/mail/?view=cm&fs=1&to=automat.busines@gmail.com&su=%D0%97%D0%B0%D1%8F%D0%B2%D0%BA%D0%B0%20%D1%81%20%D1%81%D0%B0%D0%B9%D1%82%D0%B0"
+              href={`mailto:${BRAND_EMAIL}`}
               target="_self"
             >
-              automat.busines@gmail.com
+              {BRAND_EMAIL}
             </a>
             <p className="site-footer-copy">
               © 2026 Все права защищены. Разработано AutomationBusines

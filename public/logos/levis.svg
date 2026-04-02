@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="120" viewBox="0 0 360 120" role="img" aria-label="Levi's">
+  <rect width="360" height="120" rx="20" fill="#d71920"/>
+  <path d="M52 78 C52 58, 90 54, 130 54 H230 C270 54, 308 58, 308 78 V86 H52 Z" fill="#ffffff"/>
+  <text x="180" y="82" text-anchor="middle" font-size="40" font-family="Arial Black, Arial, sans-serif" fill="#d71920">Levi's</text>
+</svg>

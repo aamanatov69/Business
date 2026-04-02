@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="120" viewBox="0 0 360 120" role="img" aria-label="L'OCCITANE EN PROVENCE">
+  <rect width="360" height="120" rx="20" fill="#1b2f66"/>
+  <circle cx="58" cy="60" r="32" fill="none" stroke="#f4d06f" stroke-width="5"/>
+  <text x="58" y="67" text-anchor="middle" font-size="22" font-family="Georgia, serif" fill="#f4d06f">L</text>
+  <text x="104" y="56" font-size="24" font-family="Georgia, serif" fill="#ffffff">L'OCCITANE</text>
+  <text x="104" y="84" font-size="14" font-family="Arial, sans-serif" letter-spacing="2" fill="#f4d06f">EN PROVENCE</text>
+</svg>

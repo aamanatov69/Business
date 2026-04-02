@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="120" viewBox="0 0 360 120" role="img" aria-label="CALVIN KLEIN">
+  <rect width="360" height="120" rx="20" fill="#ffffff" stroke="#dfe6f5"/>
+  <text x="180" y="62" text-anchor="middle" font-size="30" font-family="Arial, sans-serif" letter-spacing="6" fill="#111111">CALVIN</text>
+  <text x="180" y="90" text-anchor="middle" font-size="26" font-family="Arial, sans-serif" letter-spacing="8" fill="#111111">KLEIN</text>
+</svg>

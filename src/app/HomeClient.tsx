@@ -1,15 +1,9 @@
 "use client";
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import {
-  ArrowRight,
-  BarChart3,
-  BellDot,
-  Boxes,
-  Check,
-  Warehouse,
-} from "lucide-react";
+import { ArrowRight, BarChart3, Boxes, Play, Warehouse } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { type FormEvent, useEffect, useRef, useState } from "react";
 
 type FeatureCard = {
@@ -31,6 +25,33 @@ type ProductCard = {
   description: string;
   imageUrl: string;
   imageAlt: string;
+};
+
+type TrustedOrganization = {
+  name: string;
+  logoSrc?: string;
+};
+
+type SeoHubItem = {
+  key: string;
+  href: string;
+  label: string;
+};
+
+type SeoHubGroup = {
+  id: string;
+  tag: string;
+  title: string;
+  description: string;
+  items: SeoHubItem[];
+  footerLink?: {
+    href: string;
+    label: string;
+  };
+};
+
+type HomeClientProps = {
+  seoHubGroups?: SeoHubGroup[];
 };
 
 const featureCards: FeatureCard[] = [
@@ -92,22 +113,22 @@ const featureCards: FeatureCard[] = [
 
 const industries: IndustryCard[] = [
   {
-    title: "Магазины одежды",
+    title: "Ритейл",
     imageUrl:
-      "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=900&q=80",
+      "https://art-trade.com.ua/image/cache/catalog/image/cache/catalog/Blog/riteil-1200x900.webp",
     imageAlt: "Интерьер магазина одежды",
   },
   {
-    title: "Обувные магазины",
+    title: "Общепит",
     imageUrl:
-      "https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&w=900&q=80",
-    imageAlt: "Полки с обувью в магазине",
+      "https://inventure.com.ua/img/thumb.990.660/upload/user/1945/23e6de1643cc555ac025f68b972862a3.jpg",
+    imageAlt: "Интерьер современного кафе",
   },
   {
-    title: "Косметика",
+    title: "Услуги",
     imageUrl:
-      "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=900&q=80",
-    imageAlt: "Косметические товары на витрине",
+      "https://easypayments.online/media//articles/img_1764942003.575413.jpg",
+    imageAlt: "Услуги и обслуживание клиентов",
   },
   {
     title: "СТО",
@@ -131,12 +152,12 @@ const industries: IndustryCard[] = [
 
 const products: ProductCard[] = [
   {
-    title: "Пленка и расходники",
+    title: "AMOCRM+Разработка сайтов",
     description:
-      "Кассовая и этикеточная пленка для стабильной работы торговых точек.",
+      "Интеграция с AMOCRM для управления лидами, сделками и коммуникацией с клиентами.",
     imageUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNZQ57xViStF4M6bIkv0zCkWQwtlXvOTrT7w&s",
-    imageAlt: "Рулоны пленки и расходные материалы",
+      "https://cdn-ru.bitrix24.ru/b2517/landing/a26/a265bfd1963525ab9e60443edb4b15b8/logo_bill_kg.jpg",
+    imageAlt: "Логотип AMOCRM и разработки сайтов",
   },
   {
     title: "Торговое оборудование",
@@ -169,27 +190,92 @@ const heroStats = [
   { value: "24/7", label: "доступ к отчетам и контролю" },
 ];
 
-const trustItems = ["Розница", "Кафе", "Сервисы", "Франшизы", "Сети", "СТО"];
-
 const heroAnimatedSegments = [
   "магазинов",
   "складов",
   "кафе",
-  "Бильярдов",
+  "бильярдов",
   "СТО",
-  
+  "сервисных точек",
+  "общепита",
+  "услуг",
+  "отделов продаж",
+  "разработки сайтов",
 ];
+
+const heroBoardGallery = [
+  {
+    src: "/mag2.jpg",
+    alt: "Сотрудник работает в торговом зале",
+    className: "hero-collage-item-top-left",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1556740738-b6a63e27c4df?auto=format&fit=crop&w=1200&q=80",
+    alt: "Администратор за стойкой магазина",
+    className: "hero-collage-item-top-right",
+  },
+  {
+    src: "/mag.jpg",
+    alt: "Обслуживание покупателя в магазине",
+    className: "hero-collage-item-bottom-left",
+  },
+  {
+    src: "/image_30b5ed0a.png",
+    alt: "Команда работает с панелью автоматизации",
+    className: "hero-collage-item-bottom-center",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1556742111-a301076d9d18?auto=format&fit=crop&w=1200&q=80",
+    alt: "Работа с аналитикой на экране кассы",
+    className: "hero-collage-item-bottom-right",
+  },
+];
+
+const retailBusinessOptions = [
+  "Продуктовый магазин",
+  "Магазин обуви",
+  "Косметика и парфюм",
+  "Аптека",
+  "Склад",
+  "Торговая компания",
+  "Маркет",
+  "Зоотовары",
+  "Эко товары",
+  "Игрушки",
+  "Другое",
+];
+
+const foodBusinessOptions = [
+  "Пекарня",
+  "Кафе",
+  "Фастфуд",
+  "Ресторан",
+  "Другое",
+];
+
+const servicesBusinessOptions = [
+  "СТО",
+  "Развлекательные центры",
+  "Бани",
+  "Сауна",
+  "Бильярд",
+  "Досуг",
+  "Массаж",
+  "Другое",
+];
+
+const equipmentPdfPath = encodeURI("/docs/прайс все позиции в сомах.pdf");
 
 const faqItems = [
   {
     question: "Для каких бизнесов подходит платформа?",
     answer:
-      "Решение подходит для магазинов, кафе, сервисных точек, СТО, сетей и франшиз. Мы настраиваем процессы под ваш формат работы.",
+      "Мы автоматизируем различные типы бизнесов и помогаем настраивать процессы под ваш формат работы.",
   },
   {
     question: "Сколько времени занимает запуск?",
     answer:
-      "Базовый запуск занимает от нескольких дней: подключаем кассу, склад, CRM и отчеты, затем обучаем команду.",
+      "Базовый запуск занимает от нескольких часов до того времени пока вы полноценно не заработаете: подключаем кассу, склад, CRM и отчеты, затем обучаем команду.",
   },
   {
     question: "Есть ли интеграция с amoCRM?",
@@ -198,21 +284,34 @@ const faqItems = [
   },
 ];
 
-const testimonials = [
+const trustedOrganizations: TrustedOrganization[] = [
   {
-    quote:
-      "После внедрения мы перестали терять продажи в пиковые часы и увидели полную картину по остаткам.",
-    author: "Сеть магазинов одежды",
+    name: "L'OCCITANE EN PROVENCE",
+    logoSrc: "/logos/loccitane.svg",
   },
   {
-    quote:
-      "Команда работает в одной системе, а не в пяти таблицах. Руководителю стало проще управлять операциями.",
-    author: "Розничная сеть",
+    name: "Levi's",
+    logoSrc: "/logos/levis.svg",
   },
   {
-    quote:
-      "Отчеты по прибыли теперь собираются автоматически, решения принимаем быстрее и точнее.",
-    author: "Сервисный бизнес",
+    name: "LACOSTE",
+    logoSrc: "/logos/lacoste.svg",
+  },
+  {
+    name: "TOMMY HILFIGER",
+    logoSrc: "/logos/tommy.svg",
+  },
+  {
+    name: "CALVIN KLEIN",
+    logoSrc: "/logos/calvin-klein.svg",
+  },
+  {
+    name: "vicco",
+    logoSrc: "/logos/vicco.svg",
+  },
+  {
+    name: "button EST. 2019",
+    logoSrc: "/logos/button.svg",
   },
 ];
 
@@ -257,8 +356,15 @@ function formatKgPhone(localDigits: string): string {
   return `+996 ${chunks.join(" ")}`;
 }
 
-export default function HomeClient() {
+export default function HomeClient({ seoHubGroups = [] }: HomeClientProps) {
+  const industriesSectionRef = useRef<HTMLElement | null>(null);
   const [isModalOpen, setModalOpen] = useState(false);
+  const [isEquipmentModalOpen, setEquipmentModalOpen] = useState(false);
+  const [showRetailBusinessOptions, setShowRetailBusinessOptions] =
+    useState(false);
+  const [activeIndustryOptions, setActiveIndustryOptions] = useState<string[]>(
+    retailBusinessOptions,
+  );
   const [heroSegmentIndex, setHeroSegmentIndex] = useState(0);
   const [fullName, setFullName] = useState("");
   const [phoneDigits, setPhoneDigits] = useState("");
@@ -269,8 +375,21 @@ export default function HomeClient() {
   const [isSubmitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
   const [submitSuccess, setSubmitSuccess] = useState("");
+  const [failedTrustedLogos, setFailedTrustedLogos] = useState<
+    Record<string, boolean>
+  >({});
   const autoCloseTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const prefersReducedMotion = useReducedMotion();
+
+  const markTrustedLogoFailed = (name: string) => {
+    setFailedTrustedLogos((previous) => {
+      if (previous[name]) {
+        return previous;
+      }
+
+      return { ...previous, [name]: true };
+    });
+  };
 
   const clearAutoCloseTimer = () => {
     if (autoCloseTimerRef.current) {
@@ -296,7 +415,7 @@ export default function HomeClient() {
   }, [prefersReducedMotion]);
 
   useEffect(() => {
-    if (!isModalOpen) {
+    if (!isModalOpen && !isEquipmentModalOpen) {
       return;
     }
 
@@ -306,6 +425,7 @@ export default function HomeClient() {
     const onEsc = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         setModalOpen(false);
+        setEquipmentModalOpen(false);
       }
     };
 
@@ -315,12 +435,28 @@ export default function HomeClient() {
       document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", onEsc);
     };
-  }, [isModalOpen]);
+  }, [isModalOpen, isEquipmentModalOpen]);
 
   const openLeadModal = () => {
     setSubmitError("");
     setSubmitSuccess("");
     setModalOpen(true);
+  };
+
+  const openLeadModalForBusiness = (businessLabel: string) => {
+    setSubmitError("");
+    setSubmitSuccess("");
+    setBusinessType(OTHER_BUSINESS_TYPE);
+    setCustomBusinessType(businessLabel);
+    setModalOpen(true);
+  };
+
+  const openEquipmentModal = () => {
+    setEquipmentModalOpen(true);
+  };
+
+  const closeEquipmentModal = () => {
+    setEquipmentModalOpen(false);
   };
 
   const closeLeadModal = () => {
@@ -440,6 +576,28 @@ export default function HomeClient() {
     };
   }, []);
 
+  useEffect(() => {
+    if (!showRetailBusinessOptions) {
+      return;
+    }
+
+    const onClickOutside = (event: MouseEvent) => {
+      if (!industriesSectionRef.current) {
+        return;
+      }
+
+      if (!industriesSectionRef.current.contains(event.target as Node)) {
+        setShowRetailBusinessOptions(false);
+      }
+    };
+
+    document.addEventListener("mousedown", onClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", onClickOutside);
+    };
+  }, [showRetailBusinessOptions]);
+
   return (
     <main className="landing">
       <header className="shell topbar">
@@ -472,130 +630,130 @@ export default function HomeClient() {
       </header>
 
       <section id="hero" className="shell hero">
-        <div className="hero-copy">
-          <span className="tag">Автоматизация торговли и сервиса</span>
-          <h1>
-            <span className="hero-title-static">Автоматизация для</span>
-            <span className="hero-title-dynamic-wrap" aria-live="polite">
-              <AnimatePresence mode="wait" initial={false}>
-                <motion.span
-                  key={heroAnimatedSegments[heroSegmentIndex]}
-                  className="hero-title-dynamic"
-                  initial={
-                    prefersReducedMotion
-                      ? { opacity: 1, y: 0 }
-                      : { opacity: 0, y: 14 }
-                  }
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={
-                    prefersReducedMotion
-                      ? { opacity: 1, y: 0 }
-                      : { opacity: 0, y: -14 }
-                  }
-                  transition={
-                    prefersReducedMotion
-                      ? { duration: 0 }
-                      : { duration: 0.32, ease: "easeOut" }
-                  }
+        <div className="hero-showcase">
+          <div className="hero-showcase-top">
+            <Image
+              src={heroBoardGallery[0].src}
+              alt={heroBoardGallery[0].alt}
+              width={1200}
+              height={900}
+              className="hero-board-photo hero-showcase-photo hero-showcase-photo-top-left"
+              sizes="(max-width: 760px) 100vw, (max-width: 1080px) 42vw, 26vw"
+            />
+
+            <div className="hero-copy hero-copy-overlay">
+              <span className="tag">Автоматизация торговли и сервиса</span>
+              <h1>
+                <span className="hero-title-static">
+                  Автоматизация для
+                  <br />
+                  вашего бизнеса
+                </span>
+                <span className="hero-title-dynamic-wrap" aria-live="polite">
+                  <AnimatePresence mode="wait" initial={false}>
+                    <motion.span
+                      key={heroAnimatedSegments[heroSegmentIndex]}
+                      className="hero-title-dynamic"
+                      initial={
+                        prefersReducedMotion
+                          ? { opacity: 1, y: 0 }
+                          : { opacity: 0, y: 14 }
+                      }
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={
+                        prefersReducedMotion
+                          ? { opacity: 1, y: 0 }
+                          : { opacity: 0, y: -14 }
+                      }
+                      transition={
+                        prefersReducedMotion
+                          ? { duration: 0 }
+                          : { duration: 0.32, ease: "easeOut" }
+                      }
+                    >
+                      {heroAnimatedSegments[heroSegmentIndex]}
+                    </motion.span>
+                  </AnimatePresence>
+                </span>
+              </h1>
+              <p>
+                Системы для кассы, склада, клиентов, финансов и управленческих
+                решений. Контролируйте бизнес в реальном времени и
+                масштабируйтесь без хаоса.
+              </p>
+
+              <div className="hero-actions">
+                <motion.button
+                  type="button"
+                  whileHover={{ y: -2 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="btn btn-primary"
+                  onClick={openLeadModal}
                 >
-                  {heroAnimatedSegments[heroSegmentIndex]}
-                </motion.span>
-              </AnimatePresence>
-            </span>
-          </h1>
-          <p>
-            Одна система для кассы, склада, клиентов, финансов и управленческих
-            решений. Контролируйте бизнес в реальном времени и масштабируйтесь
-            без хаоса.
-          </p>
+                  Попробовать сейчас <ArrowRight size={16} />
+                </motion.button>
+                
+              </div>
+            </div>
 
-          <div className="hero-actions">
-            <motion.button
-              type="button"
-              whileHover={{ y: -2 }}
-              whileTap={{ scale: 0.98 }}
-              className="btn btn-primary"
-              onClick={openLeadModal}
-            >
-              Попробовать сейчас <ArrowRight size={16} />
-            </motion.button>
-            <a href="#features" className="btn btn-outline">
-              Смотреть возможности
-            </a>
+            <Image
+              src={heroBoardGallery[1].src}
+              alt={heroBoardGallery[1].alt}
+              width={1200}
+              height={900}
+              className="hero-board-photo hero-showcase-photo hero-showcase-photo-top-right"
+              sizes="(max-width: 760px) 100vw, (max-width: 1080px) 42vw, 26vw"
+            />
           </div>
 
-          <ul className="hero-stats" aria-label="Ключевые показатели">
-            {heroStats.map((item) => (
-              <li key={item.label}>
-                <strong>{item.value}</strong>
-                <span>{item.label}</span>
-              </li>
-            ))}
-          </ul>
+          <motion.div
+            className="hero-board"
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.65 }}
+          >
+            <div className="hero-board-collage">
+              <Image
+                src={heroBoardGallery[2].src}
+                alt={heroBoardGallery[2].alt}
+                width={1200}
+                height={900}
+                className="hero-board-photo hero-showcase-photo-bottom-left"
+                sizes="(max-width: 760px) 100vw, (max-width: 1080px) 72vw, 30vw"
+              />
+              <Image
+                src={heroBoardGallery[3].src}
+                alt={heroBoardGallery[3].alt}
+                width={1200}
+                height={900}
+                className="hero-board-photo hero-showcase-photo-bottom-center"
+                sizes="(max-width: 760px) 100vw, (max-width: 1080px) 72vw, 34vw"
+              />
+              <Image
+                src={heroBoardGallery[4].src}
+                alt={heroBoardGallery[4].alt}
+                width={1200}
+                height={900}
+                className="hero-board-photo hero-showcase-photo-bottom-right"
+                sizes="(max-width: 760px) 100vw, (max-width: 1080px) 72vw, 30vw"
+              />
+            </div>
+          </motion.div>
         </div>
 
-        <motion.div
-          className="hero-board"
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.65 }}
-        >
-          <div className="board-head">
-            <div>
-              <span>Business OS</span>
-              <strong>Панель руководителя</strong>
-            </div>
-            <div className="chip chip-live">
-              <BellDot size={14} />
-              Онлайн
-            </div>
-          </div>
-
-          <div className="board-metrics">
-            <article>
-              <span>Выручка</span>
-              <strong>4 829 400 сом</strong>
-              <small>+18% за месяц</small>
-            </article>
-            <article>
-              <span>Средний чек</span>
-              <strong>2 680 сом</strong>
-              <small>+9% к прошлой неделе</small>
-            </article>
-            <article>
-              <span>Повторные клиенты</span>
-              <strong>39%</strong>
-              <small>CRM-сегменты активны</small>
-            </article>
-          </div>
-
-          <div className="board-wave" aria-hidden="true" />
-
-          <ul className="board-feed">
-            <li>
-              <Check size={14} /> Лид отправлен в amoCRM
+        <ul className="hero-stats" aria-label="Ключевые показатели">
+          {heroStats.map((item) => (
+            <li key={item.label}>
+              <strong>{item.value}</strong>
+              <span>{item.label}</span>
             </li>
-            <li>
-              <Check size={14} /> Инвентаризация завершена
-            </li>
-            <li>
-              <Check size={14} /> Отчет по точкам обновлен
-            </li>
-          </ul>
-        </motion.div>
-      </section>
-
-      <section className="trust-strip" aria-label="Подходит для отраслей">
-        <div className="shell trust-track">
-          {trustItems.map((item) => (
-            <span key={item}>{item}</span>
           ))}
-        </div>
+        </ul>
       </section>
 
       <section id="features" className="shell section">
         <div className="section-head">
-          <span className="tag">Одна программа</span>
+          <span className="tag">Возможности</span>
           <h2>Решение всех ключевых задач в одном интерфейсе</h2>
           <p>
             От первых продаж до управленческой аналитики: весь операционный цикл
@@ -676,8 +834,8 @@ export default function HomeClient() {
 
       <section id="products" className="shell section">
         <div className="section-head">
-          <span className="tag">Наша продукция</span>
-          <h2>Пленка, оборудование и программы для вашего бизнеса</h2>
+          <span className="tag">Продукции</span>
+          <h2>Оборудование и программы для вашего бизнеса</h2>
           <p>
             Комплексно закрываем потребности точки: расходники, оборудование и
             программные решения Rosta и Next Market.
@@ -686,67 +844,193 @@ export default function HomeClient() {
 
         <div className="product-grid">
           {products.map((item, index) => (
-            <motion.article
+            <motion.div
               key={item.title}
-              className="product-card"
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.4, delay: index * 0.05 }}
             >
-              <Image
-                src={item.imageUrl}
-                alt={item.imageAlt}
-                className="product-photo"
-                width={1200}
-                height={800}
-                sizes="(max-width: 760px) 100vw, (max-width: 1080px) 50vw, 25vw"
-              />
-              <div className="product-body">
-                <h3>{item.title}</h3>
-                <p>{item.description}</p>
-              </div>
-            </motion.article>
+              {item.title === "Торговое оборудование" ? (
+                <button
+                  type="button"
+                  className="product-card product-card-trigger"
+                  onClick={openEquipmentModal}
+                >
+                  <Image
+                    src={item.imageUrl}
+                    alt={item.imageAlt}
+                    className="product-photo"
+                    width={1200}
+                    height={800}
+                    sizes="(max-width: 760px) 100vw, (max-width: 1080px) 50vw, 25vw"
+                  />
+                  <div className="product-body">
+                    <h3>{item.title}</h3>
+                    <p>{item.description}</p>
+                  </div>
+                </button>
+              ) : (
+                <article className="product-card">
+                  <Image
+                    src={item.imageUrl}
+                    alt={item.imageAlt}
+                    className="product-photo"
+                    width={1200}
+                    height={800}
+                    sizes="(max-width: 760px) 100vw, (max-width: 1080px) 50vw, 25vw"
+                  />
+                  <div className="product-body">
+                    <h3>{item.title}</h3>
+                    <p>{item.description}</p>
+                  </div>
+                </article>
+              )}
+            </motion.div>
           ))}
         </div>
       </section>
 
-      <section id="industries" className="shell section">
+      <section
+        id="industries"
+        className="shell section"
+        ref={industriesSectionRef}
+      >
         <div className="section-head">
-          <span className="tag">Подходит для вашего формата</span>
+          <span className="tag">Ниши</span>
           <h2>Платформа для разных типов бизнеса</h2>
         </div>
 
-        <div className="industry-grid">
-          {industries.map((item) => (
-            <article key={item.title} className="industry-card">
-              <Image
-                src={item.imageUrl}
-                alt={item.imageAlt}
-                className="industry-photo"
-                width={900}
-                height={600}
-                sizes="(max-width: 760px) 100vw, (max-width: 1080px) 50vw, 33vw"
-              />
-              <h3 className="industry-title">{item.title}</h3>
-            </article>
-          ))}
+        <div
+          className={`industry-grid ${
+            showRetailBusinessOptions ? "industry-grid-hidden" : ""
+          }`}
+        >
+          {industries.slice(0, 3).map((item) =>
+            item.title === "Магазины одежды" ||
+            item.title === "Ритейл" ||
+            item.title === "Общепит" ||
+            item.title === "Услуги" ? (
+              <button
+                key={item.title}
+                type="button"
+                className="industry-card industry-card-trigger"
+                onClick={() => {
+                  if (
+                    item.title === "Магазины одежды" ||
+                    item.title === "Ритейл"
+                  ) {
+                    setActiveIndustryOptions(retailBusinessOptions);
+                  } else if (item.title === "Общепит") {
+                    setActiveIndustryOptions(foodBusinessOptions);
+                  } else {
+                    setActiveIndustryOptions(servicesBusinessOptions);
+                  }
+
+                  setShowRetailBusinessOptions(true);
+                }}
+                aria-expanded={showRetailBusinessOptions}
+                aria-controls="industry-business-options"
+              >
+                <Image
+                  src={item.imageUrl}
+                  alt={item.imageAlt}
+                  className="industry-photo"
+                  width={900}
+                  height={600}
+                  sizes="(max-width: 760px) 100vw, (max-width: 1080px) 50vw, 33vw"
+                />
+                <h3 className="industry-title">{item.title}</h3>
+              </button>
+            ) : (
+              <article key={item.title} className="industry-card">
+                <Image
+                  src={item.imageUrl}
+                  alt={item.imageAlt}
+                  className="industry-photo"
+                  width={900}
+                  height={600}
+                  sizes="(max-width: 760px) 100vw, (max-width: 1080px) 50vw, 33vw"
+                />
+                <h3 className="industry-title">{item.title}</h3>
+              </article>
+            ),
+          )}
+        </div>
+
+        <div
+          id="industry-business-options"
+          className={`industry-business-options ${
+            showRetailBusinessOptions ? "industry-business-options-visible" : ""
+          }`}
+        >
+          <p className="industry-business-options-title">
+            Выберите тип бизнеса для быстрой заявки:
+          </p>
+          <div className="industry-business-options-grid">
+            {activeIndustryOptions.map((option) => (
+              <button
+                key={option}
+                type="button"
+                className="industry-business-option-btn"
+                onClick={() => openLeadModalForBusiness(option)}
+              >
+                {option}
+              </button>
+            ))}
+          </div>
         </div>
       </section>
 
       <section className="shell section">
         <div className="section-head">
-          <span className="tag">Отзывы</span>
-          <h2>Бизнесы уже видят результат от автоматизации</h2>
+          <span className="tag">Нас выбрали</span>
+          <h2>Нам доверяют бренды</h2>
         </div>
 
-        <div className="testimonial-grid">
-          {testimonials.map((item) => (
-            <blockquote key={item.author} className="testimonial-card">
-              <p>{item.quote}</p>
-              <cite>{item.author}</cite>
-            </blockquote>
-          ))}
+        <div className="trusted-logos" aria-label="Нам доверяют бренды">
+          <div className="trusted-logos-track">
+            {trustedOrganizations.map((item) => (
+              <article
+                key={item.name}
+                className="trusted-logo-card"
+                aria-label={item.name}
+              >
+                {item.logoSrc && !failedTrustedLogos[item.name] ? (
+                  <img
+                    src={item.logoSrc}
+                    alt={item.name}
+                    className="trusted-logo-image"
+                    loading="lazy"
+                    decoding="async"
+                    onError={() => markTrustedLogoFailed(item.name)}
+                  />
+                ) : (
+                  <span>{item.name}</span>
+                )}
+              </article>
+            ))}
+            {trustedOrganizations.map((item) => (
+              <article
+                key={`${item.name}-copy`}
+                className="trusted-logo-card"
+                aria-hidden="true"
+              >
+                {item.logoSrc && !failedTrustedLogos[item.name] ? (
+                  <img
+                    src={item.logoSrc}
+                    alt=""
+                    className="trusted-logo-image"
+                    loading="lazy"
+                    decoding="async"
+                    onError={() => markTrustedLogoFailed(item.name)}
+                  />
+                ) : (
+                  <span>{item.name}</span>
+                )}
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -765,6 +1049,54 @@ export default function HomeClient() {
           ))}
         </div>
       </section>
+
+      {seoHubGroups.length ? (
+        <section className="shell section seo-hub" aria-label="SEO навигация">
+          <details className="seo-hub-toggle">
+            <summary className="btn btn-outline seo-hub-trigger">
+              Быстрый доступ
+            </summary>
+            <div className="seo-hub-content">
+              <div className="section-head">
+                <h2>Навигация по решениям, странам и статьям</h2>
+                <p>
+                  Все ключевые ссылки сохранены для удобства пользователей и
+                  стабильной индексации поисковыми системами.
+                </p>
+              </div>
+
+              <div className="seo-hub-grid">
+                {seoHubGroups.map((group) => (
+                  <article key={group.id} className="seo-hub-card">
+                    <span className="tag">{group.tag}</span>
+                    <h3 className="seo-hub-title">{group.title}</h3>
+                    <p className="seo-hub-description">{group.description}</p>
+                    <ul className="seo-hub-links">
+                      {group.items.map((item) => (
+                        <li key={item.key}>
+                          <Link className="seo-hub-link-btn" href={item.href}>
+                            {item.label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                    {group.footerLink ? (
+                      <p className="seo-hub-footer-link">
+                        <Link
+                          className="btn btn-ghost"
+                          href={group.footerLink.href}
+                        >
+                          {group.footerLink.label}
+                        </Link>
+                      </p>
+                    ) : null}
+                  </article>
+                ))}
+              </div>
+            </div>
+          </details>
+        </section>
+      ) : null}
 
       <section id="connect" className="shell cta">
         <div className="cta-box">
@@ -787,6 +1119,45 @@ export default function HomeClient() {
       </section>
 
       <AnimatePresence>
+        {isEquipmentModalOpen ? (
+          <motion.div
+            className="lead-modal-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={closeEquipmentModal}
+          >
+            <motion.div
+              className="lead-modal equipment-modal"
+              initial={{ opacity: 0, y: 14, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 14, scale: 0.98 }}
+              transition={{ duration: 0.14 }}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="equipment-modal-title"
+              onClick={(event) => event.stopPropagation()}
+            >
+              <button
+                type="button"
+                className="equipment-modal-close"
+                onClick={closeEquipmentModal}
+                aria-label="Закрыть окно"
+              >
+                ×
+              </button>
+              <h3 id="equipment-modal-title">Список оборудования</h3>
+              <div className="resource-preview-wrap">
+                <iframe
+                  src={`${equipmentPdfPath}#toolbar=0&navpanes=0&scrollbar=1`}
+                  title="PDF торгового оборудования"
+                  className="resource-pdf-preview"
+                />
+              </div>
+            </motion.div>
+          </motion.div>
+        ) : null}
+
         {isModalOpen ? (
           <motion.div
             className="lead-modal-overlay"

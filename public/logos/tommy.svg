@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="120" viewBox="0 0 360 120" role="img" aria-label="TOMMY HILFIGER">
+  <rect width="360" height="120" rx="20" fill="#ffffff" stroke="#dbe5f7"/>
+  <rect x="38" y="32" width="70" height="56" rx="8" fill="#0f1b45"/>
+  <rect x="73" y="32" width="35" height="56" rx="8" fill="#d91f2e"/>
+  <rect x="56" y="46" width="34" height="28" fill="#ffffff"/>
+  <text x="122" y="61" font-size="22" font-family="Arial Black, Arial, sans-serif" fill="#0f1b45">TOMMY</text>
+  <text x="122" y="84" font-size="22" font-family="Arial Black, Arial, sans-serif" fill="#d91f2e">HILFIGER</text>
+</svg>
