@@ -16,6 +16,7 @@ import {
   SITE_URL,
 } from "@/lib/seo";
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -109,6 +110,9 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const googleAnalyticsId = process.env.NEXT_PUBLIC_GA_ID;
+  const yandexMetrikaId = process.env.NEXT_PUBLIC_YANDEX_METRIKA_ID;
+
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -166,8 +170,56 @@ export default function RootLayout({
     <html lang="ru" translate="no" className="notranslate">
       <head>
         <meta name="google" content="notranslate" />
+        {googleAnalyticsId ? (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`}
+              strategy="afterInteractive"
+            />
+            <Script id="google-analytics" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${googleAnalyticsId}');
+              `}
+            </Script>
+          </>
+        ) : null}
+        {yandexMetrikaId ? (
+          <Script id="yandex-metrika" strategy="afterInteractive">
+            {`
+              (function(m,e,t,r,i,k,a){
+                m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+                m[i].l=1*new Date();
+                for (var j = 0; j < document.scripts.length; j++) {
+                  if (document.scripts[j].src === r) { return; }
+                }
+                k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a);
+              })(window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+              ym(${yandexMetrikaId}, "init", {
+                clickmap:true,
+                trackLinks:true,
+                accurateTrackBounce:true,
+                webvisor:true
+              });
+            `}
+          </Script>
+        ) : null}
       </head>
       <body className="antialiased">
+        {yandexMetrikaId ? (
+          <noscript>
+            <div>
+              <img
+                src={`https://mc.yandex.ru/watch/${yandexMetrikaId}`}
+                style={{ position: "absolute", left: "-9999px" }}
+                alt=""
+              />
+            </div>
+          </noscript>
+        ) : null}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -208,7 +260,7 @@ export default function RootLayout({
                 </div>
               </details>
               <details className="site-footer-phone-chooser">
-                <summary className="site-footer-link">+996 990 474 999</summary>
+                <summary className="site-footer-link">Отдел продаж</summary>
                 <div className="site-footer-actions" aria-label="Способы связи">
                   <a className="site-footer-action" href="tel:+996990474999">
                     Позвонить

@@ -1,5 +1,12 @@
 server {
     listen 80;
+    server_name www.app.example.com;
+
+    return 301 http://app.example.com$request_uri;
+}
+
+server {
+    listen 80;
     server_name app.example.com;
 
     location / {

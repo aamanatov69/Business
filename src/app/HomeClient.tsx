@@ -54,6 +54,11 @@ type HomeClientProps = {
   seoHubGroups?: SeoHubGroup[];
 };
 
+type GalleryImage = {
+  src: string;
+  alt: string;
+};
+
 const featureCards: FeatureCard[] = [
   {
     title: "Продажи и касса",
@@ -266,6 +271,59 @@ const servicesBusinessOptions = [
 
 const equipmentPdfPath = encodeURI("/docs/прайс все позиции в сомах.pdf");
 
+const amocrmGallery: GalleryImage[] = [
+  {
+    src: "/image20.png",
+    alt: "Интерфейс AMOCRM с воронкой продаж и сделками",
+  },
+  {
+    src: "/image21.png",
+    alt: "Карточка клиента и история коммуникаций в AMOCRM",
+  },
+  {
+    src: "/image22.png",
+    alt: "Отчет и аналитика по лидам в AMOCRM",
+  },
+];
+
+const rostaGallery: GalleryImage[] = [
+  {
+    src: "/image.png",
+    alt: "Главный экран программы Rosta с основными метриками",
+  },
+  {
+    src: "/image2.png",
+    alt: "Оператор работает с интерфейсом учета продаж",
+  },
+  {
+    src: "/image3.png",
+    alt: "Аналитика и отчеты по продажам в системе",
+  },
+];
+
+const nextMarketGallery: GalleryImage[] = [
+  {
+    src: "/image10.png",
+    alt: "Рабочий экран системы Next Market с показателями и отчетами",
+  },
+  {
+    src: "/image11.png",
+    alt: "Оператор работает с цифровой системой учета на кассе",
+  },
+  {
+    src: "/image12.png",
+    alt: "Контроль продаж и склада в интерфейсе системы",
+  },
+  {
+    src: "/image13.png",
+    alt: "Сотрудник использует систему Next Market в торговом зале",
+  },
+  {
+    src: "/image14.png",
+    alt: "Сотрудник использует систему Next Market в торговом зале",
+  },
+];
+
 const faqItems = [
   {
     question: "Для каких бизнесов подходит платформа?",
@@ -361,6 +419,12 @@ export default function HomeClient({ seoHubGroups = [] }: HomeClientProps) {
   const industriesSectionRef = useRef<HTMLElement | null>(null);
   const [isModalOpen, setModalOpen] = useState(false);
   const [isEquipmentModalOpen, setEquipmentModalOpen] = useState(false);
+  const [isAmocrmModalOpen, setAmocrmModalOpen] = useState(false);
+  const [amocrmSlideIndex, setAmocrmSlideIndex] = useState(0);
+  const [isRostaModalOpen, setRostaModalOpen] = useState(false);
+  const [rostaSlideIndex, setRostaSlideIndex] = useState(0);
+  const [isNextMarketModalOpen, setNextMarketModalOpen] = useState(false);
+  const [nextMarketSlideIndex, setNextMarketSlideIndex] = useState(0);
   const [showRetailBusinessOptions, setShowRetailBusinessOptions] =
     useState(false);
   const [activeIndustryOptions, setActiveIndustryOptions] = useState<string[]>(
@@ -380,6 +444,9 @@ export default function HomeClient({ seoHubGroups = [] }: HomeClientProps) {
     Record<string, boolean>
   >({});
   const autoCloseTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const amocrmTouchStartXRef = useRef<number | null>(null);
+  const rostaTouchStartXRef = useRef<number | null>(null);
+  const nextMarketTouchStartXRef = useRef<number | null>(null);
   const prefersReducedMotion = useReducedMotion();
 
   const markTrustedLogoFailed = (name: string) => {
@@ -416,7 +483,13 @@ export default function HomeClient({ seoHubGroups = [] }: HomeClientProps) {
   }, [prefersReducedMotion]);
 
   useEffect(() => {
-    if (!isModalOpen && !isEquipmentModalOpen) {
+    if (
+      !isModalOpen &&
+      !isEquipmentModalOpen &&
+      !isAmocrmModalOpen &&
+      !isRostaModalOpen &&
+      !isNextMarketModalOpen
+    ) {
       return;
     }
 
@@ -427,6 +500,9 @@ export default function HomeClient({ seoHubGroups = [] }: HomeClientProps) {
       if (event.key === "Escape") {
         setModalOpen(false);
         setEquipmentModalOpen(false);
+        setAmocrmModalOpen(false);
+        setRostaModalOpen(false);
+        setNextMarketModalOpen(false);
       }
     };
 
@@ -436,7 +512,13 @@ export default function HomeClient({ seoHubGroups = [] }: HomeClientProps) {
       document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", onEsc);
     };
-  }, [isModalOpen, isEquipmentModalOpen]);
+  }, [
+    isAmocrmModalOpen,
+    isEquipmentModalOpen,
+    isModalOpen,
+    isNextMarketModalOpen,
+    isRostaModalOpen,
+  ]);
 
   const openLeadModal = () => {
     setSubmitError("");
@@ -453,11 +535,188 @@ export default function HomeClient({ seoHubGroups = [] }: HomeClientProps) {
   };
 
   const openEquipmentModal = () => {
+    if (window.matchMedia("(max-width: 768px)").matches) {
+      window.open(
+        `${equipmentPdfPath}#toolbar=1&navpanes=0&view=FitH`,
+        "_blank",
+        "noopener,noreferrer",
+      );
+      return;
+    }
+
     setEquipmentModalOpen(true);
   };
 
   const closeEquipmentModal = () => {
     setEquipmentModalOpen(false);
+  };
+
+  const openAmocrmModal = () => {
+    setAmocrmSlideIndex(0);
+    setAmocrmModalOpen(true);
+  };
+
+  const closeAmocrmModal = () => {
+    setAmocrmModalOpen(false);
+  };
+
+  const shiftAmocrmSlide = (step: number) => {
+    setAmocrmSlideIndex((previous) => {
+      const total = amocrmGallery.length;
+      return (previous + step + total) % total;
+    });
+  };
+
+  const handleAmocrmSlideDragEnd = (
+    _event: MouseEvent | TouchEvent | PointerEvent,
+    info: { offset: { x: number }; velocity: { x: number } },
+  ) => {
+    if (info.offset.x <= -60 || info.velocity.x <= -260) {
+      shiftAmocrmSlide(1);
+      return;
+    }
+
+    if (info.offset.x >= 60 || info.velocity.x >= 260) {
+      shiftAmocrmSlide(-1);
+    }
+  };
+
+  const handleAmocrmTouchStart = (event: React.TouchEvent<HTMLElement>) => {
+    amocrmTouchStartXRef.current = event.changedTouches[0]?.clientX ?? null;
+  };
+
+  const handleAmocrmTouchEnd = (event: React.TouchEvent<HTMLElement>) => {
+    const startX = amocrmTouchStartXRef.current;
+    const endX = event.changedTouches[0]?.clientX ?? null;
+
+    amocrmTouchStartXRef.current = null;
+
+    if (startX === null || endX === null) {
+      return;
+    }
+
+    const deltaX = endX - startX;
+
+    if (deltaX <= -48) {
+      shiftAmocrmSlide(1);
+      return;
+    }
+
+    if (deltaX >= 48) {
+      shiftAmocrmSlide(-1);
+    }
+  };
+
+  const openRostaModal = () => {
+    setRostaSlideIndex(0);
+    setRostaModalOpen(true);
+  };
+
+  const closeRostaModal = () => {
+    setRostaModalOpen(false);
+  };
+
+  const shiftRostaSlide = (step: number) => {
+    setRostaSlideIndex((previous) => {
+      const total = rostaGallery.length;
+      return (previous + step + total) % total;
+    });
+  };
+
+  const handleRostaSlideDragEnd = (
+    _event: MouseEvent | TouchEvent | PointerEvent,
+    info: { offset: { x: number }; velocity: { x: number } },
+  ) => {
+    if (info.offset.x <= -60 || info.velocity.x <= -260) {
+      shiftRostaSlide(1);
+      return;
+    }
+
+    if (info.offset.x >= 60 || info.velocity.x >= 260) {
+      shiftRostaSlide(-1);
+    }
+  };
+
+  const handleRostaTouchStart = (event: React.TouchEvent<HTMLElement>) => {
+    rostaTouchStartXRef.current = event.changedTouches[0]?.clientX ?? null;
+  };
+
+  const handleRostaTouchEnd = (event: React.TouchEvent<HTMLElement>) => {
+    const startX = rostaTouchStartXRef.current;
+    const endX = event.changedTouches[0]?.clientX ?? null;
+
+    rostaTouchStartXRef.current = null;
+
+    if (startX === null || endX === null) {
+      return;
+    }
+
+    const deltaX = endX - startX;
+
+    if (deltaX <= -48) {
+      shiftRostaSlide(1);
+      return;
+    }
+
+    if (deltaX >= 48) {
+      shiftRostaSlide(-1);
+    }
+  };
+
+  const openNextMarketModal = () => {
+    setNextMarketSlideIndex(0);
+    setNextMarketModalOpen(true);
+  };
+
+  const closeNextMarketModal = () => {
+    setNextMarketModalOpen(false);
+  };
+
+  const shiftNextMarketSlide = (step: number) => {
+    setNextMarketSlideIndex((previous) => {
+      const total = nextMarketGallery.length;
+      return (previous + step + total) % total;
+    });
+  };
+
+  const handleNextMarketSlideDragEnd = (
+    _event: MouseEvent | TouchEvent | PointerEvent,
+    info: { offset: { x: number }; velocity: { x: number } },
+  ) => {
+    if (info.offset.x <= -60 || info.velocity.x <= -260) {
+      shiftNextMarketSlide(1);
+      return;
+    }
+
+    if (info.offset.x >= 60 || info.velocity.x >= 260) {
+      shiftNextMarketSlide(-1);
+    }
+  };
+
+  const handleNextMarketTouchStart = (event: React.TouchEvent<HTMLElement>) => {
+    nextMarketTouchStartXRef.current = event.changedTouches[0]?.clientX ?? null;
+  };
+
+  const handleNextMarketTouchEnd = (event: React.TouchEvent<HTMLElement>) => {
+    const startX = nextMarketTouchStartXRef.current;
+    const endX = event.changedTouches[0]?.clientX ?? null;
+
+    nextMarketTouchStartXRef.current = null;
+
+    if (startX === null || endX === null) {
+      return;
+    }
+
+    const deltaX = endX - startX;
+
+    if (deltaX <= -48) {
+      shiftNextMarketSlide(1);
+      return;
+    }
+
+    if (deltaX >= 48) {
+      shiftNextMarketSlide(-1);
+    }
   };
 
   const closeLeadModal = () => {
@@ -870,6 +1129,63 @@ export default function HomeClient({ seoHubGroups = [] }: HomeClientProps) {
                     <p>{item.description}</p>
                   </div>
                 </button>
+              ) : item.title === "AMOCRM+Разработка сайтов" ? (
+                <button
+                  type="button"
+                  className="product-card product-card-trigger"
+                  onClick={openAmocrmModal}
+                >
+                  <Image
+                    src={item.imageUrl}
+                    alt={item.imageAlt}
+                    className="product-photo"
+                    width={1200}
+                    height={800}
+                    sizes="(max-width: 760px) 100vw, (max-width: 1080px) 50vw, 25vw"
+                  />
+                  <div className="product-body">
+                    <h3>{item.title}</h3>
+                    <p>{item.description}</p>
+                  </div>
+                </button>
+              ) : item.title === "Программа Rosta" ? (
+                <button
+                  type="button"
+                  className="product-card product-card-trigger"
+                  onClick={openRostaModal}
+                >
+                  <Image
+                    src={item.imageUrl}
+                    alt={item.imageAlt}
+                    className="product-photo"
+                    width={1200}
+                    height={800}
+                    sizes="(max-width: 760px) 100vw, (max-width: 1080px) 50vw, 25vw"
+                  />
+                  <div className="product-body">
+                    <h3>{item.title}</h3>
+                    <p>{item.description}</p>
+                  </div>
+                </button>
+              ) : item.title === "Программа Next Market" ? (
+                <button
+                  type="button"
+                  className="product-card product-card-trigger"
+                  onClick={openNextMarketModal}
+                >
+                  <Image
+                    src={item.imageUrl}
+                    alt={item.imageAlt}
+                    className="product-photo"
+                    width={1200}
+                    height={800}
+                    sizes="(max-width: 760px) 100vw, (max-width: 1080px) 50vw, 25vw"
+                  />
+                  <div className="product-body">
+                    <h3>{item.title}</h3>
+                    <p>{item.description}</p>
+                  </div>
+                </button>
               ) : (
                 <article className="product-card">
                   <Image
@@ -1155,6 +1471,267 @@ export default function HomeClient({ seoHubGroups = [] }: HomeClientProps) {
                   title="PDF торгового оборудования"
                   className="resource-pdf-preview"
                 />
+              </div>
+            </motion.div>
+          </motion.div>
+        ) : null}
+
+        {isAmocrmModalOpen ? (
+          <motion.div
+            className="lead-modal-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={closeAmocrmModal}
+          >
+            <motion.div
+              className="lead-modal equipment-modal next-market-modal"
+              initial={{ opacity: 0, y: 14, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 14, scale: 0.98 }}
+              transition={{ duration: 0.14 }}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="amocrm-modal-title"
+              onClick={(event) => event.stopPropagation()}
+            >
+              <button
+                type="button"
+                className="equipment-modal-close"
+                onClick={closeAmocrmModal}
+                aria-label="Закрыть окно"
+              >
+                ×
+              </button>
+              <h3 id="amocrm-modal-title">AMOCRM + Разработка сайтов</h3>
+              <div
+                className="next-market-slider"
+                aria-label="Слайдер фотографий AMOCRM и разработки сайтов"
+              >
+                <button
+                  type="button"
+                  className="next-market-slider-nav"
+                  onClick={() => shiftAmocrmSlide(-1)}
+                  aria-label="Предыдущее фото"
+                >
+                  ←
+                </button>
+                <div
+                  className="next-market-slider-viewport"
+                  onTouchStart={handleAmocrmTouchStart}
+                  onTouchEnd={handleAmocrmTouchEnd}
+                >
+                  <AnimatePresence mode="wait" initial={false}>
+                    <motion.figure
+                      key={`${amocrmGallery[amocrmSlideIndex].src}-${amocrmSlideIndex}`}
+                      className="next-market-gallery-item"
+                      initial={{ opacity: 0, x: 30 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -30 }}
+                      transition={{ duration: 0.24, ease: "easeOut" }}
+                      drag="x"
+                      dragConstraints={{ left: 0, right: 0 }}
+                      dragElastic={0.08}
+                      dragMomentum={false}
+                      onDragEnd={handleAmocrmSlideDragEnd}
+                    >
+                      <Image
+                        src={amocrmGallery[amocrmSlideIndex].src}
+                        alt={amocrmGallery[amocrmSlideIndex].alt}
+                        width={1200}
+                        height={800}
+                        className="next-market-gallery-image"
+                        sizes="(max-width: 760px) 100vw, 70vw"
+                        priority
+                      />
+                    </motion.figure>
+                  </AnimatePresence>
+                </div>
+                <button
+                  type="button"
+                  className="next-market-slider-nav"
+                  onClick={() => shiftAmocrmSlide(1)}
+                  aria-label="Следующее фото"
+                >
+                  →
+                </button>
+              </div>
+              <div className="next-market-slider-status" aria-live="polite">
+                {amocrmSlideIndex + 1} / {amocrmGallery.length}
+              </div>
+            </motion.div>
+          </motion.div>
+        ) : null}
+
+        {isRostaModalOpen ? (
+          <motion.div
+            className="lead-modal-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={closeRostaModal}
+          >
+            <motion.div
+              className="lead-modal equipment-modal next-market-modal"
+              initial={{ opacity: 0, y: 14, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 14, scale: 0.98 }}
+              transition={{ duration: 0.14 }}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="rosta-modal-title"
+              onClick={(event) => event.stopPropagation()}
+            >
+              <button
+                type="button"
+                className="equipment-modal-close"
+                onClick={closeRostaModal}
+                aria-label="Закрыть окно"
+              >
+                ×
+              </button>
+              <h3 id="rosta-modal-title">Программа Rosta</h3>
+              <div
+                className="next-market-slider"
+                aria-label="Слайдер фотографий программы Rosta"
+              >
+                <button
+                  type="button"
+                  className="next-market-slider-nav"
+                  onClick={() => shiftRostaSlide(-1)}
+                  aria-label="Предыдущее фото"
+                >
+                  ←
+                </button>
+                <div
+                  className="next-market-slider-viewport"
+                  onTouchStart={handleRostaTouchStart}
+                  onTouchEnd={handleRostaTouchEnd}
+                >
+                  <AnimatePresence mode="wait" initial={false}>
+                    <motion.figure
+                      key={`${rostaGallery[rostaSlideIndex].src}-${rostaSlideIndex}`}
+                      className="next-market-gallery-item"
+                      initial={{ opacity: 0, x: 30 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -30 }}
+                      transition={{ duration: 0.24, ease: "easeOut" }}
+                      drag="x"
+                      dragConstraints={{ left: 0, right: 0 }}
+                      dragElastic={0.08}
+                      dragMomentum={false}
+                      onDragEnd={handleRostaSlideDragEnd}
+                    >
+                      <Image
+                        src={rostaGallery[rostaSlideIndex].src}
+                        alt={rostaGallery[rostaSlideIndex].alt}
+                        width={1200}
+                        height={800}
+                        className="next-market-gallery-image"
+                        sizes="(max-width: 760px) 100vw, 70vw"
+                        priority
+                      />
+                    </motion.figure>
+                  </AnimatePresence>
+                </div>
+                <button
+                  type="button"
+                  className="next-market-slider-nav"
+                  onClick={() => shiftRostaSlide(1)}
+                  aria-label="Следующее фото"
+                >
+                  →
+                </button>
+              </div>
+              <div className="next-market-slider-status" aria-live="polite">
+                {rostaSlideIndex + 1} / {rostaGallery.length}
+              </div>
+            </motion.div>
+          </motion.div>
+        ) : null}
+
+        {isNextMarketModalOpen ? (
+          <motion.div
+            className="lead-modal-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={closeNextMarketModal}
+          >
+            <motion.div
+              className="lead-modal equipment-modal next-market-modal"
+              initial={{ opacity: 0, y: 14, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 14, scale: 0.98 }}
+              transition={{ duration: 0.14 }}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="next-market-modal-title"
+              onClick={(event) => event.stopPropagation()}
+            >
+              <button
+                type="button"
+                className="equipment-modal-close"
+                onClick={closeNextMarketModal}
+                aria-label="Закрыть окно"
+              >
+                ×
+              </button>
+              <h3 id="next-market-modal-title">Программа Next Market</h3>
+              <div
+                className="next-market-slider"
+                aria-label="Слайдер фотографий программы Next Market"
+              >
+                <button
+                  type="button"
+                  className="next-market-slider-nav"
+                  onClick={() => shiftNextMarketSlide(-1)}
+                  aria-label="Предыдущее фото"
+                >
+                  ←
+                </button>
+                <div
+                  className="next-market-slider-viewport"
+                  onTouchStart={handleNextMarketTouchStart}
+                  onTouchEnd={handleNextMarketTouchEnd}
+                >
+                  <AnimatePresence mode="wait" initial={false}>
+                    <motion.figure
+                      key={`${nextMarketGallery[nextMarketSlideIndex].src}-${nextMarketSlideIndex}`}
+                      className="next-market-gallery-item"
+                      initial={{ opacity: 0, x: 30 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -30 }}
+                      transition={{ duration: 0.24, ease: "easeOut" }}
+                      drag="x"
+                      dragConstraints={{ left: 0, right: 0 }}
+                      dragElastic={0.08}
+                      dragMomentum={false}
+                      onDragEnd={handleNextMarketSlideDragEnd}
+                    >
+                      <Image
+                        src={nextMarketGallery[nextMarketSlideIndex].src}
+                        alt={nextMarketGallery[nextMarketSlideIndex].alt}
+                        width={1200}
+                        height={800}
+                        className="next-market-gallery-image"
+                        sizes="(max-width: 760px) 100vw, 70vw"
+                        priority
+                      />
+                    </motion.figure>
+                  </AnimatePresence>
+                </div>
+                <button
+                  type="button"
+                  className="next-market-slider-nav"
+                  onClick={() => shiftNextMarketSlide(1)}
+                  aria-label="Следующее фото"
+                >
+                  →
+                </button>
+              </div>
+              <div className="next-market-slider-status" aria-live="polite">
+                {nextMarketSlideIndex + 1} / {nextMarketGallery.length}
               </div>
             </motion.div>
           </motion.div>

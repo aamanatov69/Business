@@ -1,5 +1,11 @@
 import type { NextConfig } from "next";
 
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL || "https://business-automation.kg";
+const siteHostname = new URL(siteUrl).hostname;
+const canonicalHostname = siteHostname.replace(/^www\./, "");
+const wwwHostname = `www.${canonicalHostname}`;
+
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
@@ -56,6 +62,21 @@ const nextConfig: NextConfig = {
         hostname: "logo.clearbit.com",
       },
     ],
+  },
+  async redirects() {
+    return [
+      {
+        source: "/:path*",
+        has: [
+          {
+            type: "host",
+            value: wwwHostname,
+          },
+        ],
+        destination: `https://${canonicalHostname}/:path*`,
+        permanent: true,
+      },
+    ];
   },
 };
 
