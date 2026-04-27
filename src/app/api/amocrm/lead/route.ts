@@ -22,24 +22,68 @@ const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
 const RATE_LIMIT_MAX_REQUESTS = 12;
 const rateLimitStore = new Map<string, { count: number; resetAt: number }>();
 
+function isValidIpv4(value: string) {
+  const parts = value.split(".");
+
+  if (parts.length !== 4) {
+    return false;
+  }
+
+  return parts.every((part) => {
+    if (!/^\d{1,3}$/.test(part)) {
+      return false;
+    }
+
+    const parsed = Number(part);
+    return parsed >= 0 && parsed <= 255;
+  });
+}
+
+function normalizeClientIp(rawValue: string | null | undefined) {
+  const value = rawValue?.trim();
+
+  if (!value) {
+    return null;
+  }
+
+  const withoutBrackets = value.replace(/^\[|\]$/g, "");
+  const withoutPort = withoutBrackets.replace(/:\d+$/, "");
+
+  if (isValidIpv4(withoutPort)) {
+    return withoutPort;
+  }
+
+  const ipv4MappedMatch = withoutPort.match(/::ffff:(\d+\.\d+\.\d+\.\d+)$/i);
+
+  if (ipv4MappedMatch && isValidIpv4(ipv4MappedMatch[1])) {
+    return ipv4MappedMatch[1];
+  }
+
+  if (withoutPort === "::1") {
+    return "127.0.0.1";
+  }
+
+  return null;
+}
+
 function getClientIp(request: Request) {
   const forwardedFor = request.headers.get("x-forwarded-for");
 
   if (forwardedFor) {
-    const firstIp = forwardedFor.split(",")[0]?.trim();
+    const firstIp = normalizeClientIp(forwardedFor.split(",")[0]?.trim());
 
     if (firstIp) {
       return firstIp;
     }
   }
 
-  const realIp = request.headers.get("x-real-ip")?.trim();
+  const realIp = normalizeClientIp(request.headers.get("x-real-ip")?.trim());
 
   if (realIp) {
     return realIp;
   }
 
-  return "unknown";
+  return "127.0.0.1";
 }
 
 function cleanExpiredRateLimitEntries(now: number) {
@@ -112,6 +156,26 @@ function extractLeadId(payload: unknown) {
     "_embedded" in payload &&
     payload._embedded &&
     typeof payload._embedded === "object" &&
+    "unsorted" in payload._embedded &&
+    Array.isArray(payload._embedded.unsorted) &&
+    payload._embedded.unsorted[0] &&
+    typeof payload._embedded.unsorted[0] === "object" &&
+    "_embedded" in payload._embedded.unsorted[0] &&
+    payload._embedded.unsorted[0]._embedded &&
+    typeof payload._embedded.unsorted[0]._embedded === "object" &&
+    "leads" in payload._embedded.unsorted[0]._embedded &&
+    Array.isArray(payload._embedded.unsorted[0]._embedded.leads) &&
+    typeof payload._embedded.unsorted[0]._embedded.leads[0]?.id === "number"
+  ) {
+    return payload._embedded.unsorted[0]._embedded.leads[0].id;
+  }
+
+  if (
+    payload &&
+    typeof payload === "object" &&
+    "_embedded" in payload &&
+    payload._embedded &&
+    typeof payload._embedded === "object" &&
     "leads" in payload._embedded &&
     Array.isArray(payload._embedded.leads) &&
     typeof payload._embedded.leads[0]?.id === "number"
@@ -166,6 +230,10 @@ async function createLeadNote(params: {
 
 function badRequest(message: string) {
   return NextResponse.json({ message }, { status: 400 });
+}
+
+function isUnsortedFormsWebhook(url: string) {
+  return /\/api\/v4\/leads\/unsorted\/forms\/?$/i.test(url);
 }
 
 export async function POST(request: Request) {
@@ -243,6 +311,8 @@ export async function POST(request: Request) {
   }
 
   const now = new Date().toLocaleString("ru-RU", { timeZone: "Asia/Bishkek" });
+  const unixNow = Math.floor(Date.now() / 1000);
+  const requestUrl = new URL(request.url);
   const leadNoteText = buildLeadNoteText({
     fullName,
     phone,
@@ -297,6 +367,60 @@ export async function POST(request: Request) {
     },
   ];
 
+  const unsortedPayload = [
+    {
+      request_id: crypto.randomUUID(),
+      source_name: "Сайт",
+      source_uid:
+        process.env.AMOCRM_SOURCE_UID?.trim() || "business-landing-form",
+      ...(getOptionalNumberEnv("AMOCRM_PIPELINE_ID")
+        ? { pipeline_id: getOptionalNumberEnv("AMOCRM_PIPELINE_ID") }
+        : {}),
+      created_at: unixNow,
+      metadata: {
+        form_id: process.env.AMOCRM_FORM_ID?.trim() || "business-landing-form",
+        form_name:
+          process.env.AMOCRM_FORM_NAME?.trim() || "Форма заявки с сайта",
+        form_page: request.headers.get("referer") || requestUrl.origin,
+        form_sent_at: unixNow,
+        ip: clientIp,
+        referer: request.headers.get("referer") || requestUrl.origin,
+      },
+      _embedded: {
+        contacts: [
+          {
+            name: fullName,
+            custom_fields_values: [
+              {
+                field_code: "PHONE",
+                values: [{ value: phone, enum_code: "WORK" }],
+              },
+              {
+                field_code: "EMAIL",
+                values: [{ value: email, enum_code: "WORK" }],
+              },
+            ],
+          },
+        ],
+        leads: [
+          {
+            name: `Запрос на автоматизацию: ${businessType} (${fullName})`,
+            created_at: unixNow,
+            ...(getOptionalNumberEnv("AMOCRM_PIPELINE_ID")
+              ? { pipeline_id: getOptionalNumberEnv("AMOCRM_PIPELINE_ID") }
+              : {}),
+            ...(getOptionalNumberEnv("AMOCRM_STATUS_ID")
+              ? { status_id: getOptionalNumberEnv("AMOCRM_STATUS_ID") }
+              : {}),
+            ...(leadCustomFields.length > 0
+              ? { custom_fields_values: leadCustomFields }
+              : {}),
+          },
+        ],
+      },
+    },
+  ];
+
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
     Accept: "application/json",
@@ -309,7 +433,9 @@ export async function POST(request: Request) {
   const amoResponse = await fetch(webhookUrl, {
     method: "POST",
     headers,
-    body: JSON.stringify(leadPayload),
+    body: JSON.stringify(
+      isUnsortedFormsWebhook(webhookUrl) ? unsortedPayload : leadPayload,
+    ),
     cache: "no-store",
   });
 
