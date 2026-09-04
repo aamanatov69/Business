@@ -2,388 +2,71 @@
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, BarChart3, Boxes, Warehouse } from "lucide-react";
+import {
+  OTHER_BUSINESS_TYPE,
+  amocrmGallery,
+  businessTypes,
+  equipmentCatalogDefaults,
+  equipmentPdfPath,
+  faqItems,
+  featureCards,
+  foodBusinessOptions,
+  heroAnimatedSegments,
+  heroBoardGallery,
+  heroStats,
+  industries,
+  nextMarketGallery,
+  products,
+  retailBusinessOptions,
+  rostaGallery,
+  servicesBusinessOptions,
+  topNavItems,
+  trustedOrganizations,
+} from "@/lib/home/content";
+import type { HomeClientProps } from "@/lib/home/types";
 import Image from "next/image";
 import Link from "next/link";
 import { type FormEvent, useEffect, useRef, useState } from "react";
 
-type FeatureCard = {
-  title: string;
-  description: string;
-  points: string[];
-  imageUrl: string;
-  imageAlt: string;
-};
-
-type IndustryCard = {
-  title: string;
-  imageUrl: string;
-  imageAlt: string;
-};
-
-type ProductCard = {
-  title: string;
-  description: string;
-  imageUrl: string;
-  imageAlt: string;
-};
-
-type TrustedOrganization = {
-  name: string;
-  logoSrc?: string;
-};
-
-type SeoHubItem = {
-  key: string;
-  href: string;
-  label: string;
-};
-
-type SeoHubGroup = {
+type EquipmentStockRow = {
   id: string;
-  tag: string;
+  code: string;
   title: string;
   description: string;
-  items: SeoHubItem[];
-  footerLink?: {
-    href: string;
-    label: string;
-  };
+  shortLabel: string;
+  itemCount: number;
 };
 
-type HomeClientProps = {
-  seoHubGroups?: SeoHubGroup[];
+type EquipmentCatalogProduct = {
+  id: string;
+  rostaItemId: string;
+  name: string;
+  sku: string | null;
+  article: string | null;
+  barcode: string | null;
+  category: string | null;
+  image: string | null;
+  price: number | null;
+  unit: string | null;
+  availability: "in_stock" | "out_of_stock" | "unknown";
+  quantity: number | null;
+  sourceField: string | null;
+  updatedAt: string | null;
+  showOnHome: boolean;
 };
 
-type GalleryImage = {
-  src: string;
-  alt: string;
+type EquipmentWarehouse = {
+  id: string;
+  rostaWarehouseId: string;
+  name: string;
 };
 
-const featureCards: FeatureCard[] = [
-  {
-    title: "Продажи и касса",
-    description:
-      "Ускоряйте обслуживание, контролируйте смены и получайте прозрачную выручку по каждой точке.",
-    points: ["Быстрые продажи", "Возвраты и скидки", "Контроль смен"],
-    imageUrl:
-      "https://images.unsplash.com/photo-1556740749-887f6717d7e4?auto=format&fit=crop&w=1200&q=80",
-    imageAlt: "Оплата на кассе в магазине",
-  },
-  {
-    title: "Склад и остатки",
-    description:
-      "Держите товар под контролем: приходы, перемещения, инвентаризации и автоматическое списание.",
-    points: ["Актуальные остатки", "Приемка и перемещения", "Инвентаризация"],
-    imageUrl:
-      "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1200&q=80",
-    imageAlt: "Складские стеллажи и учет товара",
-  },
-  {
-    title: "Клиенты и лояльность",
-    description:
-      "Стройте повторные продажи через CRM, сегменты, историю покупок и персональные предложения.",
-    points: ["Единая база", "Сегментация", "Повторные продажи"],
-    imageUrl:
-      "https://images.unsplash.com/photo-1556745757-8d76bdb6984b?auto=format&fit=crop&w=1200&q=80",
-    imageAlt: "Работа с клиентами и CRM",
-  },
-  {
-    title: "Аналитика и прибыль",
-    description:
-      "Видьте маржинальность, лидеров продаж и проблемные зоны в режиме реального времени.",
-    points: ["KPI-панель", "Отчеты по прибыли", "План-факт"],
-    imageUrl:
-      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80",
-    imageAlt: "Дашборд с графиками аналитики",
-  },
-  {
-    title: "Операционный контроль",
-    description:
-      "Соберите все процессы в одном окне и уберите ручные таблицы и хаотичные чаты.",
-    points: ["Регламенты", "Роли и доступы", "Журнал действий"],
-    imageUrl:
-      "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80",
-    imageAlt: "Управление бизнес-процессами в офисе",
-  },
-  {
-    title: "Интеграции",
-    description:
-      "Передавайте лиды в amoCRM и синхронизируйте данные между отделами без двойного ввода.",
-    points: ["amoCRM", "Webhook-события", "Единый поток данных"],
-    imageUrl:
-      "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1200&q=80",
-    imageAlt: "Командная работа и интеграции систем",
-  },
-];
-
-const industries: IndustryCard[] = [
-  {
-    title: "Ритейл",
-    imageUrl:
-      "https://art-trade.com.ua/image/cache/catalog/image/cache/catalog/Blog/riteil-1200x900.webp",
-    imageAlt: "Интерьер магазина одежды",
-  },
-  {
-    title: "Общепит",
-    imageUrl:
-      "https://inventure.com.ua/img/thumb.990.660/upload/user/1945/23e6de1643cc555ac025f68b972862a3.jpg",
-    imageAlt: "Интерьер современного кафе",
-  },
-  {
-    title: "Услуги",
-    imageUrl:
-      "https://easypayments.online/media//articles/img_1764942003.575413.jpg",
-    imageAlt: "Услуги и обслуживание клиентов",
-  },
-  {
-    title: "СТО",
-    imageUrl:
-      "https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?auto=format&fit=crop&w=900&q=80",
-    imageAlt: "Автомастерская и диагностика автомобиля",
-  },
-  {
-    title: "Кафе",
-    imageUrl:
-      "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?auto=format&fit=crop&w=900&q=80",
-    imageAlt: "Интерьер современного кафе",
-  },
-  {
-    title: "Бани и досуг",
-    imageUrl:
-      "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=900&q=80",
-    imageAlt: "Зона отдыха и wellness",
-  },
-];
-
-const products: ProductCard[] = [
-  {
-    title: "AMOCRM+Разработка сайтов",
-    description:
-      "Интеграция с AMOCRM для управления лидами, сделками и коммуникацией с клиентами.",
-    imageUrl:
-      "https://cdn-ru.bitrix24.ru/b2517/landing/a26/a265bfd1963525ab9e60443edb4b15b8/logo_bill_kg.jpg",
-    imageAlt: "Логотип AMOCRM и разработки сайтов",
-  },
-  {
-    title: "Торговое оборудование",
-    description:
-      "POS-оборудование, сканеры, принтеры и периферия для автоматизации.",
-    imageUrl: "https://btpos.md/wp-content/uploads/2024/07/pos4-350x350.jpg",
-    imageAlt: "Торговое и кассовое оборудование",
-  },
-  {
-    title: "Программа Rosta",
-    description:
-      "Решение для учета, контроля операций и роста продаж в рознице.",
-    imageUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOIjQYTUuX_O5xQQbWfpGlpcjI3lcJxV2oJA&s",
-    imageAlt: "Рабочий экран программы Rosta",
-  },
-  {
-    title: "Программа Next Market",
-    description:
-      "Платформа для управления магазином, командой и клиентской базой.",
-    imageUrl:
-      "https://static.tildacdn.pro/tild3039-3438-4466-b165-333661643931/logo.png",
-    imageAlt: "Интерфейс программы Next Market",
-  },
-];
-
-const heroStats = [
-  { value: "6000+", label: "бизнесов автоматизируют процессы" },
-  { value: "до 30%", label: "рост повторных продаж" },
-  { value: "24/7", label: "доступ к отчетам и контролю" },
-];
-
-const heroAnimatedSegments = [
-  "магазинов",
-  "складов",
-  "кафе",
-  "бильярдов",
-  "СТО",
-  "сервисных точек",
-  "общепита",
-  "услуг",
-  "отделов продаж",
-  "разработки сайтов",
-];
-
-const heroBoardGallery = [
-  {
-    src: "/mag2.jpg",
-    alt: "Сотрудник работает в торговом зале",
-    className: "hero-collage-item-top-left",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1556740738-b6a63e27c4df?auto=format&fit=crop&w=1200&q=80",
-    alt: "Администратор за стойкой магазина",
-    className: "hero-collage-item-top-right",
-  },
-  {
-    src: "/mag.jpg",
-    alt: "Обслуживание покупателя в магазине",
-    className: "hero-collage-item-bottom-left",
-  },
-  {
-    src: "/image_30b5ed0a.png",
-    alt: "Команда работает с панелью автоматизации",
-    className: "hero-collage-item-bottom-center",
-  },
-  {
-    src: "https://images.unsplash.com/photo-1556742111-a301076d9d18?auto=format&fit=crop&w=1200&q=80",
-    alt: "Работа с аналитикой на экране кассы",
-    className: "hero-collage-item-bottom-right",
-  },
-];
-
-const retailBusinessOptions = [
-  "Продуктовый магазин",
-  "Магазин обуви",
-  "Косметика и парфюм",
-  "Аптека",
-  "Склад",
-  "Торговая компания",
-  "Маркет",
-  "Зоотовары",
-  "Эко товары",
-  "Игрушки",
-  "Другое",
-];
-
-const foodBusinessOptions = [
-  "Пекарня",
-  "Кафе",
-  "Фастфуд",
-  "Ресторан",
-  "Другое",
-];
-
-const servicesBusinessOptions = [
-  "СТО",
-  "Развлекательные центры",
-  "Бани",
-  "Сауна",
-  "Бильярд",
-  "Досуг",
-  "Массаж",
-  "Другое",
-];
-
-const equipmentPdfPath = encodeURI("/docs/прайс все позиции в сомах.pdf");
-
-const amocrmGallery: GalleryImage[] = [
-  {
-    src: "/image20.png",
-    alt: "Интерфейс AMOCRM с воронкой продаж и сделками",
-  },
-  {
-    src: "/image21.png",
-    alt: "Карточка клиента и история коммуникаций в AMOCRM",
-  },
-  {
-    src: "/image22.png",
-    alt: "Отчет и аналитика по лидам в AMOCRM",
-  },
-];
-
-const rostaGallery: GalleryImage[] = [
-  {
-    src: "/image.png",
-    alt: "Главный экран программы Rosta с основными метриками",
-  },
-  {
-    src: "/image2.png",
-    alt: "Оператор работает с интерфейсом учета продаж",
-  },
-  {
-    src: "/image3.png",
-    alt: "Аналитика и отчеты по продажам в системе",
-  },
-];
-
-const nextMarketGallery: GalleryImage[] = [
-  {
-    src: "/image10.png",
-    alt: "Рабочий экран системы Next Market с показателями и отчетами",
-  },
-  {
-    src: "/image11.png",
-    alt: "Оператор работает с цифровой системой учета на кассе",
-  },
-  {
-    src: "/image12.png",
-    alt: "Контроль продаж и склада в интерфейсе системы",
-  },
-  {
-    src: "/image13.png",
-    alt: "Сотрудник использует систему Next Market в торговом зале",
-  },
-  {
-    src: "/image14.png",
-    alt: "Сотрудник использует систему Next Market в торговом зале",
-  },
-];
-
-const faqItems = [
-  {
-    question: "Для каких бизнесов подходит платформа?",
-    answer:
-      "Мы автоматизируем различные типы бизнесов и помогаем настраивать процессы под ваш формат работы.",
-  },
-  {
-    question: "Сколько времени занимает запуск?",
-    answer:
-      "Базовый запуск занимает от нескольких часов до того времени пока вы полноценно не заработаете: подключаем кассу, склад, CRM и отчеты, затем обучаем команду.",
-  },
-  {
-    question: "Есть ли интеграция с amoCRM?",
-    answer:
-      "Да. Лиды и контакты передаются в amoCRM, чтобы отдел продаж сразу работал с актуальными данными.",
-  },
-];
-
-const trustedOrganizations: TrustedOrganization[] = [
-  {
-    name: "L'OCCITANE EN PROVENCE",
-    logoSrc: "/logos/loccitane.svg",
-  },
-  {
-    name: "Levi's",
-    logoSrc: "/logos/levis.svg",
-  },
-  {
-    name: "LACOSTE",
-    logoSrc: "/logos/lacoste.svg",
-  },
-  {
-    name: "TOMMY HILFIGER",
-    logoSrc: "/logos/tommy.svg",
-  },
-  {
-    name: "CALVIN KLEIN",
-    logoSrc: "/logos/calvin-klein.svg",
-  },
-  {
-    name: "vicco",
-    logoSrc: "/logos/vicco.svg",
-  },
-  {
-    name: "button EST. 2019",
-    logoSrc: "/logos/button.svg",
-  },
-];
-
-const topNavItems = [
-  { href: "#hero", label: "Главная" },
-  { href: "#features", label: "Возможности" },
-  { href: "#products", label: "Продукция" },
-  { href: "#industries", label: "Ниши" },
-  { href: "#faq", label: "FAQ" },
-  { href: "#connect", label: "Контакты" },
-];
-
-const businessTypes = ["Магазин", "СТО", "Бильярд", "Кафе", "Баня"] as const;
-const OTHER_BUSINESS_TYPE = "Другое";
+type PaginationState = {
+  page: number;
+  limit: number;
+  total: number;
+  pages: number;
+};
 
 const LOCAL_PHONE_DIGITS = 9;
 
@@ -412,6 +95,35 @@ function formatKgPhone(localDigits: string): string {
   ].filter(Boolean);
 
   return `+996 ${chunks.join(" ")}`;
+}
+
+function toRenderableImageSrc(value: string | null): string | null {
+  if (!value) {
+    return null;
+  }
+
+  const trimmed = value.trim();
+  if (!trimmed) {
+    return null;
+  }
+
+  try {
+    if (trimmed.startsWith("http://") || trimmed.startsWith("https://")) {
+      return encodeURI(trimmed);
+    }
+
+    if (trimmed.startsWith("//")) {
+      return encodeURI(`https:${trimmed}`);
+    }
+
+    if (trimmed.startsWith("/")) {
+      return encodeURI(trimmed);
+    }
+
+    return encodeURI(`https://${trimmed}`);
+  } catch {
+    return null;
+  }
 }
 
 export default function HomeClient({ seoHubGroups = [] }: HomeClientProps) {
@@ -443,6 +155,29 @@ export default function HomeClient({ seoHubGroups = [] }: HomeClientProps) {
   const [failedTrustedLogos, setFailedTrustedLogos] = useState<
     Record<string, boolean>
   >({});
+  const [equipmentRows, setEquipmentRows] = useState<EquipmentStockRow[]>([]);
+  const [equipmentProducts, setEquipmentProducts] = useState<
+    EquipmentCatalogProduct[]
+  >([]);
+  const [equipmentWarehouses, setEquipmentWarehouses] = useState<
+    EquipmentWarehouse[]
+  >([]);
+  const [equipmentPagination, setEquipmentPagination] = useState<PaginationState>({
+    page: 1,
+    limit: 24,
+    total: 0,
+    pages: 1,
+  });
+  const [isEquipmentLoading, setEquipmentLoading] = useState(false);
+  const [isEquipmentSyncing, setEquipmentSyncing] = useState(false);
+  const [equipmentError, setEquipmentError] = useState("");
+  const [equipmentWarning, setEquipmentWarning] = useState("");
+  const [equipmentClientId, setEquipmentClientId] = useState<string | null>(null);
+  const [equipmentClientIdOverride, setEquipmentClientIdOverride] = useState("");
+  const [equipmentCategory, setEquipmentCategory] = useState("");
+  const [equipmentSearch, setEquipmentSearch] = useState("");
+  const [equipmentWarehouseId, setEquipmentWarehouseId] = useState("");
+  const [equipmentRefreshKey, setEquipmentRefreshKey] = useState(0);
   const autoCloseTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const amocrmTouchStartXRef = useRef<number | null>(null);
   const rostaTouchStartXRef = useRef<number | null>(null);
@@ -465,6 +200,258 @@ export default function HomeClient({ seoHubGroups = [] }: HomeClientProps) {
       autoCloseTimerRef.current = null;
     }
   };
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const initialCategory = params.get("category")?.trim().toUpperCase() || "";
+    const initialSearch = params.get("search")?.trim() || "";
+    const initialWarehouse = params.get("warehouseId")?.trim() || "";
+    const initialClientId = params.get("clientId")?.trim() || "";
+    const initialPageRaw = Number(params.get("page"));
+    const initialPage =
+      Number.isFinite(initialPageRaw) && initialPageRaw > 0
+        ? Math.floor(initialPageRaw)
+        : 1;
+
+    setEquipmentCategory(initialCategory);
+    setEquipmentSearch(initialSearch);
+    setEquipmentWarehouseId(initialWarehouse);
+    setEquipmentClientIdOverride(initialClientId);
+    setEquipmentPagination((previous) => ({
+      ...previous,
+      page: initialPage,
+    }));
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (document.visibilityState === "visible") {
+        setEquipmentRefreshKey((previous) => previous + 1);
+      }
+    }, 30_000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    const loadEquipmentCatalog = async () => {
+      try {
+        setEquipmentLoading(true);
+        setEquipmentError("");
+
+        const params = new URLSearchParams();
+        params.set("page", String(equipmentPagination.page));
+        params.set("limit", String(equipmentPagination.limit));
+
+        if (equipmentCategory) {
+          params.set("category", equipmentCategory);
+        }
+        if (equipmentSearch) {
+          params.set("search", equipmentSearch);
+        }
+        if (equipmentWarehouseId) {
+          params.set("warehouseId", equipmentWarehouseId);
+        }
+        if (equipmentClientIdOverride) {
+          params.set("clientId", equipmentClientIdOverride);
+        }
+
+        const response = await fetch(`/api/equipment/catalog?${params.toString()}`, {
+          method: "GET",
+          cache: "no-store",
+          signal: controller.signal,
+        });
+
+        const payload = (await response.json().catch(() => null)) as
+          | {
+              ok?: boolean;
+              message?: string;
+              data?: {
+                clientId?: string;
+                warning?: string | null;
+                activeWarehouseId?: string | null;
+                warehouses?: EquipmentWarehouse[];
+                categories?: EquipmentStockRow[];
+                items?: EquipmentCatalogProduct[];
+                pagination?: PaginationState;
+              };
+            }
+          | null;
+
+        if (!response.ok || !payload?.ok || !payload.data) {
+          throw new Error(payload?.message ?? "Не удалось загрузить данные");
+        }
+
+        setEquipmentClientId(payload.data.clientId ?? null);
+        setEquipmentWarning(payload.data.warning ?? "");
+        setEquipmentRows(
+          Array.isArray(payload.data.categories) ? payload.data.categories : [],
+        );
+        setEquipmentProducts(Array.isArray(payload.data.items) ? payload.data.items : []);
+        setEquipmentWarehouses(
+          Array.isArray(payload.data.warehouses) ? payload.data.warehouses : [],
+        );
+
+        if (payload.data.activeWarehouseId) {
+          setEquipmentWarehouseId(payload.data.activeWarehouseId);
+        }
+
+        if (payload.data.pagination) {
+          setEquipmentPagination((previous) => ({
+            ...previous,
+            page: payload.data?.pagination?.page ?? previous.page,
+            limit: payload.data?.pagination?.limit ?? previous.limit,
+            total: payload.data?.pagination?.total ?? previous.total,
+            pages: payload.data?.pagination?.pages ?? previous.pages,
+          }));
+        }
+      } catch (error) {
+        if (error instanceof Error && error.name === "AbortError") {
+          return;
+        }
+
+        setEquipmentError(
+          error instanceof Error ? error.message : "Не удалось загрузить данные",
+        );
+      } finally {
+        setEquipmentLoading(false);
+      }
+    };
+
+    void loadEquipmentCatalog();
+
+    return () => {
+      controller.abort();
+    };
+  }, [
+    equipmentCategory,
+    equipmentPagination.limit,
+    equipmentPagination.page,
+    equipmentRefreshKey,
+    equipmentClientIdOverride,
+    equipmentSearch,
+    equipmentWarehouseId,
+  ]);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+
+    if (equipmentCategory) {
+      params.set("category", equipmentCategory);
+    } else {
+      params.delete("category");
+    }
+
+    if (equipmentSearch) {
+      params.set("search", equipmentSearch);
+    } else {
+      params.delete("search");
+    }
+
+    if (equipmentWarehouseId) {
+      params.set("warehouseId", equipmentWarehouseId);
+    } else {
+      params.delete("warehouseId");
+    }
+
+    if (equipmentPagination.page > 1) {
+      params.set("page", String(equipmentPagination.page));
+    } else {
+      params.delete("page");
+    }
+
+    if (equipmentClientIdOverride) {
+      params.set("clientId", equipmentClientIdOverride);
+    } else {
+      params.delete("clientId");
+    }
+
+    const nextQuery = params.toString();
+    const nextUrl = nextQuery
+      ? `${window.location.pathname}?${nextQuery}`
+      : window.location.pathname;
+
+    window.history.replaceState({}, "", nextUrl);
+  }, [
+    equipmentCategory,
+    equipmentPagination.page,
+    equipmentSearch,
+    equipmentWarehouseId,
+    equipmentClientIdOverride,
+  ]);
+
+  const onEquipmentSync = async () => {
+    try {
+      setEquipmentSyncing(true);
+      setEquipmentError("");
+
+      const syncParams = new URLSearchParams();
+      if (equipmentClientIdOverride) {
+        syncParams.set("clientId", equipmentClientIdOverride);
+      }
+
+      const response = await fetch(
+        `/api/equipment/sync${syncParams.toString() ? `?${syncParams.toString()}` : ""}`,
+        {
+        method: "POST",
+        },
+      );
+
+      const payload = (await response.json().catch(() => null)) as
+        | { ok?: boolean; message?: string }
+        | null;
+
+      if (!response.ok || !payload?.ok) {
+        throw new Error(payload?.message ?? "Не удалось выполнить синхронизацию");
+      }
+
+      setEquipmentRefreshKey((previous) => previous + 1);
+    } catch (error) {
+      setEquipmentError(
+        error instanceof Error ? error.message : "Не удалось выполнить синхронизацию",
+      );
+    } finally {
+      setEquipmentSyncing(false);
+    }
+  };
+
+  const formatStockUpdatedAt = (value: string | null) => {
+    if (!value) {
+      return "-";
+    }
+
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) {
+      return value;
+    }
+
+    return date.toLocaleString("ru-RU");
+  };
+
+  const formatCatalogPrice = (value: number | null) => {
+    if (typeof value !== "number" || !Number.isFinite(value)) {
+      return "Цена не указана";
+    }
+
+    return `${value.toLocaleString("ru-RU")} тнг.`;
+  };
+
+  const catalogCategories =
+    equipmentRows.length > 0
+      ? equipmentRows
+      : equipmentCatalogDefaults.map((item) => ({
+          id: item.id,
+          code: item.shortLabel,
+          title: item.title,
+          description: item.description,
+          shortLabel: item.shortLabel,
+          itemCount: 0,
+        }));
+
 
   useEffect(() => {
     if (prefersReducedMotion) {
@@ -899,6 +886,8 @@ export default function HomeClient({ seoHubGroups = [] }: HomeClientProps) {
               height={900}
               className="hero-board-photo hero-showcase-photo hero-showcase-photo-top-left"
               sizes="(max-width: 760px) 100vw, (max-width: 1080px) 42vw, 26vw"
+              priority
+              fetchPriority="high"
             />
 
             <div className="hero-copy hero-copy-overlay">
@@ -962,6 +951,7 @@ export default function HomeClient({ seoHubGroups = [] }: HomeClientProps) {
               height={900}
               className="hero-board-photo hero-showcase-photo hero-showcase-photo-top-right"
               sizes="(max-width: 760px) 100vw, (max-width: 1080px) 42vw, 26vw"
+              priority
             />
           </div>
 
@@ -1205,6 +1195,126 @@ export default function HomeClient({ seoHubGroups = [] }: HomeClientProps) {
             </motion.div>
           ))}
         </div>
+
+        <div className="catalog-market" aria-labelledby="catalog-market-title">
+          <h3 id="catalog-market-title">Каталог товаров</h3>
+
+          <div className="catalog-market-layout">
+            <aside className="catalog-market-sidebar" aria-label="Фильтры каталога">
+              <p className="catalog-market-filter-title">Категории</p>
+              <div className="catalog-market-category-list">
+                <button
+                  type="button"
+                  className={`catalog-market-category ${
+                    !equipmentCategory ? "catalog-market-category-active" : ""
+                  }`}
+                  onClick={() => {
+                    setEquipmentCategory("");
+                    setEquipmentPagination((previous) => ({
+                      ...previous,
+                      page: 1,
+                    }));
+                  }}
+                >
+                  Все
+                </button>
+
+                {catalogCategories.map((item) => {
+                  const isActive = equipmentCategory === item.shortLabel;
+
+                  return (
+                    <button
+                      key={item.id}
+                      type="button"
+                      className={`catalog-market-category ${
+                        isActive ? "catalog-market-category-active" : ""
+                      }`}
+                      onClick={() => {
+                        setEquipmentCategory(isActive ? "" : item.shortLabel);
+                        setEquipmentPagination((previous) => ({
+                          ...previous,
+                          page: 1,
+                        }));
+                      }}
+                    >
+                      {item.title}
+                    </button>
+                  );
+                })}
+              </div>
+
+            </aside>
+
+            <div className="catalog-market-main">
+              {equipmentError ? (
+                <p className="catalog-market-status catalog-market-status-error">
+                  {equipmentError}
+                </p>
+              ) : null}
+
+              {equipmentWarning ? (
+                <p className="catalog-market-status">{equipmentWarning}</p>
+              ) : null}
+
+              {isEquipmentLoading ? (
+                <p className="catalog-market-status" aria-live="polite">
+                  Загрузка каталога...
+                </p>
+              ) : null}
+
+              <div className="catalog-market-grid" role="list">
+                {equipmentProducts.filter((row) => row.showOnHome).length > 0
+                  ? equipmentProducts
+                      .filter((row) => row.showOnHome)
+                      .map((row) => (
+                      <article
+                        key={row.id}
+                        className="catalog-market-card"
+                        role="listitem"
+                      >
+                        <div className="catalog-market-image-wrap">
+                          {toRenderableImageSrc(row.image) ? (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img
+                              src={toRenderableImageSrc(row.image) || ""}
+                              alt={row.name}
+                              className="catalog-market-image"
+                              loading="lazy"
+                              onError={(event) => {
+                                event.currentTarget.style.display = "none";
+                              }}
+                            />
+                          ) : (
+                            <div
+                              className="catalog-market-image catalog-market-image-fallback"
+                              aria-hidden="true"
+                            >
+                              {row.category || "ITEM"}
+                            </div>
+                          )}
+                        </div>
+                        <div className="catalog-market-card-body">
+                          <h4>{row.name}</h4>
+                          <p>
+                            Остаток на складе: {typeof row.quantity === "number" ? row.quantity : 0}{" "}
+                            {row.unit || "шт"}
+                          </p>
+                          <p>
+                            Цена: {typeof row.price === "number" ? `${row.price.toLocaleString("ru-RU")} сом` : "Цена не указана"}
+                          </p>
+                        </div>
+                      </article>
+                    ))
+                  : (
+                    <p className="catalog-market-status">
+                      Нет карточек для главной. Отметьте товары в /foto через галочку.
+                    </p>
+                  )}
+              </div>
+            </div>
+          </div>
+        </div>
+
       </section>
 
       <section
@@ -1314,12 +1424,13 @@ export default function HomeClient({ seoHubGroups = [] }: HomeClientProps) {
                   aria-label={item.name}
                 >
                   {item.logoSrc && !failedTrustedLogos[item.name] ? (
-                    <img
+                    <Image
                       src={item.logoSrc}
                       alt={item.name}
                       className="trusted-logo-image"
+                      width={160}
+                      height={40}
                       loading="lazy"
-                      decoding="async"
                       onError={() => markTrustedLogoFailed(item.name)}
                     />
                   ) : (
@@ -1334,12 +1445,13 @@ export default function HomeClient({ seoHubGroups = [] }: HomeClientProps) {
                   aria-hidden="true"
                 >
                   {item.logoSrc && !failedTrustedLogos[item.name] ? (
-                    <img
+                    <Image
                       src={item.logoSrc}
                       alt=""
                       className="trusted-logo-image"
+                      width={160}
+                      height={40}
                       loading="lazy"
-                      decoding="async"
                       onError={() => markTrustedLogoFailed(item.name)}
                     />
                   ) : (

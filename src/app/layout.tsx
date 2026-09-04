@@ -208,10 +208,11 @@ export default function RootLayout({
           </Script>
         ) : null}
       </head>
-      <body className="antialiased">
+      <body className="antialiased" suppressHydrationWarning>
         {yandexMetrikaId ? (
           <noscript>
             <div>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={`https://mc.yandex.ru/watch/${yandexMetrikaId}`}
                 style={{ position: "absolute", left: "-9999px" }}

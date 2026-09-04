@@ -36,6 +36,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# local JSON database (contains encrypted per-client Rosta API keys)
+/data
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

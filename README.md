@@ -134,6 +134,120 @@ sudo certbot --nginx -d app.example.com
 
 ### 6. Проверка
 
+## Rosta Per-Client Integration (Backend + Admin UI)
+
+Per-client Rosta access without sharing a global API key. An admin connects a client with just
+a Rosta API Key from `/integrations/rosta`; tradepoints, warehouses, items, attributes and stock
+are all fetched and linked automatically.
+
+Data is stored in a server-side JSON database file:
+
+- `data/app-db.json` (gitignored — contains encrypted API keys, never commit it)
+
+Logical entities:
+
+- `Client`: `id`, `name`, `rostaApiKeyEncrypted` (null once disconnected), `rostaApiKeyMasked`, `status` (`active`/`disabled`/`error`), `lastSyncAt`, `lastError`
+- `RostaTradepoint`: `id`, `clientId`, `rostaTradepointId`, `name`, `warehouseId`, `updatedAt`
+- `RostaWarehouse`: `id`, `clientId`, `rostaWarehouseId`, `name`, `tradepointId`, `isLimit`, `updatedAt`
+- `RostaItem`: `id`, `clientId`, `rostaItemId`, `name`, `sku`, `article`, `barcode`, `category`, `image`, `price`, `unit`, `parentId`, `typeId`, `unitId`, `updatedAt`
+- `RostaStock`: `id`, `clientId`, `warehouseId`, `itemId`, `attributeId`, `quantity`, `updatedAt`
+- `RostaSyncLog`: `id`, `clientId`, `type` (`FULL_SYNC`/`STOCK_SYNC`), `status`, `startedAt`, `finishedAt`, `itemsProcessed`, `itemsUpdated`, `errorsCount`, `errorMessage`
+
+Security:
+
+- Raw Rosta API keys are encrypted at rest using `ROSTA_ENCRYPTION_KEY`; only a masked value
+  (`••••••••••••••••a8F2`) is ever returned by an API route or shown in the admin UI.
+- Every `/api/clients*` admin route (and the cron sync-all route) requires an
+  `x-admin-token: <ROSTA_ADMIN_TOKEN>` header. Requests without a valid token get `401`.
+  The public `/api/equipment/*` routes (homepage widget) are unauthenticated by design, same as before.
+- Disconnecting a client (`DELETE /api/clients/{clientId}`) sets `status: disabled` and clears
+  the encrypted API key, but keeps historical warehouse/item/stock/log rows.
+
+Admin UI:
+
+- `/integrations/rosta` - paste the admin token once (stored in the browser only), then connect
+  a client with just its Rosta API Key, monitor status/counts/last sync, trigger manual sync,
+  view recent sync history, and disconnect a client.
+
+Routes (all require the `x-admin-token` header except the `equipment/*` ones):
+
+- `GET /api/clients` - list clients with masked key, status, counts, last sync
+- `POST /api/clients` - connect a new client: `{ name?, apiKey }` → validates the key, then runs
+  the full tradepoints/warehouses/items/attributes/stock sync in one call
+- `GET /api/clients/{clientId}` - client detail incl. tradepoints/warehouses
+- `PATCH /api/clients/{clientId}` - rename / enable / disable
+- `DELETE /api/clients/{clientId}` - disconnect (soft; keeps history)
+- `POST /api/clients/{clientId}/rosta/connect` - re-run the full connect flow for an existing client
+- `POST /api/clients/{clientId}/rosta/sync` - force catalog + stock sync ("Синхронизировать сейчас")
+- `GET /api/clients/{clientId}/rosta/warehouses` - list client warehouses
+- `GET /api/clients/{clientId}/rosta/tradepoints` - list client tradepoints
+- `GET /api/clients/{clientId}/rosta/stock` - refresh and return stock for that client
+- `GET /api/clients/{clientId}/logs?limit=20` - recent sync log entries
+- `GET /api/clients/{clientId}/catalog?page=1&limit=24&search=&category=&warehouseId=` - catalog bundle
+- `GET /api/clients/{clientId}/categories` - dynamic categories
+- `GET /api/clients/{clientId}/products?page=1&limit=24&search=&category=&warehouseId=` - products list + pagination
+- `GET /api/clients/{clientId}/products/{productId}` - one product
+- `POST /api/integrations/rosta/sync-all` - syncs every non-disabled client sequentially; this is
+  the endpoint a cron job/systemd timer should call for automatic periodic sync
+- `GET /api/equipment/catalog`, `POST /api/equipment/sync`, `GET /api/equipment/stock` - unauthenticated
+  homepage widget endpoints for the configured `ROSTA_DEFAULT_UI_CLIENT_ID`
+
+Automatic sync (no in-process scheduler/queue exists, so it's driven by the OS). Example systemd
+timer on the same VPS as the app:
+
+```ini
+# /etc/systemd/system/rosta-sync.service
+[Unit]
+Description=Rosta sync-all
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/curl -fsS -X POST https://app.example.com/api/integrations/rosta/sync-all \
+  -H "x-admin-token: %E{ROSTA_ADMIN_TOKEN}"
+```
+
+```ini
+# /etc/systemd/system/rosta-sync.timer
+[Unit]
+Description=Run Rosta sync-all every 5 minutes
+
+[Timer]
+OnBootSec=2min
+OnUnitActiveSec=5min
+
+[Install]
+WantedBy=timers.target
+```
+
+Enable with `sudo systemctl enable --now rosta-sync.timer`. A plain crontab entry
+(`*/5 * * * * curl -fsS -X POST ... -H "x-admin-token: ..."`) works just as well.
+
+Required env:
+
+```env
+ROSTA_ENCRYPTION_KEY=replace_with_long_random_secret
+ROSTA_ADMIN_TOKEN=replace_with_long_random_secret
+```
+
+Optional env:
+
+```env
+ROSTA_REQUEST_TIMEOUT_MS=12000
+ROSTA_MAX_RETRIES=2
+ROSTA_STOCK_BATCH_SIZE=100
+ROSTA_DEFAULT_UI_CLIENT_ID=
+```
+
+Notes:
+
+- Stock requests are batched (`ROSTA_STOCK_BATCH_SIZE`) to avoid one request per item.
+- List endpoints (tradepoints/warehouses/items/attributes) are paginated automatically until the
+  upstream response reports no further page.
+- Retries on `429`/`5xx` use exponential backoff (500ms, 1s, 2s, 4s, ... capped at 8s).
+- If upstream response does not contain detectable stock quantity fields, service returns raw payload and warning instead of inventing values.
+- There is no separate internal product catalog in this app to map Rosta items against — the
+  synced Rosta items are the catalog shown on the homepage, so no barcode/SKU mapping step is needed.
+
 - Откройте `https://app.example.com`
 - Убедитесь, что `POST /api/amocrm/lead` возвращает `200` при валидной форме
 - Проверьте логи: `journalctl -u business -f`
