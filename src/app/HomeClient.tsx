@@ -337,53 +337,6 @@ export default function HomeClient({ seoHubGroups = [] }: HomeClientProps) {
     equipmentWarehouseId,
   ]);
 
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-
-    if (equipmentCategory) {
-      params.set("category", equipmentCategory);
-    } else {
-      params.delete("category");
-    }
-
-    if (equipmentSearch) {
-      params.set("search", equipmentSearch);
-    } else {
-      params.delete("search");
-    }
-
-    if (equipmentWarehouseId) {
-      params.set("warehouseId", equipmentWarehouseId);
-    } else {
-      params.delete("warehouseId");
-    }
-
-    if (equipmentPagination.page > 1) {
-      params.set("page", String(equipmentPagination.page));
-    } else {
-      params.delete("page");
-    }
-
-    if (equipmentClientIdOverride) {
-      params.set("clientId", equipmentClientIdOverride);
-    } else {
-      params.delete("clientId");
-    }
-
-    const nextQuery = params.toString();
-    const nextUrl = nextQuery
-      ? `${window.location.pathname}?${nextQuery}`
-      : window.location.pathname;
-
-    window.history.replaceState({}, "", nextUrl);
-  }, [
-    equipmentCategory,
-    equipmentPagination.page,
-    equipmentSearch,
-    equipmentWarehouseId,
-    equipmentClientIdOverride,
-  ]);
-
   const onEquipmentSync = async () => {
     try {
       setEquipmentSyncing(true);
