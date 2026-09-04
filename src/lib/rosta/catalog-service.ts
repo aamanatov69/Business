@@ -17,6 +17,7 @@ import {
 } from "@/lib/server/client-repository";
 import {
   ensureFreshClientStock,
+  refreshClientStock,
   sanitizeServiceError,
   syncClientRostaData,
 } from "@/lib/rosta/service";
