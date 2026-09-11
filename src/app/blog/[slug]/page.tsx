@@ -1,8 +1,10 @@
+import { JsonLd } from "@/app/components/JsonLd";
 import { BLOG_POSTS, blogSlugs } from "@/lib/blog-posts";
 import { CORE_SEO_KEYWORDS, SITE_NAME, SITE_URL } from "@/lib/seo";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { publicLinkLabel } from "@/lib/public-links";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -91,18 +93,6 @@ export default async function BlogPostPage({ params }: PageProps) {
     },
   };
 
-  const faqSchema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: post.faq.map((item) => ({
-      "@type": "Question",
-      name: item.question,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: item.answer,
-      },
-    })),
-  };
 
   const breadcrumbSchema = {
     "@context": "https://schema.org",
@@ -131,24 +121,15 @@ export default async function BlogPostPage({ params }: PageProps) {
 
   return (
     <main className="shell section" aria-labelledby="blog-post-title">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-      />
+      <JsonLd data={articleSchema} />
+      <JsonLd data={breadcrumbSchema} />
 
       <article>
         <header className="section-head">
           <span className="tag">Экспертная статья</span>
           <h1 id="blog-post-title">{post.title}</h1>
           <p>{post.description}</p>
+          <p>Опубликовано: <time dateTime={post.publishedAt}>{post.publishedAt}</time>. Обновлено: <time dateTime={post.updatedAt}>{post.updatedAt}</time>.</p>
         </header>
 
         {post.sections.map((section) => (
@@ -169,12 +150,14 @@ export default async function BlogPostPage({ params }: PageProps) {
         </section>
 
         <section aria-label="Навигация по блогу">
+          <h2>Решения для вашего проекта</h2>
+          <ul>{(post.relatedLinks || ["/catalog", "/solutions/avtomatizaciya-sklada-i-ucheta"]).map((href) => <li key={href}><Link href={href}>{publicLinkLabel(href)}</Link></li>)}</ul>
           <h2>Читать дальше</h2>
           <p>
             <Link href="/blog">Все статьи блога</Link>
           </p>
           <p>
-            <Link href="/#connect">Получить консультацию по внедрению</Link>
+            <Link prefetch={false} href="/#request">Получить консультацию по внедрению</Link>
           </p>
         </section>
       </article>

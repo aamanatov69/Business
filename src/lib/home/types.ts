@@ -44,6 +44,7 @@ export type SeoHubGroup = {
 
 export type HomeClientProps = {
   seoHubGroups?: SeoHubGroup[];
+  directionLinks: { href: string; label: string }[];
 };
 
 export type GalleryImage = {

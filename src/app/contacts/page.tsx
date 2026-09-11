@@ -1,0 +1,9 @@
+import Link from "next/link";
+import { BRAND_ADDRESS, BRAND_CITY, BRAND_COUNTRY, BRAND_EMAIL, BRAND_PHONE, SITE_NAME, SITE_URL } from "@/lib/seo";
+import { pageMetadata } from "@/lib/page-metadata";
+import { JsonLd } from "@/app/components/JsonLd";
+import { Breadcrumbs } from "@/app/components/Breadcrumbs";
+export const metadata = pageMetadata("/contacts", "Контакты в Бишкеке | Automation Business", "Центр автоматизации бизнеса: адрес в Кок-Жаре, телефон, WhatsApp и электронная почта. Обсудите подбор оборудования, внедрение программы или интеграцию.");
+export default function ContactsPage() { return <main className="shell section solution-page"><Breadcrumbs items={[{ name: "Главная", path: "/" }, { name: "Контакты", path: "/contacts" }]} />
+  <JsonLd data={{ "@context": "https://schema.org", "@type": "ProfessionalService", "@id": `${SITE_URL}/#business`, name: SITE_NAME, url: SITE_URL, telephone: BRAND_PHONE, email: BRAND_EMAIL, address: { "@type": "PostalAddress", streetAddress: BRAND_ADDRESS, addressLocality: BRAND_CITY, addressCountry: BRAND_COUNTRY } }} />
+  <h1>Контакты центра автоматизации бизнеса</h1><p>{SITE_NAME} — подбор оборудования и автоматизация бизнеса в Кыргызстане.</p><section><h2>Адрес и связь</h2><address style={{ fontStyle: "normal" }}><p>{BRAND_CITY}, {BRAND_ADDRESS}</p><p><a href={`tel:${BRAND_PHONE.replace(/\s+/g, "")}`}>{BRAND_PHONE}</a></p><p><a href="https://wa.me/996559474999">Написать в WhatsApp</a></p><p><a href={`mailto:${BRAND_EMAIL}`}>{BRAND_EMAIL}</a></p></address><p>Перед визитом свяжитесь с нами, чтобы согласовать время встречи.</p></section><section><h2>Что сообщить для консультации</h2><p>Тип бизнеса, город, количество рабочих мест, текущую программу и задачу, которую хотите решить. Эти сведения помогут подготовить предметный разговор.</p><Link className="btn btn-primary" prefetch={false} href="/#request">Оставить заявку</Link></section></main>; }

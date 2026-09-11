@@ -1,3 +1,4 @@
+import { JsonLd } from "@/app/components/JsonLd";
 import { BLOG_POSTS } from "@/lib/blog-posts";
 import {
   CORE_SEO_KEYWORDS,
@@ -11,9 +12,9 @@ import Link from "next/link";
 export const revalidate = 86400;
 
 export const metadata: Metadata = {
-  title: "Блог по автоматизации бизнеса в СНГ",
+  title: "Блог по автоматизации бизнеса в Кыргызстане",
   description:
-    "Экспертные статьи по CRM, POS-терминалам, торговым весам, складу и аналитике для бизнеса в странах СНГ.",
+    "Практические руководства по автоматизации магазинов, выбору POS-оборудования, складскому учету и интеграциям для бизнеса в Кыргызстане.",
   keywords: [
     ...CORE_SEO_KEYWORDS,
     "блог автоматизация бизнеса",
@@ -24,7 +25,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "website",
-    title: "Блог по автоматизации бизнеса в СНГ",
+    title: "Блог по автоматизации бизнеса в Кыргызстане",
     description: SITE_DESCRIPTION,
     url: `${SITE_URL}/blog`,
     images: [
@@ -38,7 +39,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Блог по автоматизации бизнеса в СНГ",
+    title: "Блог по автоматизации бизнеса в Кыргызстане",
     description: SITE_DESCRIPTION,
     images: ["/twitter-image"],
   },
@@ -71,10 +72,7 @@ export default function BlogPage() {
 
   return (
     <main className="shell section" aria-labelledby="blog-title">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogListSchema) }}
-      />
+      <JsonLd data={blogListSchema} />
 
       <div className="section-head">
         <span className="tag">SEO блог</span>

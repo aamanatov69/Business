@@ -1,9 +1,9 @@
 import type { HeroBoardImage } from "@/lib/home/types";
 
 export const heroStats = [
-  { value: "6000+", label: "бизнесов автоматизируют процессы" },
-  { value: "до 30%", label: "рост повторных продаж" },
-  { value: "24/7", label: "доступ к отчетам и контролю" },
+  { value: "POS", label: "касса и оборудование" },
+  { value: "CRM", label: "клиенты и обращения" },
+  { value: "Учет", label: "товары и склад" },
 ];
 
 export const heroAnimatedSegments = [

@@ -85,6 +85,8 @@ AMOCRM_BUSINESS_TYPE_FIELD_ID=333333
 
 ### 1. DNS
 
+Для production-домена `automationbusines.com` используйте [SEO-отчет](deploy/SEO_AUDIT.md) и [HTTPS-шаблон nginx](deploy/nginx-production.conf.template). Основной адрес задается в `src/lib/site-origin.ts`. Инструкции ниже с `app.example.com` сохранены как пример установки на отдельном поддомене; перед применением сверяйте их с действующей конфигурацией сервера.
+
 Создайте A-запись поддомена (например, `app.example.com`) на IP VPS.
 
 ### 2. Подготовка приложения

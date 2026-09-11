@@ -64,6 +64,7 @@ export default function FotoAdminPage() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [search, setSearch] = useState("");
+  const [viewMode, setViewMode] = useState<"table" | "grid">("table");
 
   useEffect(() => {
     if (!isAuthorized) {
@@ -241,7 +242,7 @@ export default function FotoAdminPage() {
       <div className="section-head">
         <span className="tag">Админка</span>
         <h1>Управление фото карточек</h1>
-        <p>Путь: /foto. Для каждой карточки можно заменить фото через ссылку на изображение.</p>
+        <p></p>
       </div>
 
       <div className="foto-admin-toolbar">
@@ -252,124 +253,275 @@ export default function FotoAdminPage() {
           onChange={(event) => setSearch(event.target.value)}
           aria-label="Поиск карточки"
         />
+
+        <div className="foto-admin-view-toggle" role="group" aria-label="Вид отображения">
+          <button
+            type="button"
+            className={viewMode === "table" ? "active" : ""}
+            onClick={() => setViewMode("table")}
+            aria-pressed={viewMode === "table"}
+          >
+            Список
+          </button>
+          <button
+            type="button"
+            className={viewMode === "grid" ? "active" : ""}
+            onClick={() => setViewMode("grid")}
+            aria-pressed={viewMode === "grid"}
+          >
+            Карточки
+          </button>
+        </div>
       </div>
 
       {loading ? <p className="foto-admin-status">Загрузка...</p> : null}
       {error ? <p className="foto-admin-status foto-admin-status-error">{error}</p> : null}
       {success ? <p className="foto-admin-status foto-admin-status-success">{success}</p> : null}
 
-      <div className="foto-admin-grid" role="list">
-        {filteredCards.map((card) => (
-          <article key={card.id} className="foto-admin-card" role="listitem">
-            <div className="foto-admin-preview-wrap">
-              {toRenderableImageSrc(drafts[card.id]?.image || card.image) ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={toRenderableImageSrc(drafts[card.id]?.image || card.image) || ""}
-                  alt={card.name}
-                  className="foto-admin-preview"
-                  onError={(event) => {
-                    event.currentTarget.style.display = "none";
-                  }}
+      {viewMode === "table" ? (
+        <div className="foto-admin-table-wrap">
+          <table className="foto-admin-table">
+            <thead>
+              <tr>
+                <th>Фото</th>
+                <th>Наименование</th>
+                <th>Ссылка на фото</th>
+                <th>Категория</th>
+                <th>На главной</th>
+                <th>Действия</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredCards.map((card) => (
+                <tr key={card.id} className="foto-admin-row">
+                  <td className="foto-admin-cell-photo">
+                    <div className="foto-admin-preview-wrap">
+                      {toRenderableImageSrc(drafts[card.id]?.image || card.image) ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={toRenderableImageSrc(drafts[card.id]?.image || card.image) || ""}
+                          alt={card.name}
+                          className="foto-admin-preview"
+                          onError={(event) => {
+                            event.currentTarget.style.display = "none";
+                          }}
+                        />
+                      ) : (
+                        <div className="foto-admin-preview foto-admin-preview-empty">NO IMAGE</div>
+                      )}
+                    </div>
+                  </td>
+
+                  <td className="foto-admin-cell-name">
+                    <h2>{card.name}</h2>
+                    <p>ID: {card.id}</p>
+                  </td>
+
+                  <td className="foto-admin-cell-image">
+                    <input
+                      type="text"
+                      value={drafts[card.id]?.image || ""}
+                      onChange={(event) =>
+                        setDrafts((prev) => ({
+                          ...prev,
+                          [card.id]: {
+                            image: event.target.value,
+                            category: prev[card.id]?.category || "",
+                            showOnHome: Boolean(prev[card.id]?.showOnHome),
+                          },
+                        }))
+                      }
+                      placeholder="https://... или /logos/..."
+                    />
+                  </td>
+
+                  <td className="foto-admin-cell-category">
+                    <select
+                      value={drafts[card.id]?.category || ""}
+                      onChange={(event) =>
+                        setDrafts((prev) => ({
+                          ...prev,
+                          [card.id]: {
+                            image: prev[card.id]?.image || "",
+                            category: event.target.value,
+                            showOnHome: Boolean(prev[card.id]?.showOnHome),
+                          },
+                        }))
+                      }
+                    >
+                      <option value="">Не выбрано</option>
+                      {categoryOptions.map((option) => (
+                        <option key={option.value} value={option.value}>
+                          {option.label}
+                        </option>
+                      ))}
+                    </select>
+                  </td>
+
+                  <td className="foto-admin-cell-checkbox">
+                    <input
+                      type="checkbox"
+                      checked={Boolean(drafts[card.id]?.showOnHome)}
+                      onChange={(event) =>
+                        setDrafts((prev) => ({
+                          ...prev,
+                          [card.id]: {
+                            image: prev[card.id]?.image || "",
+                            category: prev[card.id]?.category || "",
+                            showOnHome: event.target.checked,
+                          },
+                        }))
+                      }
+                    />
+                  </td>
+
+                  <td className="foto-admin-cell-actions">
+                    <div className="foto-admin-actions">
+                      <button
+                        type="button"
+                        className="btn btn-outline"
+                        onClick={() => onSave(card)}
+                        disabled={savingId === card.id}
+                      >
+                        {savingId === card.id ? "Сохранение..." : "Сохранить"}
+                      </button>
+                      <button
+                        type="button"
+                        className="btn btn-primary"
+                        onClick={() =>
+                          setDrafts((prev) => ({
+                            ...prev,
+                            [card.id]: {
+                              image: "",
+                              category: prev[card.id]?.category || "",
+                              showOnHome: Boolean(prev[card.id]?.showOnHome),
+                            },
+                          }))
+                        }
+                      >
+                        Очистить
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ) : (
+        <div className="foto-admin-grid" role="list">
+          {filteredCards.map((card) => (
+            <article key={card.id} className="foto-admin-card" role="listitem">
+              <div className="foto-admin-preview-wrap">
+                {toRenderableImageSrc(drafts[card.id]?.image || card.image) ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={toRenderableImageSrc(drafts[card.id]?.image || card.image) || ""}
+                    alt={card.name}
+                    className="foto-admin-preview"
+                    onError={(event) => {
+                      event.currentTarget.style.display = "none";
+                    }}
+                  />
+                ) : (
+                  <div className="foto-admin-preview foto-admin-preview-empty">NO IMAGE</div>
+                )}
+              </div>
+
+              <h2>{card.name}</h2>
+              <p>ID: {card.id}</p>
+
+              <label>
+                Ссылка на фото
+                <input
+                  type="text"
+                  value={drafts[card.id]?.image || ""}
+                  onChange={(event) =>
+                    setDrafts((prev) => ({
+                      ...prev,
+                      [card.id]: {
+                        image: event.target.value,
+                        category: prev[card.id]?.category || "",
+                        showOnHome: Boolean(prev[card.id]?.showOnHome),
+                      },
+                    }))
+                  }
+                  placeholder="https://... или /logos/..."
                 />
-              ) : (
-                <div className="foto-admin-preview foto-admin-preview-empty">NO IMAGE</div>
-              )}
-            </div>
+              </label>
 
-            <h2>{card.name}</h2>
-            <p>ID: {card.id}</p>
+              <label>
+                Категория
+                <select
+                  value={drafts[card.id]?.category || ""}
+                  onChange={(event) =>
+                    setDrafts((prev) => ({
+                      ...prev,
+                      [card.id]: {
+                        image: prev[card.id]?.image || "",
+                        category: event.target.value,
+                        showOnHome: Boolean(prev[card.id]?.showOnHome),
+                      },
+                    }))
+                  }
+                >
+                  <option value="">Не выбрано</option>
+                  {categoryOptions.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+              </label>
 
-            <label>
-              Ссылка на фото
-              <input
-                type="text"
-                value={drafts[card.id]?.image || ""}
-                onChange={(event) =>
-                  setDrafts((prev) => ({
-                    ...prev,
-                    [card.id]: {
-                      image: event.target.value,
-                      category: prev[card.id]?.category || "",
-                      showOnHome: Boolean(prev[card.id]?.showOnHome),
-                    },
-                  }))
-                }
-                placeholder="https://... или /logos/..."
-              />
-            </label>
+              <label className="foto-admin-checkbox">
+                <input
+                  type="checkbox"
+                  checked={Boolean(drafts[card.id]?.showOnHome)}
+                  onChange={(event) =>
+                    setDrafts((prev) => ({
+                      ...prev,
+                      [card.id]: {
+                        image: prev[card.id]?.image || "",
+                        category: prev[card.id]?.category || "",
+                        showOnHome: event.target.checked,
+                      },
+                    }))
+                  }
+                />
+                Показывать карточку на главной
+              </label>
 
-            <label>
-              Категория
-              <select
-                value={drafts[card.id]?.category || ""}
-                onChange={(event) =>
-                  setDrafts((prev) => ({
-                    ...prev,
-                    [card.id]: {
-                      image: prev[card.id]?.image || "",
-                      category: event.target.value,
-                      showOnHome: Boolean(prev[card.id]?.showOnHome),
-                    },
-                  }))
-                }
-              >
-                <option value="">Не выбрано</option>
-                {categoryOptions.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </select>
-            </label>
-
-            <label className="foto-admin-checkbox">
-              <input
-                type="checkbox"
-                checked={Boolean(drafts[card.id]?.showOnHome)}
-                onChange={(event) =>
-                  setDrafts((prev) => ({
-                    ...prev,
-                    [card.id]: {
-                      image: prev[card.id]?.image || "",
-                      category: prev[card.id]?.category || "",
-                      showOnHome: event.target.checked,
-                    },
-                  }))
-                }
-              />
-              Показывать карточку на главной
-            </label>
-
-            <div className="foto-admin-actions">
-              <button
-                type="button"
-                className="btn btn-outline"
-                onClick={() => onSave(card)}
-                disabled={savingId === card.id}
-              >
-                {savingId === card.id ? "Сохранение..." : "Сохранить"}
-              </button>
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={() =>
-                  setDrafts((prev) => ({
-                    ...prev,
-                    [card.id]: {
-                      image: "",
-                      category: prev[card.id]?.category || "",
-                      showOnHome: Boolean(prev[card.id]?.showOnHome),
-                    },
-                  }))
-                }
-              >
-                Очистить
-              </button>
-            </div>
-          </article>
-        ))}
-      </div>
+              <div className="foto-admin-actions">
+                <button
+                  type="button"
+                  className="btn btn-outline"
+                  onClick={() => onSave(card)}
+                  disabled={savingId === card.id}
+                >
+                  {savingId === card.id ? "Сохранение..." : "Сохранить"}
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={() =>
+                    setDrafts((prev) => ({
+                      ...prev,
+                      [card.id]: {
+                        image: "",
+                        category: prev[card.id]?.category || "",
+                        showOnHome: Boolean(prev[card.id]?.showOnHome),
+                      },
+                    }))
+                  }
+                >
+                  Очистить
+                </button>
+              </div>
+            </article>
+          ))}
+        </div>
+      )}
         </>
       ) : null}
     </main>

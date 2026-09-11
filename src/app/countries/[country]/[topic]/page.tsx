@@ -1,3 +1,4 @@
+import { JsonLd } from "@/app/components/JsonLd";
 import { COUNTRY_PAGES, countrySlugs } from "@/lib/country-pages";
 import {
   BRAND_ADDRESS,
@@ -72,7 +73,7 @@ export async function generateMetadata({
       images: ["/twitter-image"],
     },
     robots: {
-      index: true,
+      index: false,
       follow: true,
     },
   };
@@ -141,14 +142,8 @@ export default async function CountryTopicPage({ params }: PageProps) {
 
   return (
     <main className="shell section" aria-labelledby="country-topic-title">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-      />
+      <JsonLd data={serviceSchema} />
+      <JsonLd data={breadcrumbSchema} />
 
       <div className="section-head">
         <span className="tag">Запрос + страна</span>

@@ -1,12 +1,17 @@
 import type { NextConfig } from "next";
+import { SITE_ORIGIN } from "./src/lib/site-origin";
+import { legacyUrls } from "./src/lib/legacy-urls";
 
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://business-automation.kg";
+const siteUrl = SITE_ORIGIN;
 const siteHostname = new URL(siteUrl).hostname;
 const canonicalHostname = siteHostname.replace(/^www\./, "");
 const wwwHostname = `www.${canonicalHostname}`;
 
 const nextConfig: NextConfig = {
+  poweredByHeader: false,
+  async headers() {
+    return [{ source: "/api/:path*", headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }] }];
+  },
   images: {
     remotePatterns: [
       {
@@ -65,8 +70,9 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      ...Object.entries(legacyUrls).map(([source, destination]) => ({ source, destination: `${SITE_ORIGIN}${destination}`, statusCode: 301 as const })),
       {
-        source: "/:path*",
+        source: "/:path((?!api(?:/|$)).*)",
         has: [
           {
             type: "host",
@@ -74,7 +80,7 @@ const nextConfig: NextConfig = {
           },
         ],
         destination: `https://${canonicalHostname}/:path*`,
-        permanent: true,
+        statusCode: 301,
       },
     ];
   },

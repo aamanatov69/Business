@@ -1,3 +1,4 @@
+import { JsonLd } from "@/app/components/JsonLd";
 import { COUNTRY_PAGES, countrySlugs } from "@/lib/country-pages";
 import {
   BRAND_ADDRESS,
@@ -126,14 +127,8 @@ export default async function CountryPage({ params }: PageProps) {
 
   return (
     <main className="shell section" aria-labelledby="country-title">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-      />
+      <JsonLd data={serviceSchema} />
+      <JsonLd data={breadcrumbSchema} />
 
       <div className="section-head">
         <span className="tag">География внедрения</span>
@@ -163,8 +158,8 @@ export default async function CountryPage({ params }: PageProps) {
         </ul>
       </section>
 
-      <section aria-label="Коммерческие запросы по стране">
-        <h2>Страницы по ключевым коммерческим запросам</h2>
+      <section aria-label="Направления автоматизации">
+        <h2>Подбор решения по задачам</h2>
         <ul>
           {topicList.map((topic) => (
             <li key={topic.slug}>

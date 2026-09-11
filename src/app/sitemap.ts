@@ -1,98 +1,27 @@
-import { blogSlugs } from "@/lib/blog-posts";
+import { BLOG_POSTS } from "@/lib/blog-posts";
 import { countrySlugs } from "@/lib/country-pages";
 import { SITE_URL } from "@/lib/seo";
 import { solutionSlugs } from "@/lib/solution-pages";
-import { topicSlugs } from "@/lib/topic-pages";
+import { catalogCategories, productPath } from "@/lib/catalog-categories";
+import { integrationPages } from "@/lib/integration-pages";
+import { getPublicProducts } from "@/lib/server/public-catalog";
 import type { MetadataRoute } from "next";
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const baseEntry: MetadataRoute.Sitemap[number] = {
-    url: SITE_URL,
-    lastModified: new Date(),
-    changeFrequency: "daily",
-    priority: 1,
-    alternates: {
-      languages: {
-        ru: SITE_URL,
-        "x-default": SITE_URL,
-      },
-    },
-  };
-
-  const solutionEntries: MetadataRoute.Sitemap = solutionSlugs.map((slug) => ({
-    url: `${SITE_URL}/solutions/${slug}`,
-    lastModified: new Date(),
-    changeFrequency: "weekly",
-    priority: 0.9,
-    alternates: {
-      languages: {
-        ru: `${SITE_URL}/solutions/${slug}`,
-        "x-default": `${SITE_URL}/solutions/${slug}`,
-      },
-    },
-  }));
-
-  const countryEntries: MetadataRoute.Sitemap = countrySlugs.map((slug) => ({
-    url: `${SITE_URL}/countries/${slug}`,
-    lastModified: new Date(),
-    changeFrequency: "weekly",
-    priority: 0.85,
-    alternates: {
-      languages: {
-        ru: `${SITE_URL}/countries/${slug}`,
-        "x-default": `${SITE_URL}/countries/${slug}`,
-      },
-    },
-  }));
-
-  const countryTopicEntries: MetadataRoute.Sitemap = countrySlugs.flatMap(
-    (country) =>
-      topicSlugs.map((topic) => ({
-        url: `${SITE_URL}/countries/${country}/${topic}`,
-        lastModified: new Date(),
-        changeFrequency: "weekly",
-        priority: 0.8,
-        alternates: {
-          languages: {
-            ru: `${SITE_URL}/countries/${country}/${topic}`,
-            "x-default": `${SITE_URL}/countries/${country}/${topic}`,
-          },
-        },
-      })),
-  );
-
-  const blogEntries: MetadataRoute.Sitemap = blogSlugs.map((slug) => ({
-    url: `${SITE_URL}/blog/${slug}`,
-    lastModified: new Date(),
-    changeFrequency: "monthly",
-    priority: 0.75,
-    alternates: {
-      languages: {
-        ru: `${SITE_URL}/blog/${slug}`,
-        "x-default": `${SITE_URL}/blog/${slug}`,
-      },
-    },
-  }));
-
-  const blogIndexEntry: MetadataRoute.Sitemap[number] = {
-    url: `${SITE_URL}/blog`,
-    lastModified: new Date(),
-    changeFrequency: "weekly",
-    priority: 0.82,
-    alternates: {
-      languages: {
-        ru: `${SITE_URL}/blog`,
-        "x-default": `${SITE_URL}/blog`,
-      },
-    },
-  };
-
+// Runtime snapshot includes newly published products without rebuilding.
+export const dynamic = "force-dynamic";
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const products = await getPublicProducts();
+  const paths = ["", "/catalog", "/integrations", "/contacts", "/blog",
+    ...solutionSlugs.map((slug) => `/solutions/${slug}`),
+    ...countrySlugs.filter((slug) => slug !== "kyrgyzstan").map((slug) => `/countries/${slug}`),
+    ...catalogCategories.map((category) => `/catalog/${category.slug}`),
+    ...integrationPages.map((page) => `/integrations/${page.slug}`),
+  ];
   return [
-    baseEntry,
-    ...solutionEntries,
-    ...countryEntries,
-    ...countryTopicEntries,
-    blogIndexEntry,
-    ...blogEntries,
+    ...paths.map((path) => ({ url: `${SITE_URL}${path}` })),
+    ...BLOG_POSTS.map((post) => ({ url: `${SITE_URL}/blog/${post.slug}`, lastModified: post.updatedAt })),
+    ...products.map((product) => ({ url: `${SITE_URL}${productPath(product.id)}`,
+      ...(product.updatedAt && Number.isFinite(Date.parse(product.updatedAt)) ? { lastModified: product.updatedAt } : {}),
+    })),
   ];
 }

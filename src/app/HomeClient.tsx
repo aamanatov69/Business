@@ -126,7 +126,7 @@ function toRenderableImageSrc(value: string | null): string | null {
   }
 }
 
-export default function HomeClient({ seoHubGroups = [] }: HomeClientProps) {
+export default function HomeClient({ seoHubGroups = [], directionLinks }: HomeClientProps) {
   const showTrustedBrandsSection = false;
   const industriesSectionRef = useRef<HTMLElement | null>(null);
   const [isModalOpen, setModalOpen] = useState(false);
@@ -465,6 +465,29 @@ export default function HomeClient({ seoHubGroups = [] }: HomeClientProps) {
     setSubmitSuccess("");
     setModalOpen(true);
   };
+
+  useEffect(() => {
+    const openRequestedForm = () => {
+      if (window.location.hash !== "#request") return;
+
+      setSubmitError("");
+      setSubmitSuccess("");
+      setModalOpen(true);
+      // Consume the action so closing or refreshing does not reopen the dialog.
+      window.history.replaceState(
+        window.history.state,
+        "",
+        `${window.location.pathname}${window.location.search}#connect`,
+      );
+    };
+
+    const frame = window.requestAnimationFrame(openRequestedForm);
+    window.addEventListener("hashchange", openRequestedForm);
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.removeEventListener("hashchange", openRequestedForm);
+    };
+  }, []);
 
   const openLeadModalForBusiness = (businessLabel: string) => {
     setSubmitError("");
@@ -847,11 +870,12 @@ export default function HomeClient({ seoHubGroups = [] }: HomeClientProps) {
               <span className="tag">Автоматизация торговли и сервиса</span>
               <h1>
                 <span className="hero-title-static">
-                  Автоматизация для
+                  Автоматизация
                   <br />
-                  вашего бизнеса
+                  бизнеса в Кыргызстане
                 </span>
-                <span className="hero-title-dynamic-wrap" aria-live="polite">
+              </h1>
+                <span className="hero-title-dynamic-wrap" aria-hidden="true">
                   <AnimatePresence mode="wait" initial={false}>
                     <motion.span
                       key={heroAnimatedSegments[heroSegmentIndex]}
@@ -877,11 +901,10 @@ export default function HomeClient({ seoHubGroups = [] }: HomeClientProps) {
                     </motion.span>
                   </AnimatePresence>
                 </span>
-              </h1>
               <p>
-                Системы для кассы, склада, клиентов, финансов и управленческих
-                решений. Контролируйте бизнес в реальном времени и
-                масштабируйтесь без хаоса.
+                Автоматизация магазинов, кафе и складов: POS-системы,
+                Rosta, CRM и торговое оборудование. Подбор, настройка
+                и интеграции под задачи вашей команды.
               </p>
 
               <div className="hero-actions">
@@ -904,7 +927,6 @@ export default function HomeClient({ seoHubGroups = [] }: HomeClientProps) {
               height={900}
               className="hero-board-photo hero-showcase-photo hero-showcase-photo-top-right"
               sizes="(max-width: 760px) 100vw, (max-width: 1080px) 42vw, 26vw"
-              priority
             />
           </div>
 
@@ -1201,12 +1223,12 @@ export default function HomeClient({ seoHubGroups = [] }: HomeClientProps) {
             <div className="catalog-market-main">
               {equipmentError ? (
                 <p className="catalog-market-status catalog-market-status-error">
-                  {equipmentError}
+                  Каталог временно недоступен. Свяжитесь с нами для подбора оборудования.
                 </p>
               ) : null}
 
               {equipmentWarning ? (
-                <p className="catalog-market-status">{equipmentWarning}</p>
+                <p className="catalog-market-status">Наличие и стоимость уточняйте у менеджера.</p>
               ) : null}
 
               {isEquipmentLoading ? (
@@ -1247,10 +1269,11 @@ export default function HomeClient({ seoHubGroups = [] }: HomeClientProps) {
                           )}
                         </div>
                         <div className="catalog-market-card-body">
-                          <h4>{row.name}</h4>
+                          <h4><Link href={`/catalog/product/${encodeURIComponent(row.id)}`}>{row.name}</Link></h4>
                           <p>
-                            Остаток на складе: {typeof row.quantity === "number" ? row.quantity : 0}{" "}
-                            {row.unit || "шт"}
+                            {row.availability !== "unknown" && typeof row.quantity === "number"
+                              ? `Остаток на складе: ${row.quantity} ${row.unit || "шт"}`
+                              : "Наличие уточняйте у менеджера"}
                           </p>
                           <p>
                             Цена: {typeof row.price === "number" ? `${row.price.toLocaleString("ru-RU")} сом` : "Цена не указана"}
@@ -1260,7 +1283,7 @@ export default function HomeClient({ seoHubGroups = [] }: HomeClientProps) {
                     ))
                   : (
                     <p className="catalog-market-status">
-                      Нет карточек для главной. Отметьте товары в /foto через галочку.
+                      Подберем оборудование под ваши задачи. Оставьте заявку для уточнения комплектации.
                     </p>
                   )}
               </div>
@@ -1417,6 +1440,22 @@ export default function HomeClient({ seoHubGroups = [] }: HomeClientProps) {
         </section>
       ) : null}
 
+      <section id="directions" className="shell section" aria-labelledby="business-directions-title">
+        <div className="section-head">
+          <span className="tag">Направления бизнеса</span>
+          <h2 id="business-directions-title">Автоматизация для вашего бизнеса</h2>
+          <p>Выберите направление: оборудование, возможности учета и этапы запуска в Бишкеке и Кыргызстане.</p>
+        </div>
+        <nav className="business-direction-grid" aria-label="Направления автоматизации">
+          {directionLinks.map((direction) => (
+            <Link className="btn btn-outline business-direction-link" href={direction.href} key={direction.href}>
+              <span>{direction.label}</span>
+              <ArrowRight size={20} aria-hidden="true" />
+            </Link>
+          ))}
+        </nav>
+      </section>
+
       <section id="faq" className="shell section">
         <div className="section-head">
           <span className="tag">FAQ</span>
@@ -1434,7 +1473,7 @@ export default function HomeClient({ seoHubGroups = [] }: HomeClientProps) {
       </section>
 
       {seoHubGroups.length ? (
-        <section className="shell section seo-hub" aria-label="SEO навигация">
+        <section className="shell section seo-hub" aria-label="Услуги и полезные материалы">
           <details className="seo-hub-toggle">
             <summary className="btn btn-outline seo-hub-trigger">
               Быстрый доступ
@@ -1443,8 +1482,7 @@ export default function HomeClient({ seoHubGroups = [] }: HomeClientProps) {
               <div className="section-head">
                 <h2>Навигация по решениям, странам и статьям</h2>
                 <p>
-                  Все ключевые ссылки сохранены для удобства пользователей и
-                  стабильной индексации поисковыми системами.
+                  Выберите услугу, регион или руководство по внедрению.
                 </p>
               </div>
 
@@ -1607,8 +1645,7 @@ export default function HomeClient({ seoHubGroups = [] }: HomeClientProps) {
                         height={800}
                         className="next-market-gallery-image"
                         sizes="(max-width: 760px) 100vw, 70vw"
-                        priority
-                      />
+                                />
                     </motion.figure>
                   </AnimatePresence>
                 </div>
@@ -1694,8 +1731,7 @@ export default function HomeClient({ seoHubGroups = [] }: HomeClientProps) {
                         height={800}
                         className="next-market-gallery-image"
                         sizes="(max-width: 760px) 100vw, 70vw"
-                        priority
-                      />
+                                />
                     </motion.figure>
                   </AnimatePresence>
                 </div>
@@ -1781,8 +1817,7 @@ export default function HomeClient({ seoHubGroups = [] }: HomeClientProps) {
                         height={800}
                         className="next-market-gallery-image"
                         sizes="(max-width: 760px) 100vw, 70vw"
-                        priority
-                      />
+                                />
                     </motion.figure>
                   </AnimatePresence>
                 </div>

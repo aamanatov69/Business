@@ -1,3 +1,5 @@
+import { JsonLd } from "@/app/components/JsonLd";
+import { businessDirectionLinks } from "@/lib/business-directions";
 ﻿import { BLOG_POSTS } from "@/lib/blog-posts";
 import { countryList } from "@/lib/country-pages";
 import { getHomeSeoHubGroups } from "@/lib/home/seo-hub";
@@ -22,7 +24,7 @@ import HomeClient from "./HomeClient";
 export const revalidate = 86400;
 
 export const metadata: Metadata = {
-  title: SITE_TITLE,
+  title: { absolute: SITE_TITLE },
   description: SITE_DESCRIPTION,
   keywords: [...CORE_SEO_KEYWORDS],
   alternates: {
@@ -53,24 +55,6 @@ export const metadata: Metadata = {
     images: ["/twitter-image"],
   },
 };
-
-const faqItems = [
-  {
-    question: "Для каких бизнесов подходит система?",
-    answer:
-      "Платформа подходит для магазина, СТО, кафе, бильярда, бани, розничных сетей и других форм малого и среднего бизнеса.",
-  },
-  {
-    question: "Какие процессы можно автоматизировать?",
-    answer:
-      "Продажи, складской учет, CRM, финансовую аналитику, отчеты по прибыли и контроль операций в одной системе.",
-  },
-  {
-    question: "Как быстро можно запустить систему?",
-    answer:
-      "Базовая настройка и подключение обычно выполняются в короткие сроки после заявки, в зависимости от сложности бизнеса.",
-  },
-];
 
 export default function Page() {
   const webPageSchema = {
@@ -152,7 +136,7 @@ export default function Page() {
     "@context": "https://schema.org",
     "@type": "ItemList",
     name: "Автоматизация бизнеса по странам СНГ",
-    itemListElement: countryList.map((item, index) => ({
+    itemListElement: countryList.filter((item) => item.slug !== "kyrgyzstan").map((item, index) => ({
       "@type": "ListItem",
       position: index + 1,
       url: `${SITE_URL}/countries/${item.slug}`,
@@ -172,62 +156,19 @@ export default function Page() {
     })),
   };
 
-  const faqSchema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: faqItems.map((item) => ({
-      "@type": "Question",
-      name: item.question,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: item.answer,
-      },
-    })),
-  };
 
   const seoHubGroups = getHomeSeoHubGroups();
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(localBusinessSchema),
-        }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(serviceCatalogSchema),
-        }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(multiRegionSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(countryCatalogSchema),
-        }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogCatalogSchema) }}
-      />
-      <HomeClient seoHubGroups={seoHubGroups} />
+      <JsonLd data={webPageSchema} />
+      <JsonLd data={breadcrumbSchema} />
+      <JsonLd data={localBusinessSchema} />
+      <JsonLd data={serviceCatalogSchema} />
+      <JsonLd data={multiRegionSchema} />
+      <JsonLd data={countryCatalogSchema} />
+      <JsonLd data={blogCatalogSchema} />
+      <HomeClient seoHubGroups={seoHubGroups} directionLinks={businessDirectionLinks} />
     </>
   );
 }

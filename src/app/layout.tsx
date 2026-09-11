@@ -1,3 +1,4 @@
+import { JsonLd } from "@/app/components/JsonLd";
 import {
   BRAND_ADDRESS,
   BRAND_CITY,
@@ -5,7 +6,6 @@ import {
   BRAND_EMAIL,
   BRAND_LOGO_PATH,
   BRAND_PHONE,
-  BRAND_POSTAL_CODE,
   CIS_COUNTRIES,
   CORE_SEO_KEYWORDS,
   SITE_DESCRIPTION,
@@ -17,6 +17,7 @@ import {
 } from "@/lib/seo";
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
+import Link from "next/link";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -37,13 +38,6 @@ export const metadata: Metadata = {
   authors: [{ name: SITE_NAME, url: SITE_URL }],
   creator: SITE_NAME,
   publisher: SITE_NAME,
-  alternates: {
-    canonical: SITE_URL,
-    languages: {
-      ru: SITE_URL,
-      "x-default": SITE_URL,
-    },
-  },
   openGraph: {
     type: "website",
     locale: SITE_LOCALE,
@@ -69,6 +63,7 @@ export const metadata: Metadata = {
   verification: {
     google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
     yandex: process.env.NEXT_PUBLIC_YANDEX_VERIFICATION,
+    other: process.env.NEXT_PUBLIC_BING_VERIFICATION ? { "msvalidate.01": process.env.NEXT_PUBLIC_BING_VERIFICATION } : undefined,
   },
   icons: {
     icon: [
@@ -92,8 +87,6 @@ export const metadata: Metadata = {
   other: {
     "geo.region": "KG-GB",
     "geo.placename": `${BRAND_CITY}, Кыргызстан`,
-    "geo.position": "42.82699;74.61044",
-    ICBM: "42.82699, 74.61044",
     language: SITE_LANGUAGE,
   },
   category: "business software",
@@ -126,7 +119,6 @@ export default function RootLayout({
       "@type": "PostalAddress",
       streetAddress: BRAND_ADDRESS,
       addressLocality: BRAND_CITY,
-      postalCode: BRAND_POSTAL_CODE,
       addressCountry: BRAND_COUNTRY,
     },
     contactPoint: [
@@ -145,25 +137,6 @@ export default function RootLayout({
     name: SITE_NAME,
     url: SITE_URL,
     inLanguage: SITE_LANGUAGE,
-    potentialAction: {
-      "@type": "SearchAction",
-      target: `${SITE_URL}/?q={search_term_string}`,
-      "query-input": "required name=search_term_string",
-    },
-  };
-
-  const softwareSchema = {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    name: SITE_NAME,
-    applicationCategory: "BusinessApplication",
-    operatingSystem: "Web",
-    offers: {
-      "@type": "Offer",
-      price: "0",
-      priceCurrency: "KGS",
-    },
-    description: SITE_DESCRIPTION,
   };
 
   return (
@@ -221,22 +194,19 @@ export default function RootLayout({
             </div>
           </noscript>
         ) : null}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(organizationSchema),
-          }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }}
-        />
+        <JsonLd data={organizationSchema} />
+        <JsonLd data={websiteSchema} />
         <div className="site-content">{children}</div>
         <footer className="site-footer" aria-label="Контакты и реквизиты">
+          <nav className="shell footer-seo-links" aria-label="Услуги, оборудование и контакты">
+            <Link href="/solutions/avtomatizaciya-magazina">Автоматизация магазина</Link>
+            <Link href="/solutions/avtomatizaciya-kafe-i-restoranov">Кафе и рестораны</Link>
+            <Link href="/catalog">Каталог оборудования</Link>
+            <Link href="/solutions/rosta">Rosta</Link>
+            <Link href="/integrations">Интеграции</Link>
+            <Link href="/blog">Блог</Link>
+            <Link href="/contacts">Контакты</Link>
+          </nav>
           <h2 className="site-footer-title">Контакты и адрес</h2>
           <div className="shell site-footer-inner">
             <p className="site-footer-address">{BRAND_ADDRESS}</p>

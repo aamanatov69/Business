@@ -1,4 +1,6 @@
 import { CORE_SEO_KEYWORDS } from "@/lib/seo";
+import { BUSINESS_DIRECTIONS } from "./business-directions";
+import { commercialSolutions, serviceDetails } from "./commercial-solutions";
 
 export type SolutionPageContent = {
   slug: string;
@@ -9,9 +11,26 @@ export type SolutionPageContent = {
   intro: string;
   bullets: string[];
   keywords: readonly string[];
+  sections?: { title: string; text: string }[];
+  faq?: { question: string; answer: string }[];
 };
 
 export const SOLUTION_PAGES: Record<string, SolutionPageContent> = {
+  "r-keeper": {
+    slug: "r-keeper",
+    shortTitle: "Подбор автоматизации ресторана",
+    title: "R-Keeper (р кипер): подбор автоматизации в Бишкеке",
+    description: "Рассматриваете R-Keeper для кафе или ресторана? Обсудите автоматизацию в Бишкеке: кассы, учет, оборудование и расчет стоимости под ваши задачи.",
+    h1: "Рассматриваете R-Keeper для кафе или ресторана?",
+    intro: "R-Keeper часто ищут как «р кипер» или «ркипер». При выборе системы для заведения в Кыргызстане начните с задач: прием заказов, работа кассиров, учет продуктов и контроль выручки. Поможем составить требования к автоматизации и подобрать решение под ваш формат.",
+    bullets: ["Обсуждение формата заведения и количества касс", "Подбор POS-терминалов и принтеров чеков", "План настройки учета и обучения сотрудников"],
+    sections: [
+      { title: "Что учесть при выборе программы для кафе", text: "Опишите, как принимаете заказы: за столом, у кассы или на доставку. Укажите число залов и филиалов, необходимость учета ингредиентов, списаний и прав доступа. По этому списку проще проверить, подходит ли система для ежедневной работы." },
+      { title: "Сколько стоит автоматизация ресторана", text: "Расчет зависит от лицензий, количества рабочих мест, оборудования и интеграций. Подготовьте список имеющейся техники и нужных функций. Стоимость и доступность конкретного решения, включая R-Keeper, уточняются при консультации." },
+      { title: "Как подготовиться к запуску", text: "Соберите меню, цены, список сотрудников и остатки товаров. Согласуйте перенос данных, проверку кассовых операций и обучение команды. Если система учета уже есть, сообщите ее название и версию для оценки совместимости оборудования и порядка перехода." },
+    ],
+    keywords: ["r-keeper", "р кипер", "ркипер Бишкек", "автоматизация ресторана Кыргызстан"],
+  },
   "crm-dlya-biznesa": {
     slug: "crm-dlya-biznesa",
     shortTitle: "CRM для бизнеса",
@@ -121,6 +140,12 @@ export const SOLUTION_PAGES: Record<string, SolutionPageContent> = {
     keywords: [...CORE_SEO_KEYWORDS, "программа для сто", "crm для сервиса"],
   },
 };
+
+Object.assign(SOLUTION_PAGES, BUSINESS_DIRECTIONS);
+Object.assign(SOLUTION_PAGES, commercialSolutions);
+for (const [slug, details] of Object.entries(serviceDetails)) {
+  Object.assign(SOLUTION_PAGES[slug], details);
+}
 
 export const solutionSlugs = Object.keys(SOLUTION_PAGES);
 export const solutionList = solutionSlugs.map((slug) => SOLUTION_PAGES[slug]);

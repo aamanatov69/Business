@@ -1,4 +1,5 @@
 import { CORE_SEO_KEYWORDS } from "@/lib/seo";
+import { localBlogPosts } from "./local-blog-posts";
 
 export type BlogSection = {
   heading: string;
@@ -19,9 +20,11 @@ export type BlogPost = {
   updatedAt: string;
   sections: BlogSection[];
   faq: BlogFaqItem[];
+  relatedLinks?: string[];
 };
 
 export const BLOG_POSTS: BlogPost[] = [
+  ...localBlogPosts,
   {
     slug: "crm-dlya-malogo-biznesa-v-kazakhstane",
     title: "CRM для малого бизнеса в Казахстане: как выбрать и внедрить",

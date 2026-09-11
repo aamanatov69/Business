@@ -20,9 +20,9 @@ export const faqItems: FaqItem[] = [
 
 export const topNavItems: NavItem[] = [
   { href: "#hero", label: "Главная" },
-  { href: "#features", label: "Возможности" },
-  { href: "#products", label: "Продукция" },
-  { href: "#industries", label: "Ниши" },
-  { href: "#faq", label: "FAQ" },
-  { href: "#connect", label: "Контакты" },
+  { href: "#directions", label: "Автоматизация" },
+  { href: "/catalog", label: "Оборудование" },
+  { href: "/integrations", label: "Интеграции" },
+  { href: "/blog", label: "Блог" },
+  { href: "/contacts", label: "Контакты" },
 ];

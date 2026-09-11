@@ -6,11 +6,21 @@ import type { SeoHubGroup } from "@/lib/home/types";
 export function getHomeSeoHubGroups(): SeoHubGroup[] {
   return [
     {
+      id: "connections", tag: "Подключение", title: "Программы и интеграции",
+      description: "Rosta, amoCRM, обмен с сайтом и оценка подключения банковского терминала к кассе.",
+      items: [
+        { key: "rosta", href: "/solutions/rosta", label: "Rosta для магазина" },
+        { key: "amocrm", href: "/solutions/amocrm", label: "Внедрение amoCRM" },
+        { key: "integrations", href: "/integrations", label: "API и банковские интеграции" },
+        { key: "catalog", href: "/catalog", label: "Каталог торгового оборудования" },
+      ],
+    },
+    {
       id: "solutions",
-      tag: "Популярные запросы",
+      tag: "Услуги",
       title: "Страницы по ключевым направлениям автоматизации",
       description:
-        "Эти страницы помогают быстро найти подходящее решение по запросам CRM, POS-терминалы, торговые весы, склад и автоматизация в разных сферах.",
+        "Подбор CRM, кассовых рабочих мест, торгового оборудования и товарного учета.",
       items: solutionList.map((item) => ({
         key: item.slug,
         href: `/solutions/${item.slug}`,
@@ -22,8 +32,8 @@ export function getHomeSeoHubGroups(): SeoHubGroup[] {
       tag: "География",
       title: "Автоматизация бизнеса по странам СНГ",
       description:
-        "Отдельные страницы по странам помогают лучше ранжироваться по запросам с геопривязкой: CRM, POS-терминалы, весы и складской учет.",
-      items: countryList.map((item) => ({
+        "Условия внедрения и консультации для компаний в разных странах.",
+      items: countryList.filter((item) => item.slug !== "kyrgyzstan").map((item) => ({
         key: item.slug,
         href: `/countries/${item.slug}`,
         label: item.title,
