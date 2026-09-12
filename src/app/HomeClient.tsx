@@ -874,7 +874,6 @@ export default function HomeClient({ seoHubGroups = [], directionLinks }: HomeCl
                   <br />
                   бизнеса в Кыргызстане
                 </span>
-              </h1>
                 <span className="hero-title-dynamic-wrap" aria-hidden="true">
                   <AnimatePresence mode="wait" initial={false}>
                     <motion.span
@@ -901,6 +900,7 @@ export default function HomeClient({ seoHubGroups = [], directionLinks }: HomeCl
                     </motion.span>
                   </AnimatePresence>
                 </span>
+              </h1>
               <p>
                 Автоматизация магазинов, кафе и складов: POS-системы,
                 Rosta, CRM и торговое оборудование. Подбор, настройка
