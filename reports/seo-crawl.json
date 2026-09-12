@@ -1,0 +1,1326 @@
+{
+  "checkedAt": "2026-09-12T05:47:08.397Z",
+  "origin": "http://127.0.0.1:3100",
+  "sitemapUrls": 70,
+  "crawledPages": 86,
+  "errors": [],
+  "warnings": [],
+  "pages": [
+    {
+      "path": "/",
+      "status": 200,
+      "title": "Автоматизация бизнеса в Кыргызстане — POS, CRM, склад | Automation Business",
+      "description": "Автоматизация бизнеса в Бишкеке и Кыргызстане: магазины, кафе, склад, POS и CRM. Подбор оборудования, настройка Rosta и интеграций. Обсудите проект с нами.",
+      "canonical": "https://automationbusines.com",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList",
+        "ItemList",
+        "Service",
+        "ItemList",
+        "ItemList"
+      ]
+    },
+    {
+      "path": "/catalog",
+      "status": 200,
+      "title": "Торговое и кассовое оборудование в Бишкеке | Automation Business",
+      "description": "Каталог оборудования для магазина, кафе и склада в Кыргызстане: POS-терминалы, сканеры, чековые принтеры, весы и денежные ящики. Подбор под вашу программу.",
+      "canonical": "https://automationbusines.com/catalog",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/integrations",
+      "status": 200,
+      "title": "Интеграции Rosta, CRM и POS в Кыргызстане | Automation Business",
+      "description": "Интеграции сайта с Rosta и CRM, обмен каталогом и оценка подключения банковских терминалов. Выберите сценарий и обсудите технические требования.",
+      "canonical": "https://automationbusines.com/integrations",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/contacts",
+      "status": 200,
+      "title": "Автоматизация бизнеса в Бишкеке — адрес и контакты",
+      "description": "Центр автоматизации бизнеса в Бишкеке: Кок-Жар, улица Мадиева 23/1. Телефон, WhatsApp и почта для подбора оборудования, настройки учета и интеграций.",
+      "canonical": "https://automationbusines.com/contacts",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "BreadcrumbList",
+        "ContactPage"
+      ]
+    },
+    {
+      "path": "/blog",
+      "status": 200,
+      "title": "Блог об автоматизации бизнеса в Кыргызстане",
+      "description": "Как выбрать POS и CRM, перенести товары, настроить склад и запустить кафе или магазин. Практические инструкции для бизнеса в Бишкеке и Кыргызстане.",
+      "canonical": "https://automationbusines.com/blog",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "BreadcrumbList",
+        "CollectionPage",
+        "Blog"
+      ]
+    },
+    {
+      "path": "/solutions/r-keeper",
+      "status": 200,
+      "title": "R-Keeper (р кипер): подбор автоматизации в Бишкеке",
+      "description": "Рассматриваете R-Keeper для кафе или ресторана? Обсудите автоматизацию в Бишкеке: кассы, учет, оборудование и расчет стоимости под ваши задачи.",
+      "canonical": "https://automationbusines.com/solutions/r-keeper",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "WebPage",
+        "Service",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/solutions/crm-dlya-biznesa",
+      "status": 200,
+      "title": "CRM в Бишкеке и Кыргызстане — подбор и внедрение",
+      "description": "Подбор CRM для бизнеса в Кыргызстане: клиенты, сделки, задачи и отчеты. Настройка процессов отдела продаж, интеграция сайта и обучение сотрудников.",
+      "canonical": "https://automationbusines.com/solutions/crm-dlya-biznesa",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "WebPage",
+        "Service",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/solutions/pos-terminaly-i-kassy",
+      "status": 200,
+      "title": "POS-системы и кассы в Бишкеке — подбор и подключение",
+      "description": "POS-системы для магазина и кафе в Кыргызстане: кассовая программа, терминал, сканер и принтер. Подбор оборудования, проверка совместимости и запуск.",
+      "canonical": "https://automationbusines.com/solutions/pos-terminaly-i-kassy",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "WebPage",
+        "Service",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/solutions/torgovye-vesy-i-oborudovanie",
+      "status": 200,
+      "title": "Торговые весы в Бишкеке — подбор и интеграция с кассой",
+      "description": "Подбор торговых весов в Кыргызстане: диапазон взвешивания, печать этикеток и связь с кассовой программой. Проверка совместимости до подключения.",
+      "canonical": "https://automationbusines.com/solutions/torgovye-vesy-i-oborudovanie",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "WebPage",
+        "Service",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/solutions/avtomatizaciya-sklada-i-ucheta",
+      "status": 200,
+      "title": "Складской учет в Кыргызстане — программа и автоматизация",
+      "description": "Автоматизация склада в Бишкеке: приемка, остатки, перемещения и инвентаризация. Подбор программы складского учета и оборудования под ваши процессы.",
+      "canonical": "https://automationbusines.com/solutions/avtomatizaciya-sklada-i-ucheta",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "WebPage",
+        "Service",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/solutions/avtomatizaciya-kafe-i-restoranov",
+      "status": 200,
+      "title": "Автоматизация кафе и ресторанов в Бишкеке — POS и склад",
+      "description": "Подбор автоматизации для кафе и ресторанов в Бишкеке: заказы, касса, кухня, техкарты и складской учет. Обсудим оборудование, обучение и стоимость запуска.",
+      "canonical": "https://automationbusines.com/solutions/avtomatizaciya-kafe-i-restoranov",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "WebPage",
+        "Service",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/solutions/avtomatizaciya-sto-i-servisa",
+      "status": 200,
+      "title": "Автоматизация СТО в Бишкеке — заказ-наряды и запчасти",
+      "description": "Автоматизация СТО и автосервиса в Бишкеке: заказ-наряды, история ремонта, склад запчастей и учет работ. Подбор программы, настройка и обучение команды.",
+      "canonical": "https://automationbusines.com/solutions/avtomatizaciya-sto-i-servisa",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "WebPage",
+        "Service",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/solutions/avtomatizaciya-magazina",
+      "status": 200,
+      "title": "Автоматизация магазина в Бишкеке — касса и учет товаров",
+      "description": "Автоматизация магазинов в Бишкеке и Кыргызстане: касса, штрихкоды, остатки и инвентаризация. Подбор программы и торгового оборудования под вашу розницу.",
+      "canonical": "https://automationbusines.com/solutions/avtomatizaciya-magazina",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "WebPage",
+        "Service",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/solutions/avtomatizaciya-bani-i-sauny",
+      "status": 200,
+      "title": "Автоматизация бани и сауны в Бишкеке — брони и учет времени",
+      "description": "Автоматизация бань и саун в Бишкеке и Кыргызстане: бронирование залов, почасовые тарифы, учет посещений и услуг. Подбор системы и расчет проекта.",
+      "canonical": "https://automationbusines.com/solutions/avtomatizaciya-bani-i-sauny",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "WebPage",
+        "Service",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/solutions/avtomatizaciya-bilyarda",
+      "status": 200,
+      "title": "Автоматизация бильярда в Бишкеке — учет столов и времени",
+      "description": "Подбор автоматизации бильярдного клуба в Бишкеке: время игры, тарифы столов, бронирование и продажи бара. Обсудим оборудование и расчет стоимости.",
+      "canonical": "https://automationbusines.com/solutions/avtomatizaciya-bilyarda",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "WebPage",
+        "Service",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/solutions/avtomatizaciya-sfery-uslug",
+      "status": 200,
+      "title": "Автоматизация сферы услуг в Бишкеке — запись и CRM",
+      "description": "Автоматизация сервисного бизнеса в Бишкеке: запись клиентов, расписание сотрудников, CRM и учет оплат. Подбор решения для вашего формата работы.",
+      "canonical": "https://automationbusines.com/solutions/avtomatizaciya-sfery-uslug",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "WebPage",
+        "Service",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/solutions/rosta",
+      "status": 200,
+      "title": "Rosta в Бишкеке и Кыргызстане — программа для магазина",
+      "description": "Подбор и настройка Rosta для магазина в Кыргызстане: товарный справочник, продажи, склады и остатки. Обсудите перенос данных, оборудование и подключение.",
+      "canonical": "https://automationbusines.com/solutions/rosta",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "WebPage",
+        "Service",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/solutions/amocrm",
+      "status": 200,
+      "title": "amoCRM в Кыргызстане — внедрение и интеграция сайта",
+      "description": "Настройка amoCRM для бизнеса в Бишкеке: заявки с сайта, воронка продаж, контакты и задачи менеджеров. Обсудите этапы внедрения и доступные интеграции.",
+      "canonical": "https://automationbusines.com/solutions/amocrm",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "WebPage",
+        "Service",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/solutions/perenos-tovarov-i-ostatkov",
+      "status": 200,
+      "title": "Перенос товаров и остатков в программу учета — Бишкек",
+      "description": "Перенос товарного справочника из Excel или старой программы: дубли, штрихкоды, единицы и остатки. Подготовка данных и проверка загрузки для бизнеса в Бишкеке.",
+      "canonical": "https://automationbusines.com/solutions/perenos-tovarov-i-ostatkov",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "WebPage",
+        "Service",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/solutions/avtomatizaciya-seti-magazinov",
+      "status": 200,
+      "title": "Автоматизация сети магазинов в Кыргызстане — учет точек",
+      "description": "Единый учет сети магазинов: справочник товаров, цены, перемещения и отчеты по торговым точкам. Подбор программы и план запуска филиалов в Кыргызстане.",
+      "canonical": "https://automationbusines.com/solutions/avtomatizaciya-seti-magazinov",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "WebPage",
+        "Service",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/solutions/avtomatizaciya-kofeyni",
+      "status": 200,
+      "title": "Автоматизация кофейни в Бишкеке — касса, меню и учет",
+      "description": "Подбор автоматизации кофейни в Бишкеке: быстрые заказы, размеры напитков, добавки, рецептуры и остатки. Проверка оборудования, настройка меню и обучение.",
+      "canonical": "https://automationbusines.com/solutions/avtomatizaciya-kofeyni",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "WebPage",
+        "Service",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/countries/kazakhstan",
+      "status": 200,
+      "title": "Автоматизация бизнеса в Казахстане: CRM, POS, весы",
+      "description": "Автоматизация магазинов, кафе, СТО и сервисов в Казахстане: CRM, POS-система, торговое оборудование и аналитика.",
+      "canonical": "https://automationbusines.com/countries/kazakhstan",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "Service",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/countries/uzbekistan",
+      "status": 200,
+      "title": "Автоматизация бизнеса в Узбекистане: CRM и POS",
+      "description": "Запуск CRM, POS-терминалов, учета склада и интеграций для бизнеса в Узбекистане.",
+      "canonical": "https://automationbusines.com/countries/uzbekistan",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "Service",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/countries/russia",
+      "status": 200,
+      "title": "Автоматизация бизнеса в России: CRM, POS, учет",
+      "description": "Комплексная автоматизация торговли и сервиса в России: CRM, касса, складской учет и финансовая аналитика.",
+      "canonical": "https://automationbusines.com/countries/russia",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "Service",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/countries/belarus",
+      "status": 200,
+      "title": "Автоматизация бизнеса в Беларуси: POS и CRM",
+      "description": "Автоматизация процессов для бизнеса в Беларуси: CRM, POS-терминалы, учет товаров, интеграции и отчеты.",
+      "canonical": "https://automationbusines.com/countries/belarus",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "Service",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/catalog/pos-terminaly",
+      "status": 200,
+      "title": "POS-моноблоки в Бишкеке | Automation Business",
+      "description": "Кассовые рабочие станции для розницы и общепита. Подбор оборудования в Бишкеке и Кыргызстане: совместимость с кассой, комплектация и консультация перед покупкой.",
+      "canonical": "https://automationbusines.com/catalog/pos-terminaly",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/catalog/skanery-shtrih-koda",
+      "status": 200,
+      "title": "Сканеры штрих-кодов в Бишкеке | Automation Business",
+      "description": "Ручные и стационарные сканеры для кассовой зоны. Подбор оборудования в Бишкеке и Кыргызстане: совместимость с кассой, комплектация и консультация перед покупкой.",
+      "canonical": "https://automationbusines.com/catalog/skanery-shtrih-koda",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/catalog/printery-chekov",
+      "status": 200,
+      "title": "Принтеры чеков в Бишкеке | Automation Business",
+      "description": "Фискальные и нефискальные чековые принтеры. Подбор оборудования в Бишкеке и Кыргызстане: совместимость с кассой, комплектация и консультация перед покупкой.",
+      "canonical": "https://automationbusines.com/catalog/printery-chekov",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/catalog/printery-etiketok",
+      "status": 200,
+      "title": "Принтеры этикеток в Бишкеке | Automation Business",
+      "description": "Печать термоэтикеток для маркировки товаров. Подбор оборудования в Бишкеке и Кыргызстане: совместимость с кассой, комплектация и консультация перед покупкой.",
+      "canonical": "https://automationbusines.com/catalog/printery-etiketok",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/catalog/vesy",
+      "status": 200,
+      "title": "Весы с печатью этикеток в Бишкеке | Automation Business",
+      "description": "Весовое оборудование для магазина и склада. Подбор оборудования в Бишкеке и Кыргызстане: совместимость с кассой, комплектация и консультация перед покупкой.",
+      "canonical": "https://automationbusines.com/catalog/vesy",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/catalog/denezhnye-yashiki",
+      "status": 200,
+      "title": "Денежные ящики в Бишкеке | Automation Business",
+      "description": "Надежные кассовые ящики под разные кассы. Подбор оборудования в Бишкеке и Кыргызстане: совместимость с кассой, комплектация и консультация перед покупкой.",
+      "canonical": "https://automationbusines.com/catalog/denezhnye-yashiki",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/catalog/terminaly-sbora-dannyh",
+      "status": 200,
+      "title": "ТСД (терминалы сбора данных) в Бишкеке | Automation Business",
+      "description": "Мобильные терминалы для учета и инвентаризации. Подбор оборудования в Бишкеке и Кыргызстане: совместимость с кассой, комплектация и консультация перед покупкой.",
+      "canonical": "https://automationbusines.com/catalog/terminaly-sbora-dannyh",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/catalog/protivokrazhnye-sistemy",
+      "status": 200,
+      "title": "Противокражные системы в Бишкеке | Automation Business",
+      "description": "Рамки и метки для защиты товарных зон. Подбор оборудования в Бишкеке и Кыргызстане: совместимость с кассой, комплектация и консультация перед покупкой.",
+      "canonical": "https://automationbusines.com/catalog/protivokrazhnye-sistemy",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/catalog/termoetiketki",
+      "status": 200,
+      "title": "Термоэтикетки в Бишкеке | Automation Business",
+      "description": "Расходные материалы для печати этикеток. Подбор оборудования в Бишкеке и Кыргызстане: совместимость с кассой, комплектация и консультация перед покупкой.",
+      "canonical": "https://automationbusines.com/catalog/termoetiketki",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/catalog/chekovye-lenty",
+      "status": 200,
+      "title": "Чековые ленты в Бишкеке | Automation Business",
+      "description": "Чековая термолента разных форматов. Подбор оборудования в Бишкеке и Кыргызстане: совместимость с кассой, комплектация и консультация перед покупкой.",
+      "canonical": "https://automationbusines.com/catalog/chekovye-lenty",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/catalog/periferiya",
+      "status": 200,
+      "title": "Периферийные устройства в Бишкеке | Automation Business",
+      "description": "Клавиатуры, мыши, кабели, адаптеры и прочая периферия. Подбор оборудования в Бишкеке и Кыргызстане: совместимость с кассой, комплектация и консультация перед покупкой.",
+      "canonical": "https://automationbusines.com/catalog/periferiya",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/integrations/rosta-connect",
+      "status": 200,
+      "title": "Интеграция Rosta в Кыргызстане — подключение и синхронизация",
+      "description": "Подключение Rosta к каталогу и учету: товары, склады и остатки. Обследование данных, настройка обмена и проверка синхронизации для бизнеса в Кыргызстане.",
+      "canonical": "https://automationbusines.com/integrations/rosta-connect",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "BreadcrumbList",
+        "Service"
+      ]
+    },
+    {
+      "path": "/integrations/rosta-site",
+      "status": 200,
+      "title": "Интеграция Rosta с сайтом — каталог товаров и остатки",
+      "description": "Обмен данными между Rosta и сайтом: публикация товаров, сопоставление категорий и обновление остатков. Проверка API, настройка и контроль ошибок.",
+      "canonical": "https://automationbusines.com/integrations/rosta-site",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "BreadcrumbList",
+        "Service"
+      ]
+    },
+    {
+      "path": "/integrations/rosta-amocrm",
+      "status": 200,
+      "title": "Интеграция Rosta и amoCRM — оценка обмена данными",
+      "description": "Обсудите интеграцию Rosta с amoCRM: состав данных, правила сопоставления клиентов, доступность API и этапы подключения. Расчет под ваш процесс продаж.",
+      "canonical": "https://automationbusines.com/integrations/rosta-amocrm",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "BreadcrumbList",
+        "Service"
+      ]
+    },
+    {
+      "path": "/integrations/pos-bank",
+      "status": 200,
+      "title": "Интеграция банковского терминала с кассой в Кыргызстане",
+      "description": "Оценка подключения банковского терминала к POS-кассе: совместимость банка, модели и программы, оплата, отмена и сверка. Консультация по интеграции.",
+      "canonical": "https://automationbusines.com/integrations/pos-bank",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "BreadcrumbList",
+        "Service"
+      ]
+    },
+    {
+      "path": "/integrations/api",
+      "status": 200,
+      "title": "API-интеграции для бизнеса в Бишкеке — сайт, CRM и учет",
+      "description": "Проектирование API-интеграций в Кыргызстане: обмен между сайтом, CRM и учетной системой. Сопоставление данных, обработка ошибок и проверка подключения.",
+      "canonical": "https://automationbusines.com/integrations/api",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "BreadcrumbList",
+        "Service"
+      ]
+    },
+    {
+      "path": "/blog/perenos-tovarov-iz-excel-v-programmu-ucheta",
+      "status": 200,
+      "title": "Перенос товаров из Excel: как проверить справочник и остатки",
+      "description": "Порядок переноса товаров из таблицы: идентификаторы, дубли, упаковки, пробный импорт и сверка остатков. Что проверить до переключения магазина на новую программу.",
+      "canonical": "https://automationbusines.com/blog/perenos-tovarov-iz-excel-v-programmu-ucheta",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "BlogPosting",
+        "WebPage",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/blog/inventarizaciya-magazina-poshagovo",
+      "status": 200,
+      "title": "Инвентаризация магазина: подготовка, пересчет и разбор расхождений",
+      "description": "Как организовать пересчет товаров: зоны, движение во время инвентаризации, повторная проверка и причины расхождений. План для магазина и склада.",
+      "canonical": "https://automationbusines.com/blog/inventarizaciya-magazina-poshagovo",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "BlogPosting",
+        "WebPage",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/blog/kassa-i-uchet-dlya-kofeyni",
+      "status": 200,
+      "title": "Касса для кофейни: меню, добавки и учет ингредиентов",
+      "description": "Что проверить при выборе программы для кофейни: размеры напитков, замена молока, упаковка, списания и отчет смены. Сценарии для демонстрации перед запуском.",
+      "canonical": "https://automationbusines.com/blog/kassa-i-uchet-dlya-kofeyni",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "BlogPosting",
+        "WebPage",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/blog/kak-podgotovit-vnedrenie-crm-v-bishkeke",
+      "status": 200,
+      "title": "Внедрение CRM в Бишкеке: что подготовить до настройки",
+      "description": "Как подготовить CRM-проект: этапы продаж, поля заявки, права, перенос контактов и проверка интеграции сайта. Критерии приемки для владельца и отдела продаж.",
+      "canonical": "https://automationbusines.com/blog/kak-podgotovit-vnedrenie-crm-v-bishkeke",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "BlogPosting",
+        "WebPage",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/blog/kak-avtomatizirovat-magazin-v-kyrgyzstane",
+      "status": 200,
+      "title": "Как автоматизировать магазин в Кыргызстане: план запуска",
+      "description": "Практический план автоматизации магазина: подготовка товаров, выбор кассы и программы, перенос остатков, тестирование и обучение продавцов.",
+      "canonical": "https://automationbusines.com/blog/kak-avtomatizirovat-magazin-v-kyrgyzstane",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "BlogPosting",
+        "WebPage",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/blog/integraciya-kassy-s-bankovskim-terminalom",
+      "status": 200,
+      "title": "Интеграция кассы с банковским терминалом: что проверить",
+      "description": "Чем банковский терминал отличается от POS-кассы, какие данные нужны для интеграции и как проверять оплату, отмену, потерю связи и повторные запросы.",
+      "canonical": "https://automationbusines.com/blog/integraciya-kassy-s-bankovskim-terminalom",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "BlogPosting",
+        "WebPage",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/blog/crm-dlya-malogo-biznesa-v-kazakhstane",
+      "status": 200,
+      "title": "CRM для малого бизнеса в Казахстане: как выбрать и внедрить",
+      "description": "Пошаговая схема внедрения CRM для малого бизнеса в Казахстане: от аудита процессов до контроля конверсии и повторных продаж.",
+      "canonical": "https://automationbusines.com/blog/crm-dlya-malogo-biznesa-v-kazakhstane",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "BlogPosting",
+        "WebPage",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/blog/pos-terminal-dlya-magazina-v-uzbekistane",
+      "status": 200,
+      "title": "POS-терминал для магазина в Узбекистане: критерии выбора",
+      "description": "Как выбрать POS-терминал для магазина в Узбекистане и связать его со складом, CRM и отчетностью без потери данных.",
+      "canonical": "https://automationbusines.com/blog/pos-terminal-dlya-magazina-v-uzbekistane",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "BlogPosting",
+        "WebPage",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/blog/torgovye-vesy-s-integraciey-v-kassu",
+      "status": 200,
+      "title": "Торговые весы с интеграцией в кассу: практический гайд",
+      "description": "Как подключить торговые весы к кассе и учетной системе, чтобы исключить ручные ошибки и ускорить обслуживание клиентов.",
+      "canonical": "https://automationbusines.com/blog/torgovye-vesy-s-integraciey-v-kassu",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "BlogPosting",
+        "WebPage",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/blog/avtomatizaciya-sklada-dlya-roznicy",
+      "status": 200,
+      "title": "Автоматизация склада для розницы: как снизить потери",
+      "description": "Практика автоматизации склада для розничных сетей: остатки, инвентаризация, пересорт и закупки на основе оборачиваемости.",
+      "canonical": "https://automationbusines.com/blog/avtomatizaciya-sklada-dlya-roznicy",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "BlogPosting",
+        "WebPage",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/blog/avtomatizaciya-kafe-kak-snizit-fudkost",
+      "status": 200,
+      "title": "Автоматизация кафе: как снизить фудкост и ускорить сервис",
+      "description": "Как автоматизация кафе помогает контролировать фудкост, техкарты, списания и загрузку смен без ручных таблиц.",
+      "canonical": "https://automationbusines.com/blog/avtomatizaciya-kafe-kak-snizit-fudkost",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "BlogPosting",
+        "WebPage",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/blog/avtomatizaciya-sto-zakaz-naryady-i-zapchasti",
+      "status": 200,
+      "title": "Автоматизация СТО: заказ-наряды, запчасти и аналитика",
+      "description": "Как СТО оцифровать заказ-наряды, склад запчастей и финансовую аналитику по мастерам и видам работ.",
+      "canonical": "https://automationbusines.com/blog/avtomatizaciya-sto-zakaz-naryady-i-zapchasti",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "BlogPosting",
+        "WebPage",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/blog/onlayn-kassa-i-pos-v-chem-raznica",
+      "status": 200,
+      "title": "Онлайн-касса и POS: в чем разница и что выбрать",
+      "description": "Разбираем разницу между онлайн-кассой и POS-системой и объясняем, какой сценарий нужен для разных форматов бизнеса.",
+      "canonical": "https://automationbusines.com/blog/onlayn-kassa-i-pos-v-chem-raznica",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "BlogPosting",
+        "WebPage",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/blog/kak-schitat-roi-ot-avtomatizacii-biznesa",
+      "status": 200,
+      "title": "Как считать ROI от автоматизации бизнеса",
+      "description": "Формула ROI для автоматизации бизнеса: как оценить экономический эффект от CRM, POS, склада и аналитики.",
+      "canonical": "https://automationbusines.com/blog/kak-schitat-roi-ot-avtomatizacii-biznesa",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "BlogPosting",
+        "WebPage",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/blog/avtomatizaciya-biznesa-v-rossii-crm-pos-uchet",
+      "status": 200,
+      "title": "Автоматизация бизнеса в России: CRM, POS, учет и аналитика",
+      "description": "Подход к автоматизации бизнеса в России: как объединить CRM, POS-терминалы, складской учет и финансовую аналитику.",
+      "canonical": "https://automationbusines.com/blog/avtomatizaciya-biznesa-v-rossii-crm-pos-uchet",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "BlogPosting",
+        "WebPage",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/blog/avtomatizaciya-biznesa-v-belarusi",
+      "status": 200,
+      "title": "Автоматизация бизнеса в Беларуси: практическая модель запуска",
+      "description": "Как компаниям в Беларуси внедрять CRM, POS и склад без операционных сбоев и лишних расходов.",
+      "canonical": "https://automationbusines.com/blog/avtomatizaciya-biznesa-v-belarusi",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "BlogPosting",
+        "WebPage",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/blog/kak-vyyti-iz-excel-ucheta",
+      "status": 200,
+      "title": "Как выйти из Excel-учета и перейти на управляемую систему",
+      "description": "Пошаговый переход с Excel на CRM/POS/складскую платформу без остановки продаж и потери исторических данных.",
+      "canonical": "https://automationbusines.com/blog/kak-vyyti-iz-excel-ucheta",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "BlogPosting",
+        "WebPage",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/blog/checklist-zapuska-avtomatizacii-za-30-dney",
+      "status": 200,
+      "title": "Чек-лист запуска автоматизации бизнеса за 30 дней",
+      "description": "Пошаговый чек-лист на 30 дней: подготовка, внедрение, обучение и контроль метрик для устойчивого запуска автоматизации.",
+      "canonical": "https://automationbusines.com/blog/checklist-zapuska-avtomatizacii-za-30-dney",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "BlogPosting",
+        "WebPage",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/catalog/product/81ac2e34-1e14-4971-8085-1ff0281a0134",
+      "status": 200,
+      "title": "Моноблок 8/128 принтер чеков. Дисплей покупателя  Ур — купить в Бишкеке",
+      "description": "Моноблок 8/128 принтер чеков. Дисплей покупателя  Ур: запросите стоимость, комплектацию и совместимость с вашей кассовой программой. Консультация по торговому оборудованию в Кыргызстане.",
+      "canonical": "https://automationbusines.com/catalog/product/81ac2e34-1e14-4971-8085-1ff0281a0134",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "BreadcrumbList",
+        "Product"
+      ]
+    },
+    {
+      "path": "/catalog/product/e122dd65-0aca-43c9-8d34-ce6b1b26f24c",
+      "status": 200,
+      "title": "Вай фай адаптор — купить в Бишкеке",
+      "description": "Вай фай адаптор: запросите стоимость, комплектацию и совместимость с вашей кассовой программой. Консультация по торговому оборудованию в Кыргызстане.",
+      "canonical": "https://automationbusines.com/catalog/product/e122dd65-0aca-43c9-8d34-ce6b1b26f24c",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "BreadcrumbList",
+        "Product"
+      ]
+    },
+    {
+      "path": "/catalog/product/fa89d034-8f9f-49b8-a26d-1a785c28a434",
+      "status": 200,
+      "title": "Весы Мертеч со стойкой — купить в Бишкеке",
+      "description": "Весы Мертеч со стойкой: запросите стоимость, комплектацию и совместимость с вашей кассовой программой. Консультация по торговому оборудованию в Кыргызстане.",
+      "canonical": "https://automationbusines.com/catalog/product/fa89d034-8f9f-49b8-a26d-1a785c28a434",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "BreadcrumbList",
+        "Product"
+      ]
+    },
+    {
+      "path": "/catalog/product/aae408a1-07d7-4699-9ba1-b1dbedb32b6a",
+      "status": 200,
+      "title": "Весы НЕКСТ — купить в Бишкеке",
+      "description": "Весы НЕКСТ: запросите стоимость, комплектацию и совместимость с вашей кассовой программой. Консультация по торговому оборудованию в Кыргызстане.",
+      "canonical": "https://automationbusines.com/catalog/product/aae408a1-07d7-4699-9ba1-b1dbedb32b6a",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "BreadcrumbList",
+        "Product"
+      ]
+    },
+    {
+      "path": "/catalog/product/13acec8a-d995-4e45-be8d-f57b9836bf10",
+      "status": 200,
+      "title": "Весы Ронгта бол дисп — купить в Бишкеке",
+      "description": "Весы Ронгта бол дисп: запросите стоимость, комплектацию и совместимость с вашей кассовой программой. Консультация по торговому оборудованию в Кыргызстане.",
+      "canonical": "https://automationbusines.com/catalog/product/13acec8a-d995-4e45-be8d-f57b9836bf10",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "BreadcrumbList",
+        "Product"
+      ]
+    },
+    {
+      "path": "/catalog/product/e6d6c491-745f-47fb-a1a4-630d54f6b422",
+      "status": 200,
+      "title": "Весы Ронгта мален дисп — купить в Бишкеке",
+      "description": "Весы Ронгта мален дисп: запросите стоимость, комплектацию и совместимость с вашей кассовой программой. Консультация по торговому оборудованию в Кыргызстане.",
+      "canonical": "https://automationbusines.com/catalog/product/e6d6c491-745f-47fb-a1a4-630d54f6b422",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "BreadcrumbList",
+        "Product"
+      ]
+    },
+    {
+      "path": "/catalog/product/4d2803e4-383b-410d-9f76-1c774a9a0662",
+      "status": 200,
+      "title": "Браслеты чип — купить в Бишкеке",
+      "description": "Браслеты чип: запросите стоимость, комплектацию и совместимость с вашей кассовой программой. Консультация по торговому оборудованию в Кыргызстане.",
+      "canonical": "https://automationbusines.com/catalog/product/4d2803e4-383b-410d-9f76-1c774a9a0662",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "BreadcrumbList",
+        "Product"
+      ]
+    },
+    {
+      "path": "/catalog/product/20138974-9405-4d2b-b661-5daf135df6bd",
+      "status": 200,
+      "title": "лента чековая для принтера 58 мм — купить в Бишкеке",
+      "description": "лента чековая для принтера 58 мм: запросите стоимость, комплектацию и совместимость с вашей кассовой программой. Консультация по торговому оборудованию в Кыргызстане.",
+      "canonical": "https://automationbusines.com/catalog/product/20138974-9405-4d2b-b661-5daf135df6bd",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "BreadcrumbList",
+        "Product"
+      ]
+    },
+    {
+      "path": "/catalog/product/4c9a1d99-0f7a-4e0e-ae99-13b04194dbd1",
+      "status": 200,
+      "title": "денежный ящик — купить в Бишкеке",
+      "description": "денежный ящик: запросите стоимость, комплектацию и совместимость с вашей кассовой программой. Консультация по торговому оборудованию в Кыргызстане.",
+      "canonical": "https://automationbusines.com/catalog/product/4c9a1d99-0f7a-4e0e-ae99-13b04194dbd1",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "BreadcrumbList",
+        "Product"
+      ]
+    },
+    {
+      "path": "/catalog/product/c9f20a7e-5819-4ce2-aa06-a1718035ea10",
+      "status": 200,
+      "title": "Моноблок 2 экрана 8/128 — купить в Бишкеке",
+      "description": "Моноблок 2 экрана 8/128: запросите стоимость, комплектацию и совместимость с вашей кассовой программой. Консультация по торговому оборудованию в Кыргызстане.",
+      "canonical": "https://automationbusines.com/catalog/product/c9f20a7e-5819-4ce2-aa06-a1718035ea10",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "BreadcrumbList",
+        "Product"
+      ]
+    },
+    {
+      "path": "/catalog/product/608b32f2-5373-4fc7-9f9e-2e6c21fd0efd",
+      "status": 200,
+      "title": "Моноблок желез стиль 8/128 — купить в Бишкеке",
+      "description": "Моноблок желез стиль 8/128: запросите стоимость, комплектацию и совместимость с вашей кассовой программой. Консультация по торговому оборудованию в Кыргызстане.",
+      "canonical": "https://automationbusines.com/catalog/product/608b32f2-5373-4fc7-9f9e-2e6c21fd0efd",
+      "noindex": false,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "BreadcrumbList",
+        "Product"
+      ]
+    },
+    {
+      "path": "/countries/kazakhstan/crm",
+      "status": 200,
+      "title": "CRM для бизнеса в Казахстан | Центр автоматизации бизнеса",
+      "description": "CRM для бизнеса для компаний в Казахстан: внедрение, интеграция и поддержка автоматизации бизнеса.",
+      "canonical": "https://automationbusines.com/countries/kazakhstan/crm",
+      "noindex": true,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "Service",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/countries/kazakhstan/pos-terminaly",
+      "status": 200,
+      "title": "POS-терминалы и кассы в Казахстан | Центр автоматизации бизнеса",
+      "description": "POS-терминалы и кассы для компаний в Казахстан: внедрение, интеграция и поддержка автоматизации бизнеса.",
+      "canonical": "https://automationbusines.com/countries/kazakhstan/pos-terminaly",
+      "noindex": true,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "Service",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/countries/kazakhstan/vesy",
+      "status": 200,
+      "title": "Торговые весы и оборудование в Казахстан | Центр автоматизации бизнеса",
+      "description": "Торговые весы и оборудование для компаний в Казахстан: внедрение, интеграция и поддержка автоматизации бизнеса.",
+      "canonical": "https://automationbusines.com/countries/kazakhstan/vesy",
+      "noindex": true,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "Service",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/countries/kazakhstan/avtomatizaciya-sklada",
+      "status": 200,
+      "title": "Автоматизация склада в Казахстан | Центр автоматизации бизнеса",
+      "description": "Автоматизация склада для компаний в Казахстан: внедрение, интеграция и поддержка автоматизации бизнеса.",
+      "canonical": "https://automationbusines.com/countries/kazakhstan/avtomatizaciya-sklada",
+      "noindex": true,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "Service",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/countries/uzbekistan/crm",
+      "status": 200,
+      "title": "CRM для бизнеса в Узбекистан | Центр автоматизации бизнеса",
+      "description": "CRM для бизнеса для компаний в Узбекистан: внедрение, интеграция и поддержка автоматизации бизнеса.",
+      "canonical": "https://automationbusines.com/countries/uzbekistan/crm",
+      "noindex": true,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "Service",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/countries/uzbekistan/pos-terminaly",
+      "status": 200,
+      "title": "POS-терминалы и кассы в Узбекистан | Центр автоматизации бизнеса",
+      "description": "POS-терминалы и кассы для компаний в Узбекистан: внедрение, интеграция и поддержка автоматизации бизнеса.",
+      "canonical": "https://automationbusines.com/countries/uzbekistan/pos-terminaly",
+      "noindex": true,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "Service",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/countries/uzbekistan/vesy",
+      "status": 200,
+      "title": "Торговые весы и оборудование в Узбекистан | Центр автоматизации бизнеса",
+      "description": "Торговые весы и оборудование для компаний в Узбекистан: внедрение, интеграция и поддержка автоматизации бизнеса.",
+      "canonical": "https://automationbusines.com/countries/uzbekistan/vesy",
+      "noindex": true,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "Service",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/countries/uzbekistan/avtomatizaciya-sklada",
+      "status": 200,
+      "title": "Автоматизация склада в Узбекистан | Центр автоматизации бизнеса",
+      "description": "Автоматизация склада для компаний в Узбекистан: внедрение, интеграция и поддержка автоматизации бизнеса.",
+      "canonical": "https://automationbusines.com/countries/uzbekistan/avtomatizaciya-sklada",
+      "noindex": true,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "Service",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/countries/russia/crm",
+      "status": 200,
+      "title": "CRM для бизнеса в Россия | Центр автоматизации бизнеса",
+      "description": "CRM для бизнеса для компаний в Россия: внедрение, интеграция и поддержка автоматизации бизнеса.",
+      "canonical": "https://automationbusines.com/countries/russia/crm",
+      "noindex": true,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "Service",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/countries/russia/pos-terminaly",
+      "status": 200,
+      "title": "POS-терминалы и кассы в Россия | Центр автоматизации бизнеса",
+      "description": "POS-терминалы и кассы для компаний в Россия: внедрение, интеграция и поддержка автоматизации бизнеса.",
+      "canonical": "https://automationbusines.com/countries/russia/pos-terminaly",
+      "noindex": true,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "Service",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/countries/russia/vesy",
+      "status": 200,
+      "title": "Торговые весы и оборудование в Россия | Центр автоматизации бизнеса",
+      "description": "Торговые весы и оборудование для компаний в Россия: внедрение, интеграция и поддержка автоматизации бизнеса.",
+      "canonical": "https://automationbusines.com/countries/russia/vesy",
+      "noindex": true,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "Service",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/countries/russia/avtomatizaciya-sklada",
+      "status": 200,
+      "title": "Автоматизация склада в Россия | Центр автоматизации бизнеса",
+      "description": "Автоматизация склада для компаний в Россия: внедрение, интеграция и поддержка автоматизации бизнеса.",
+      "canonical": "https://automationbusines.com/countries/russia/avtomatizaciya-sklada",
+      "noindex": true,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "Service",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/countries/belarus/crm",
+      "status": 200,
+      "title": "CRM для бизнеса в Беларусь | Центр автоматизации бизнеса",
+      "description": "CRM для бизнеса для компаний в Беларусь: внедрение, интеграция и поддержка автоматизации бизнеса.",
+      "canonical": "https://automationbusines.com/countries/belarus/crm",
+      "noindex": true,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "Service",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/countries/belarus/pos-terminaly",
+      "status": 200,
+      "title": "POS-терминалы и кассы в Беларусь | Центр автоматизации бизнеса",
+      "description": "POS-терминалы и кассы для компаний в Беларусь: внедрение, интеграция и поддержка автоматизации бизнеса.",
+      "canonical": "https://automationbusines.com/countries/belarus/pos-terminaly",
+      "noindex": true,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "Service",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/countries/belarus/vesy",
+      "status": 200,
+      "title": "Торговые весы и оборудование в Беларусь | Центр автоматизации бизнеса",
+      "description": "Торговые весы и оборудование для компаний в Беларусь: внедрение, интеграция и поддержка автоматизации бизнеса.",
+      "canonical": "https://automationbusines.com/countries/belarus/vesy",
+      "noindex": true,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "Service",
+        "BreadcrumbList"
+      ]
+    },
+    {
+      "path": "/countries/belarus/avtomatizaciya-sklada",
+      "status": 200,
+      "title": "Автоматизация склада в Беларусь | Центр автоматизации бизнеса",
+      "description": "Автоматизация склада для компаний в Беларусь: внедрение, интеграция и поддержка автоматизации бизнеса.",
+      "canonical": "https://automationbusines.com/countries/belarus/avtomatizaciya-sklada",
+      "noindex": true,
+      "h1Count": 1,
+      "schemaTypes": [
+        "ProfessionalService",
+        "WebSite",
+        "Service",
+        "BreadcrumbList"
+      ]
+    }
+  ]
+}

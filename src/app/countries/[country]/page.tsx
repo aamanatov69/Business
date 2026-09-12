@@ -1,13 +1,7 @@
+import { BUSINESS_ID } from "@/lib/structured-data";
 import { JsonLd } from "@/app/components/JsonLd";
 import { COUNTRY_PAGES, countrySlugs } from "@/lib/country-pages";
 import {
-  BRAND_ADDRESS,
-  BRAND_CITY,
-  BRAND_COUNTRY,
-  BRAND_EMAIL,
-  BRAND_PHONE,
-  SITE_LANGUAGE,
-  SITE_NAME,
   SITE_URL,
 } from "@/lib/seo";
 import { solutionList } from "@/lib/solution-pages";
@@ -39,7 +33,7 @@ export async function generateMetadata({
   const pageUrl = `${SITE_URL}/countries/${country}`;
 
   return {
-    title: page.title,
+    title: { absolute: page.title },
     description: page.description,
     keywords: [...page.keywords],
     alternates: {
@@ -88,21 +82,8 @@ export default async function CountryPage({ params }: PageProps) {
     name: `${page.name} - автоматизация бизнеса`,
     serviceType: "Автоматизация бизнеса",
     areaServed: [page.code],
-    provider: {
-      "@type": "Organization",
-      name: SITE_NAME,
-      url: SITE_URL,
-      telephone: BRAND_PHONE,
-      email: BRAND_EMAIL,
-      address: {
-        "@type": "PostalAddress",
-        streetAddress: BRAND_ADDRESS,
-        addressLocality: BRAND_CITY,
-        addressCountry: BRAND_COUNTRY,
-      },
-    },
+    provider: { "@id": BUSINESS_ID },
     url: pageUrl,
-    inLanguage: SITE_LANGUAGE,
     description: page.description,
   };
 

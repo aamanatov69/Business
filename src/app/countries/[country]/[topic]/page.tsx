@@ -1,13 +1,7 @@
+import { BUSINESS_ID } from "@/lib/structured-data";
 import { JsonLd } from "@/app/components/JsonLd";
 import { COUNTRY_PAGES, countrySlugs } from "@/lib/country-pages";
 import {
-  BRAND_ADDRESS,
-  BRAND_CITY,
-  BRAND_COUNTRY,
-  BRAND_EMAIL,
-  BRAND_PHONE,
-  SITE_LANGUAGE,
-  SITE_NAME,
   SITE_URL,
 } from "@/lib/seo";
 import { TOPIC_PAGES, topicSlugs } from "@/lib/topic-pages";
@@ -97,21 +91,8 @@ export default async function CountryTopicPage({ params }: PageProps) {
     name: pageTitle,
     serviceType: topicPage.shortTitle,
     areaServed: [countryPage.code],
-    provider: {
-      "@type": "Organization",
-      name: SITE_NAME,
-      url: SITE_URL,
-      telephone: BRAND_PHONE,
-      email: BRAND_EMAIL,
-      address: {
-        "@type": "PostalAddress",
-        streetAddress: BRAND_ADDRESS,
-        addressLocality: BRAND_CITY,
-        addressCountry: BRAND_COUNTRY,
-      },
-    },
+    provider: { "@id": BUSINESS_ID },
     url: pageUrl,
-    inLanguage: SITE_LANGUAGE,
     description: `${topicPage.shortTitle} и автоматизация бизнес-процессов для компаний в ${countryPage.name}.`,
   };
 

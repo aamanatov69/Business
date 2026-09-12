@@ -1,6 +1,7 @@
 import { CORE_SEO_KEYWORDS } from "@/lib/seo";
 import { BUSINESS_DIRECTIONS } from "./business-directions";
 import { commercialSolutions, serviceDetails } from "./commercial-solutions";
+import { implementationSolutions } from "./implementation-solutions";
 
 export type SolutionPageContent = {
   slug: string;
@@ -143,6 +144,7 @@ export const SOLUTION_PAGES: Record<string, SolutionPageContent> = {
 
 Object.assign(SOLUTION_PAGES, BUSINESS_DIRECTIONS);
 Object.assign(SOLUTION_PAGES, commercialSolutions);
+Object.assign(SOLUTION_PAGES, implementationSolutions);
 for (const [slug, details] of Object.entries(serviceDetails)) {
   Object.assign(SOLUTION_PAGES[slug], details);
 }

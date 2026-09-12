@@ -1,12 +1,11 @@
+import { businessSchema, BUSINESS_ID, WEBSITE_ID } from "@/lib/structured-data";
 import { JsonLd } from "@/app/components/JsonLd";
 import {
   BRAND_ADDRESS,
   BRAND_CITY,
-  BRAND_COUNTRY,
   BRAND_EMAIL,
   BRAND_LOGO_PATH,
   BRAND_PHONE,
-  CIS_COUNTRIES,
   CORE_SEO_KEYWORDS,
   SITE_DESCRIPTION,
   SITE_LANGUAGE,
@@ -106,34 +105,11 @@ export default function RootLayout({
   const googleAnalyticsId = process.env.NEXT_PUBLIC_GA_ID;
   const yandexMetrikaId = process.env.NEXT_PUBLIC_YANDEX_METRIKA_ID;
 
-  const organizationSchema = {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    name: SITE_NAME,
-    url: SITE_URL,
-    logo: `${SITE_URL}${BRAND_LOGO_PATH}`,
-    email: BRAND_EMAIL,
-    telephone: BRAND_PHONE,
-    areaServed: [...CIS_COUNTRIES],
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: BRAND_ADDRESS,
-      addressLocality: BRAND_CITY,
-      addressCountry: BRAND_COUNTRY,
-    },
-    contactPoint: [
-      {
-        "@type": "ContactPoint",
-        telephone: BRAND_PHONE,
-        contactType: "sales",
-        availableLanguage: ["Russian", "Kyrgyz"],
-      },
-    ],
-  };
-
   const websiteSchema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
+    "@id": WEBSITE_ID,
+    publisher: { "@id": BUSINESS_ID },
     name: SITE_NAME,
     url: SITE_URL,
     inLanguage: SITE_LANGUAGE,
@@ -194,7 +170,7 @@ export default function RootLayout({
             </div>
           </noscript>
         ) : null}
-        <JsonLd data={organizationSchema} />
+        <JsonLd data={businessSchema} />
         <JsonLd data={websiteSchema} />
         <div className="site-content">{children}</div>
         <footer className="site-footer" aria-label="Контакты и реквизиты">
@@ -209,7 +185,7 @@ export default function RootLayout({
           </nav>
           <h2 className="site-footer-title">Контакты и адрес</h2>
           <div className="shell site-footer-inner">
-            <p className="site-footer-address">{BRAND_ADDRESS}</p>
+            <p className="site-footer-address">{BRAND_CITY}, {BRAND_ADDRESS}</p>
             <div className="site-footer-phones" aria-label="Номера телефонов">
               <details className="site-footer-phone-chooser">
                 <summary className="site-footer-link">{BRAND_PHONE}</summary>

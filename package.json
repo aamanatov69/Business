@@ -6,7 +6,8 @@
     "dev": "next dev --webpack",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "audit:seo": "node scripts/audit-seo.mjs"
   },
   "dependencies": {
     "framer-motion": "^12.36.0",

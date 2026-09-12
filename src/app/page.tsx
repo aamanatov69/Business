@@ -1,14 +1,10 @@
+import { BUSINESS_ID, WEBSITE_ID } from "@/lib/structured-data";
 import { JsonLd } from "@/app/components/JsonLd";
 import { businessDirectionLinks } from "@/lib/business-directions";
-﻿import { BLOG_POSTS } from "@/lib/blog-posts";
+import { BLOG_POSTS } from "@/lib/blog-posts";
 import { countryList } from "@/lib/country-pages";
 import { getHomeSeoHubGroups } from "@/lib/home/seo-hub";
 import {
-  BRAND_ADDRESS,
-  BRAND_CITY,
-  BRAND_COUNTRY,
-  BRAND_EMAIL,
-  BRAND_PHONE,
   CIS_COUNTRIES,
   CORE_SEO_KEYWORDS,
   SITE_DESCRIPTION,
@@ -60,12 +56,14 @@ export default function Page() {
   const webPageSchema = {
     "@context": "https://schema.org",
     "@type": "WebPage",
+    "@id": `${SITE_URL}/#webpage`,
     name: SITE_TITLE,
     description: SITE_DESCRIPTION,
     url: SITE_URL,
     inLanguage: SITE_LANGUAGE,
     isPartOf: {
       "@type": "WebSite",
+      "@id": WEBSITE_ID,
       name: SITE_NAME,
       url: SITE_URL,
     },
@@ -90,24 +88,6 @@ export default function Page() {
     ],
   };
 
-  const localBusinessSchema = {
-    "@context": "https://schema.org",
-    "@type": "ProfessionalService",
-    name: SITE_NAME,
-    url: SITE_URL,
-    description: SITE_DESCRIPTION,
-    telephone: BRAND_PHONE,
-    email: BRAND_EMAIL,
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: BRAND_ADDRESS,
-      addressLocality: BRAND_CITY,
-      addressCountry: BRAND_COUNTRY,
-    },
-    areaServed: "KG",
-    serviceType: ["Автоматизация бизнеса", "POS", "CRM", "Складской учет"],
-  };
-
   const serviceCatalogSchema = {
     "@context": "https://schema.org",
     "@type": "ItemList",
@@ -127,6 +107,7 @@ export default function Page() {
     areaServed: [...CIS_COUNTRIES],
     provider: {
       "@type": "Organization",
+      "@id": BUSINESS_ID,
       name: SITE_NAME,
       url: SITE_URL,
     },
@@ -163,7 +144,6 @@ export default function Page() {
     <>
       <JsonLd data={webPageSchema} />
       <JsonLd data={breadcrumbSchema} />
-      <JsonLd data={localBusinessSchema} />
       <JsonLd data={serviceCatalogSchema} />
       <JsonLd data={multiRegionSchema} />
       <JsonLd data={countryCatalogSchema} />

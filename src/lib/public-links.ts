@@ -1,3 +1,6 @@
+import { solutionList } from "./solution-pages";
+import { catalogCategories } from "./catalog-categories";
+
 export function publicLinkLabel(path: string) {
   const labels: Record<string, string> = {
     "/catalog": "Каталог оборудования", "/catalog/pos-terminaly": "POS-терминалы",
@@ -9,5 +12,8 @@ export function publicLinkLabel(path: string) {
     "/integrations/rosta-amocrm": "Обмен между Rosta и amoCRM", "/integrations/pos-bank": "Интеграция кассы с банковским терминалом",
     "/integrations/api": "API-интеграции", "/integrations": "Интеграции", "/contacts": "Контакты", "/blog": "Блог",
   };
-  return labels[path] || "Решения для бизнеса";
+  return labels[path]
+    || solutionList.find((page) => path === `/solutions/${page.slug}`)?.shortTitle
+    || catalogCategories.find((category) => path === `/catalog/${category.slug}`)?.title
+    || "Решения для бизнеса";
 }

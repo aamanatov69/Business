@@ -12,7 +12,7 @@ type Props = { params: Promise<{ id: string }> };
 export async function generateMetadata({ params }: Props) {
   const { id } = await params; const product = (await getPublicProducts()).find((item) => item.id === id);
   if (!product) return {};
-  return pageMetadata(productPath(id), `${product.name} купить в Бишкеке | Automation Business`, `${product.name}: запросите стоимость, комплектацию и совместимость с вашей кассовой программой. Консультация по торговому оборудованию в Кыргызстане.`);
+  return pageMetadata(productPath(id), `${product.name} — купить в Бишкеке`, `${product.name}: запросите стоимость, комплектацию и совместимость с вашей кассовой программой. Консультация по торговому оборудованию в Кыргызстане.`);
 }
 export default async function ProductPage({ params }: Props) {
   const { id } = await params; const products = await getPublicProducts(); const product = products.find((item) => item.id === id);

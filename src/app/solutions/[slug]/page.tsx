@@ -1,17 +1,13 @@
+import { BUSINESS_ID, webPageSchema } from "@/lib/structured-data";
+import { BLOG_POSTS } from "@/lib/blog-posts";
 import { JsonLd } from "@/app/components/JsonLd";
 import {
-  BRAND_ADDRESS,
-  BRAND_CITY,
   BRAND_COUNTRY,
-  BRAND_EMAIL,
   BRAND_PHONE,
-  CIS_COUNTRIES,
-  SITE_LANGUAGE,
-  SITE_NAME,
   SITE_URL,
 } from "@/lib/seo";
 import { SOLUTION_PAGES, solutionSlugs } from "@/lib/solution-pages";
-import { businessDirectionLinks, BUSINESS_DIRECTIONS } from "@/lib/business-directions";
+import { businessDirectionLinks } from "@/lib/business-directions";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -89,25 +85,13 @@ export default async function SolutionPage({ params }: PageProps) {
   const serviceSchema = {
     "@context": "https://schema.org",
     "@type": "Service",
+    "@id": `${pageUrl}#service`,
     name: page.title,
     serviceType: page.shortTitle,
     description: page.description,
-    provider: {
-      "@type": "Organization",
-      name: SITE_NAME,
-      url: SITE_URL,
-      telephone: BRAND_PHONE,
-      email: BRAND_EMAIL,
-      address: {
-        "@type": "PostalAddress",
-        streetAddress: BRAND_ADDRESS,
-        addressLocality: BRAND_CITY,
-        addressCountry: BRAND_COUNTRY,
-      },
-    },
-    areaServed: BUSINESS_DIRECTIONS[slug] ? BRAND_COUNTRY : [...CIS_COUNTRIES],
+    provider: { "@id": BUSINESS_ID },
+    areaServed: BRAND_COUNTRY,
     url: pageUrl,
-    inLanguage: SITE_LANGUAGE,
   };
 
   const breadcrumbSchema = {
@@ -131,6 +115,7 @@ export default async function SolutionPage({ params }: PageProps) {
 
   return (
     <main className={`shell section solution-page ${styles.page}`} aria-labelledby="solution-title">
+      <JsonLd data={{ ...webPageSchema(`/solutions/${slug}`, page.title, page.description), mainEntity: { "@id": `${pageUrl}#service` } }} />
       <JsonLd data={serviceSchema} />
       <JsonLd data={breadcrumbSchema} />
 
@@ -216,6 +201,12 @@ export default async function SolutionPage({ params }: PageProps) {
           <Link className="btn btn-primary" prefetch={false} href="/#request">Получить расчет автоматизации <ArrowRight size={18} aria-hidden="true" /></Link>
         </p>
       </section>
+      {BLOG_POSTS.some((post) => post.relatedLinks?.includes(`/solutions/${slug}`)) ? (
+        <section aria-label="Материалы по внедрению">
+          <h2>Как подготовиться к внедрению</h2>
+          <ul>{BLOG_POSTS.filter((post) => post.relatedLinks?.includes(`/solutions/${slug}`)).slice(0, 4).map((post) => <li key={post.slug}><Link href={`/blog/${post.slug}`}>{post.title}</Link></li>)}</ul>
+        </section>
+      ) : null}
       <nav aria-label="Другие направления автоматизации">
         <h2>Другие направления</h2>
         <div className="business-direction-grid">

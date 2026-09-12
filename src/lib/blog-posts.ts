@@ -1,5 +1,6 @@
 import { CORE_SEO_KEYWORDS } from "@/lib/seo";
 import { localBlogPosts } from "./local-blog-posts";
+import { practicalBlogPosts } from "./practical-blog-posts";
 
 export type BlogSection = {
   heading: string;
@@ -24,6 +25,7 @@ export type BlogPost = {
 };
 
 export const BLOG_POSTS: BlogPost[] = [
+  ...practicalBlogPosts,
   ...localBlogPosts,
   {
     slug: "crm-dlya-malogo-biznesa-v-kazakhstane",
