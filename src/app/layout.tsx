@@ -119,22 +119,19 @@ export default function RootLayout({
     <html lang="ru" translate="no" className="notranslate">
       <head>
         <meta name="google" content="notranslate" />
-        {googleAnalyticsId ? (
-          <>
-            <Script
-              src={`https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`}
-              strategy="afterInteractive"
-            />
-            <Script id="google-analytics" strategy="afterInteractive">
-              {`
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                gtag('config', '${googleAnalyticsId}');
-              `}
-            </Script>
-          </>
-        ) : null}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=AW-18449358621"
+          strategy="afterInteractive"
+        />
+        <Script id="google-tag" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'AW-18449358621');
+            ${googleAnalyticsId ? `gtag('config', '${googleAnalyticsId}');` : ""}
+          `}
+        </Script>
         {yandexMetrikaId ? (
           <Script id="yandex-metrika" strategy="afterInteractive">
             {`
