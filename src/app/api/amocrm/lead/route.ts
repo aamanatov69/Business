@@ -458,7 +458,7 @@ export async function POST(request: Request) {
   const leadId = extractLeadId(amoPayload);
 
   if (!leadId) {
-    return NextResponse.json({ ok: true }, { status: 200 });
+    return NextResponse.json({ ok: true, leadSubmitted: true }, { status: 200 });
   }
 
   const noteResponse = await createLeadNote({
@@ -479,11 +479,12 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         ok: true,
+        leadSubmitted: true,
         warning: "Сделка создана, но примечание с текстом заявки не добавлено.",
       },
       { status: 200 },
     );
   }
 
-  return NextResponse.json({ ok: true }, { status: 200 });
+  return NextResponse.json({ ok: true, leadSubmitted: true }, { status: 200 });
 }

@@ -150,6 +150,7 @@ export default function HomeClient({ seoHubGroups = [], directionLinks }: HomeCl
   const [customBusinessType, setCustomBusinessType] = useState("");
   const [website, setWebsite] = useState("");
   const [isSubmitting, setSubmitting] = useState(false);
+  const leadSubmissionInFlightRef = useRef(false);
   const [submitError, setSubmitError] = useState("");
   const [submitSuccess, setSubmitSuccess] = useState("");
   const [failedTrustedLogos, setFailedTrustedLogos] = useState<
@@ -706,6 +707,9 @@ export default function HomeClient({ seoHubGroups = [], directionLinks }: HomeCl
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (leadSubmissionInFlightRef.current) {
+      return;
+    }
     setSubmitError("");
     setSubmitSuccess("");
 
@@ -752,6 +756,7 @@ export default function HomeClient({ seoHubGroups = [], directionLinks }: HomeCl
       : businessTypeValue;
 
     try {
+      leadSubmissionInFlightRef.current = true;
       setSubmitting(true);
 
       const response = await fetch("/api/amocrm/lead", {
@@ -768,11 +773,30 @@ export default function HomeClient({ seoHubGroups = [], directionLinks }: HomeCl
         }),
       });
 
-      if (!response.ok) {
-        const payload = (await response.json().catch(() => null)) as {
-          message?: string;
-        } | null;
+      const payload = (await response.json().catch(() => null)) as {
+        ok?: boolean;
+        leadSubmitted?: boolean;
+        message?: string;
+      } | null;
+
+      if (!response.ok || payload?.ok !== true) {
         throw new Error(payload?.message ?? "Не удалось отправить заявку.");
+      }
+
+      if (
+        payload.leadSubmitted === true &&
+        typeof window !== "undefined" &&
+        typeof window.gtag === "function"
+      ) {
+        try {
+          window.gtag("event", "conversion", {
+            send_to: "AW-18449358621/kkt1CIje1_YcEJ2-q91E",
+            value: 1.0,
+            currency: "USD",
+          });
+        } catch {
+          // Tracking failures must not affect a successfully submitted lead.
+        }
       }
 
       setSubmitSuccess("Заявка отправлена. Мы скоро свяжемся с вами.");
@@ -789,6 +813,7 @@ export default function HomeClient({ seoHubGroups = [], directionLinks }: HomeCl
           : "Ошибка отправки. Попробуйте позже.";
       setSubmitError(message);
     } finally {
+      leadSubmissionInFlightRef.current = false;
       setSubmitting(false);
     }
   };
