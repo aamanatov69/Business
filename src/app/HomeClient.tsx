@@ -1306,11 +1306,7 @@ export default function HomeClient({ seoHubGroups = [], directionLinks }: HomeCl
                         </div>
                       </article>
                     ))
-                  : (
-                    <p className="catalog-market-status">
-                      Подберем оборудование под ваши задачи. Оставьте заявку для уточнения комплектации.
-                    </p>
-                  )}
+                  : null}
               </div>
             </div>
           </div>
